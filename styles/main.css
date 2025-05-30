@@ -328,3 +328,23 @@ button.icon-button img {
     left: -12px;
   }
 }
+
+@media screen and (orientation:portrait) and (max-width: 600px) {
+  body::before {
+    content: "Please rotate your device to landscape mode for the best experience.";
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #000;
+    color: #fff;
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2em;
+  }
+  .main-container {
+    display: none !important;
+  }
+}
