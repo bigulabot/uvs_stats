@@ -27,7 +27,7 @@ body {
 /* COUNTERS */
 .counters-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
   align-items: center;
   justify-content: center;
@@ -116,9 +116,9 @@ button.plus, button.minus {
 /* RIGHT SECTION (PANELS + RESET) */
 .right-section {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 40px;
   position: relative;
   margin-left: 40px; /* Shift whole right section further right */
 }
@@ -260,102 +260,61 @@ button.icon-button img {
     flex-direction: row;
   }
 }
-/* For phones and small landscape screens */
-@media (max-width: 950px) and (orientation: landscape) {
-  /* Reduce gaps so content fits better */
+
+@media (max-width: 600px) {
+  body {
+    padding: 6px;
+  }
   .main-container {
-    gap: 10px !important;
-    padding: 0 !important;
-  }
-
-  .counters-container {
-    gap: 8px !important;
-  }
-
-  .right-section {
-    margin-left: 10px !important;
-    gap: 10px !important;
-  }
-
-  /* Shrink player and rival panels */
-  .player-panel, .rival-panel {
-    width: 110px !important;
-    height: 60px !important;
-    padding: 4px !important;
-    font-size: 11px !important;
-  }
-
-  .panel-group {
-    margin: 0 auto 0.2em auto !important;
-  }
-
-  /* Smaller score numbers */
-  .score {
-    font-size: 19px !important;
-  }
-
-  /* Shrink counters */
-  .speed-counter, .damage-counter {
-    width: 43px !important;
-    height: 43px !important;
-  }
-
-  /* Smaller buttons */
-  button.plus, button.minus {
-    width: 35px !important;
-    height: 35px !important;
-    font-size: 18px !important;
-  }
-
-  /* Smaller reset button */
-  .reset-container img {
-    width: 33px !important;
-    height: 33px !important;
-  }
-
-  /* Smaller icons */
-  button.icon-button img {
-    width: 23px !important;
-    height: 23px !important;
-  }
-
-  /* Adjust panel actions (damage buttons) position */
-  .panel-actions {
-    left: -10px !important;
-    gap: 0.06em !important;
-  }
-}
-
-/* Portrait orientation: show rotate message, hide rest */
-@media (orientation: portrait) {
-  html, body {
-    overflow: hidden !important;
-    width: 100vw !important;
-    height: 100vh !important;
-  }
-  body > *:not(.rotate-message) {
-    display: none !important;
-  }
-  .rotate-message {
-    display: flex !important;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    background: #222;
-    color: #fff;
-    font-size: 1.6em;
-    text-align: center;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
+    gap: 16px;
   }
-}
-
-/* Hide rotate message in landscape */
-@media (orientation: landscape) {
-  .rotate-message {
-    display: none !important;
+  .counters-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .right-section {
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 0;
+    width: 100%;
+    position: static;
+  }
+  .reset-container {
+    position: static;
+    transform: none;
+    margin-bottom: 10px;
+    left: 0;
+    top: 0;
+  }
+  .hp-panels {
+    flex-direction: column;
+    width: 100%;
+  }
+  .player-panel, .rival-panel {
+    width: 98vw;
+    max-width: 340px;
+    height: 110px;
+    padding: 8px;
+  }
+  .score {
+    font-size: 36px;
+  }
+  .speed-counter,
+  .damage-counter {
+    width: 110px;
+    height: 110px;
+  }
+  button.plus, button.minus {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+  button.icon-button img {
+    width: 32px;
+    height: 32px;
+  }
+  .panel-actions {
+    left: -12px;
   }
 }
