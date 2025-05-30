@@ -223,6 +223,26 @@ document.addEventListener('touchmove', function (event) {
   }
 }, { passive: false });
 
+// Prevent pinch and double-tap zoom
 document.addEventListener('gesturestart', function (event) {
-  event.preventDefault(); // Disable double-tap zoom
+  event.preventDefault();
 });
+
+// Prevent double-tap zoom
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+  const now = new Date().getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// === Viewport Height Adjustment ===
+function updateViewportHeight() {
+  const viewportHeight = window.innerHeight;
+  document.querySelector('.main-container').style.height = `${viewportHeight}px`;
+}
+
+window.addEventListener('resize', updateViewportHeight);
+updateViewportHeight(); // Initial call
