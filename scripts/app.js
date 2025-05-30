@@ -167,6 +167,48 @@ halfDamageBtn.addEventListener('click', () => {
   playerHP = playerHp;
   saveState();
 });
+// FULL DAMAGE RIVAL BUTTON
+document.getElementById('fullDamageRivalBtn').addEventListener('click', () => {
+  let rivalHp = parseInt(rivalScoreEl.textContent, 10);
+  const dmg = parseInt(damageCountEl.textContent, 10);
+
+  // Subtract full damage
+  rivalHp = Math.max(rivalHp - dmg, 0);
+
+  // Reset speed, damage, and state (short reset)
+  speedCount = 0;
+  damageCount = 0;
+  speedState = 0;
+  updateSpeedCounter();
+  updateDamageCounter();
+
+  // Update HP and save
+  rivalScoreEl.textContent = rivalHp;
+  rivalHP = rivalHp;
+  saveState();
+});
+
+// HALF DAMAGE RIVAL BUTTON
+document.getElementById('halfDamageRivalBtn').addEventListener('click', () => {
+  let rivalHp = parseInt(rivalScoreEl.textContent, 10);
+  const dmg = parseInt(damageCountEl.textContent, 10);
+  const half = Math.ceil(dmg / 2);
+
+  // Subtract half damage
+  rivalHp = Math.max(rivalHp - half, 0);
+
+  // Reset speed, damage, and state (short reset)
+  speedCount = 0;
+  damageCount = 0;
+  speedState = 0;
+  updateSpeedCounter();
+  updateDamageCounter();
+
+  // Update HP and save
+  rivalScoreEl.textContent = rivalHp;
+  rivalHP = rivalHp;
+  saveState();
+});
 
 
 
