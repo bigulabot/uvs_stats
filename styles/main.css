@@ -1,3 +1,4 @@
+/* 1. DEFAULT: HORIZONTAL LAYOUT FOR ALL SCREENS (DESKTOP & MOBILE LANDSCAPE) */
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +10,7 @@ body {
   background-color: #000;
   color: #fff;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,7 +25,6 @@ body {
   gap: 40px;
 }
 
-/* COUNTERS */
 .counters-container {
   display: flex;
   flex-direction: row;
@@ -120,10 +120,9 @@ button.plus, button.minus {
   align-items: center;
   gap: 40px;
   position: relative;
-  margin-left: 40px; /* Shift whole right section further right */
+  margin-left: 40px;
 }
 
-/* RESET BUTTON */
 .reset-container {
   position: absolute;
   left: -35px;
@@ -143,11 +142,10 @@ button.plus, button.minus {
   height: 72px;
 }
 
-
 /* HP PANELS */
 .hp-panels {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 0;
 }
@@ -155,7 +153,7 @@ button.plus, button.minus {
 .panel-group {
   position: relative;
   width: fit-content;
-  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
+  margin: 0 auto 0.6em auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,8 +215,6 @@ button.icon-button {
   cursor: pointer;
   margin: 0 0.5em;
   border-radius: 12px;
-  /* Optional: focus style for accessibility */
-  /* outline: 2px solid #ffe95c; */
 }
 
 button.icon-button img {
@@ -226,146 +222,54 @@ button.icon-button img {
   height: 48px;
   display: block;
   pointer-events: none;
-  transition: transform 0.13s, filter 0.18s;
 }
-
 
 /* PANEL ACTIONS - Damage buttons on the left, overlapping */
 .panel-actions {
   position: absolute;
-  left: -30px;      /* Adjust as needed for horizontal placement */
+  left: -28px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 0.13em;      /* Tight vertical spacing */
+  gap: 0.13em;
   z-index: 2;
   margin: 0;
   padding: 0;
 }
 
-.player-actions { top: 38%; }  /* Move up or down as needed */
-.rival-actions  { top: 62%; }  /* Move up or down as needed */
+.player-actions { top: 44%; }
+.rival-actions  { top: 56%; }
 
-/* RESPONSIVENESS */
-@media (max-width: 1200px) {
+/* 2. SIZING TWEAKS FOR SMALLER LANDSCAPE SCREENS (OPTIONAL) */
+@media (max-width: 900px) and (orientation: landscape) {
   .main-container {
-    flex-direction: column;
-    gap: 30px;
-  }
-  .counters-container {
-    flex-direction: column;
-  }
-  .hp-panels {
-    flex-direction: row;
-  }
-}
-@media (max-width: 800px) {
-  .main-container {
-    flex-direction: column;
     gap: 16px;
   }
   .right-section {
-    margin-left: 0;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
+    margin-left: 12px;
+    gap: 12px;
   }
-  .counters-container {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .hp-panels {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .player-panel,
-  .rival-panel {
-    width: 98vw;
-    max-width: 340px;
-    min-width: 160px;
-    height: 90px;
+  .player-panel, .rival-panel {
+    width: 160px;
+    height: 100px;
     padding: 8px;
-    font-size: 14px;
+    font-size: 13px;
   }
   .score {
-    font-size: 32px;
+    font-size: 28px;
   }
-  .speed-counter,
-  .damage-counter {
-    width: 68px;
-    height: 68px;
+  .speed-counter, .damage-counter {
+    width: 85px;
+    height: 85px;
   }
-  .panel-actions {
-    left: -8px;
-    gap: 0.07em;
+  .reset-container img {
+    width: 48px;
+    height: 48px;
   }
 }
 
-@media (max-width: 450px) {
-  .player-panel,
-  .rival-panel {
-    width: 99vw;
-    max-width: 99vw;
-    min-width: 0;
-    padding: 4px;
-  }
-  .score {
-    font-size: 24px;
-  }
-}
-@media (orientation: portrait) {
-  body > *:not(.rotate-message) {
-    display: none !important;
-  }
-  .rotate-message {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: #fff;
-    background: #222;
-    font-size: 1.6em;
-    text-align: center;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-  }
-}
-@media (orientation: landscape) {
-  .rotate-message {
-    display: none !important;
-  }
-}
-@media (orientation: landscape) {
-  .main-container {
-    flex-direction: row !important;
-    gap: 40px !important;
-  }
-  .right-section {
-    margin-left: 40px !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 40px !important;
-  }
-  .counters-container {
-    flex-direction: row !important;
-    gap: 20px !important;
-  }
-  .hp-panels {
-    flex-direction: row !important;
-    gap: 0 !important;
-  }
-  .player-panel,
-  .rival-panel {
-    width: 240px !important;
-    height: 150px !important;
-    padding: 15px !important;
-    font-size: 16px !important;
-    max-width: none !important;
-  }
-}
+/* 3. BLOCK PORTRAIT: ONLY SHOW ROTATE MESSAGE */
 @media (orientation: portrait) {
   body > *:not(.rotate-message) {
     display: none !important;
