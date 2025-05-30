@@ -261,64 +261,43 @@ button.icon-button img {
   .main-container {
     display: flex !important;
     flex-direction: row !important;
-    gap: 8px;
-    align-items: flex-start;
-    width: 100vw;
-    justify-content: flex-start;
+    gap: 8px !important;
+    align-items: flex-start !important;
+    width: 100vw !important;
+    justify-content: flex-start !important;
   }
   .counters-container {
     display: flex !important;
     flex-direction: row !important;
-    gap: 8px;
-    align-items: flex-start;
-    min-width: 120px;
-    flex-shrink: 0;
+    gap: 8px !important;
+    align-items: flex-start !important;
+    min-width: 120px !important;
+    flex-shrink: 0 !important;
   }
   .right-section {
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px;
-    margin-left: 0;
-    width: auto;
-    position: static;
-    align-items: stretch;
-    flex: 1 1 0;
+    gap: 8px !important;
+    margin-left: 0 !important;
+    width: auto !important;
+    position: static !important;
+    align-items: stretch !important;
+    flex: 1 1 0 !important;
   }
   .hp-panels {
     display: flex !important;
     flex-direction: column !important;
-    width: 100%;
-    align-items: stretch;
+    width: 100% !important;
+    align-items: stretch !important;
   }
   .player-panel, .rival-panel {
-    width: 98vw;
-    max-width: 340px;
-    height: 110px;
-    padding: 8px;
-    margin: 0 auto;
-  }
-  .score {
-    font-size: 36px;
-  }
-  .speed-counter,
-  .damage-counter {
-    width: 110px;
-    height: 110px;
-  }
-  button.plus, button.minus {
-    width: 40px;
-    height: 40px;
-    font-size: 22px;
-  }
-  button.icon-button img {
-    width: 32px;
-    height: 32px;
-  }
-  .panel-actions {
-    left: -12px;
+    width: 98vw !important;
+    max-width: 340px !important;
+    height: 110px !important;
+    padding: 8px !important;
+    margin: 0 auto !important;
   }
 }
-
 @media screen and (orientation:portrait) and (max-width: 600px) {
   body::before {
     content: "Please rotate your device to landscape mode for the best experience.";
