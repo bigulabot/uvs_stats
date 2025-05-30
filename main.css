@@ -18,9 +18,10 @@ body {
 
 .main-container {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 2fr 1fr; /* Default: Counters take 2/3, right section takes 1/3 */
   align-items: start;
-  gap: 40px;
+  gap: 40px; /* Default gap */
+  width: 100%; /* Use the full width of the screen */
 }
 
 .counters-container {
@@ -29,6 +30,7 @@ body {
   gap: 20px;
   align-items: center;
   justify-content: center;
+  width: 100%; /* Fill the grid area */
 }
 
 /* COUNTERS */
@@ -118,6 +120,7 @@ button.plus, button.minus {
   flex-direction: column;
   gap: 40px;
   margin-left: 0;
+  width: 100%; /* Fill the grid area */
   position: relative; /* Add this */
 }
 
@@ -145,33 +148,33 @@ button.plus, button.minus {
 /* HP PANELS */
 .hp-panels {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Panels stack vertically within the right section */
   align-items: center;
-  gap: 0;
+  gap: 20px;
+  width: 100%; /* Use the full width */
 }
 
 .panel-group {
   position: relative;
   width: fit-content;
-  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
+  margin: 0 auto; /* Center horizontally */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .player-panel, .rival-panel {
-  position: relative;
-  width: 240px;
-  height: 150px;
+  width: 100%; /* Stretch to fill the container */
+  height: 120px; /* Reduce panel height for smaller screens */
   border-radius: 20px;
-  padding: 15px;
+  padding: 10px; /* Adjust padding */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   border: 3px solid #5d5d5d;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
 .player-panel { background: #003070; }
@@ -220,8 +223,8 @@ button.icon-button {
 }
 
 button.icon-button img {
-  width: 48px;
-  height: 48px;
+  width: 40px; /* Adjust icon size */
+  height: 40px;
   display: block;
   pointer-events: none;
   transition: transform 0.13s, filter 0.18s;
@@ -250,39 +253,28 @@ button.icon-button img {
   .main-container {
     gap: 30px;
   }
+  .hp-panels {
+    flex-direction: column; /* Ensure vertical stacking */
+  }
 }
 
 @media (max-width: 600px) {
   .main-container {
-    display: grid !important;
-    grid-template-columns: auto 1fr !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-    width: 100vw !important;
+    grid-template-columns: 1fr; /* Collapse into a single column on small screens */
+    grid-template-rows: auto auto; /* Stack counters and right section vertically */
+    gap: 20px; /* Reduce gap for smaller screens */
+    width: 100%; /* Ensure full width on mobile */
   }
+
   .counters-container {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 8px !important;
-    align-items: flex-start !important;
-    min-width: 120px !important;
-    flex-shrink: 0 !important;
+    justify-content: center; /* Center counters on mobile */
+    width: 100%; /* Stretch to full width */
+    gap: 12px; /* Reduce spacing between counters */
   }
+
   .right-section {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-    margin-left: 0 !important;
-    width: auto !important;
-    position: static !important;
-    align-items: stretch !important;
-    flex: 1 1 0 !important;
-  }
-  .hp-panels {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    align-items: stretch !important;
+    width: 100%; /* Stretch to full width */
+    gap: 16px; /* Adjust spacing within the right section */
   }
 }
 @media screen and (orientation:portrait) and (max-width: 600px) {
@@ -303,4 +295,33 @@ button.icon-button img {
   .main-container {
     display: none !important;
   }
+}
+
+/* Debugging layout: Outline all containers and grids */
+* {
+  outline: 1px solid red !important; /* Outline every element */
+}
+
+.main-container {
+  outline: 2px solid red !important; /* Highlight the main container */
+}
+
+.counters-container {
+  outline: 2px dashed red !important; /* Highlight the counters container */
+}
+
+.right-section {
+  outline: 2px dotted red !important; /* Highlight the right section */
+}
+
+.hp-panels {
+  outline: 2px solid red !important; /* Highlight the HP panels */
+}
+
+.player-panel, .rival-panel {
+  outline: 2px dashed red !important; /* Highlight individual panels */
+}
+
+button {
+  outline: 2px solid red !important; /* Highlight buttons */
 }
