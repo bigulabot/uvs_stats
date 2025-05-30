@@ -27,7 +27,7 @@ body {
 /* COUNTERS */
 .counters-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
   align-items: center;
   justify-content: center;
@@ -116,9 +116,9 @@ button.plus, button.minus {
 /* RIGHT SECTION (PANELS + RESET) */
 .right-section {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 12px;
   position: relative;
   margin-left: 40px; /* Shift whole right section further right */
 }
