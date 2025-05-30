@@ -21,6 +21,7 @@ body {
   grid-template-columns: auto 1fr;
   align-items: start;
   gap: 40px;
+  width: 100%; /* Use the full width of the screen */
 }
 
 .counters-container {
@@ -29,6 +30,7 @@ body {
   gap: 20px;
   align-items: center;
   justify-content: center;
+  width: 100%; /* Use the full width */
 }
 
 /* COUNTERS */
@@ -145,24 +147,23 @@ button.plus, button.minus {
 /* HP PANELS */
 .hp-panels {
   display: flex;
-  flex-direction: column; /* Always stack vertically */
+  flex-direction: column;
   align-items: center;
-  gap: 20px; /* Add spacing between panels */
+  gap: 20px;
+  width: 100%; /* Use the full width */
 }
 
 .panel-group {
   position: relative;
   width: fit-content;
-  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
+  margin: 0 auto; /* Center horizontally */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .player-panel, .rival-panel {
-  position: relative;
-  width: 100%; /* Ensure panels take full width */
-  max-width: 340px; /* Optional: limit width */
+  width: 100%; /* Stretch to fill the container */
   height: 150px;
   border-radius: 20px;
   padding: 15px;
@@ -172,7 +173,7 @@ button.plus, button.minus {
   align-items: center;
   overflow: hidden;
   border: 3px solid #5d5d5d;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
 .player-panel { background: #003070; }
@@ -262,13 +263,14 @@ button.icon-button img {
     grid-template-columns: auto 1fr !important;
     align-items: flex-start !important;
     gap: 8px !important;
-    width: 100vw !important;
+    width: 100vw !important; /* Ensure full width on mobile */
   }
   .counters-container {
     display: flex !important;
     flex-direction: row !important;
     gap: 8px !important;
     align-items: flex-start !important;
+    width: 100% !important;
     min-width: 120px !important;
     flex-shrink: 0 !important;
   }
@@ -287,6 +289,9 @@ button.icon-button img {
     flex-direction: column !important;
     width: 100% !important;
     align-items: stretch !important;
+  }
+  .player-panel, .rival-panel {
+    width: 100% !important;
   }
 }
 @media screen and (orientation:portrait) and (max-width: 600px) {
