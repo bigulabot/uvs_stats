@@ -1,63 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Orientation Notice Test</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: Arial, sans-serif;
-  }
-  
- /* Notice styles - hidden by default */
-  #rotateNotice {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #222;
-    color: white;
-    font-size: 1.8rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2rem;
-    z-index: 9999;
-  }
-  /* App container styles */
-  .app-container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #1c1c1c;
-    color: white;
-    font-size: 2rem;
-  }
- 
-
-  /* Show notice & hide app on portrait */
-  @media (orientation: portrait) {
-    .app-container {
-      display: none !important;
-    }
-    #rotateNotice {
-      display: flex !important;
-    }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UVS Stats Counter</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-<div id="rotateNotice">
-  Please tilt your phone horizontally to display the app.
-</div>
+  <div class="main-container">
 
-<div class="app-container">
-  <p>This is the app content shown only in landscape.</p>
-</div>
+    <!-- LEFT: COUNTERS -->
+    <div class="counters-container">
+
+      <!-- SPEED COUNTER -->
+      <div class="counter-block">
+        <button class="plus" onclick="incrementSpeed()">+</button>
+        <div class="speed-counter" onclick="cycleSpeedState()">
+          <img id="speedIcon" src="icons/Off.svg" alt="Speed Counter" />
+          <div class="counter-value" id="speedCount">0</div>
+        </div>
+        <button class="minus" onclick="decrementSpeed()">-</button>
+      </div>
+
+      <!-- DAMAGE COUNTER -->
+      <div class="counter-block">
+        <button class="plus" onclick="incrementDamage()">+</button>
+        <div class="damage-counter">
+          <img src="icons/yellow-star.svg" class="damage-star" />
+          <div class="counter-value" id="damageCount">0</div>
+        </div>
+        <button class="minus" onclick="decrementDamage()">-</button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: RESET + PANELS -->
+    <div class="right-section">
+
+      <!-- RESET BUTTON (positioned absolutely) -->
+      <div class="reset-container">
+        <button id="resetBtn">
+          <img src="icons/block-reset.svg" alt="Reset" />
+        </button>
+      </div>
+
+      <!-- PANELS -->
+      <div class="hp-panels">
+
+        <div class="player-panel">
+          <h2>Player</h2>
+          <div class="score" id="playerScore">25</div>
+          <div class="panel-top" onclick="adjustHP('player', 1)"></div>
+          <div class="panel-bottom" onclick="adjustHP('player', -1)"></div>
+        </div>
+
+        <div class="rival-panel">
+          <h2>Rival</h2>
+          <div class="score" id="rivalScore">25</div>
+          <div class="panel-top" onclick="adjustHP('rival', 1)"></div>
+          <div class="panel-bottom" onclick="adjustHP('rival', -1)"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="scripts/app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('Service worker registered.', reg))
+          .catch(err => console.log('Service worker registration failed.', err));
+      });
+    }
+  </script>
 
 </body>
 </html>

@@ -1,270 +1,213 @@
-/* Reset and basics */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
-body, html {
-  margin: 0; padding: 0;
-  height: 100%;
-  font-family: Arial, sans-serif;
-  background-color: #1c1c1c;
-  color: #eee;
+
+body {
+  background-color: #000;
+  color: #fff;
+  height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
-/* Container with horizontal layout */
-.app-container {
+.main-container {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  width: 90vw;
-  max-width: 1200px;
-  height: 70vh;
-  gap: 2vw;
-  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 40px;
 }
 
-/* Counters container */
-.counters {
+/* COUNTERS */
+.counters-container {
   display: flex;
-  gap: 1.5vw;
-  flex-shrink: 0;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Each counter */
-.counter {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  background: #2e2e2e;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #000 inset;
+.counter-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+  position: relative;
 }
 
-/* Counter icons */
-.counter img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  user-select: none;
-}
-
-/* Number on counter */
-.counter-number {
-  position: absolute;
-  top: 50%;
-  left: 55%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #fff;
-  -webkit-text-stroke: 1px black;
-  user-select: none;
-}
-
-/* Buttons + and - */
-.btn {
-  position: absolute;
-  width: 32px;
-  height: 32px;
+/* PLUS/MINUS Buttons */
+button.plus, button.minus {
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   border: none;
-  font-size: 1.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  background: #444;
+  background-color: #555;
   color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background: #666;
-}
-
-/* Position increment/decrement for speed counter */
-.speed-counter .increment {
-  top: 25%;
-  left: 22%;
-}
-.speed-counter .decrement {
-  bottom: 25%;
-  left: 22%;
-}
-
-/* Position increment/decrement for damage counter */
-.damage-counter .increment {
-  top: 25%;
-  right: 15%;
-}
-.damage-counter .decrement {
-  bottom: 25%;
-  right: 15%;
-}
-
-/* Reset button styling */
-.reset-button {
-  background: transparent;
-  border: none;
   cursor: pointer;
-  flex-shrink: 0;
-  width: 75px;
-  height: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 1vw;
-  transition: transform 0.3s ease;
+  position: relative;
 }
 
-.reset-button img {
+/* Move Speed counter +/- buttons slightly right */
+.counter-block:first-child button.plus,
+.counter-block:first-child button.minus {
+  left: -20px;
+}
+
+/* SPEED COUNTER */
+.speed-counter {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  cursor: pointer;
+}
+
+.speed-counter img {
   width: 100%;
   height: 100%;
-  user-select: none;
 }
 
-.reset-button:active {
-  transform: scale(0.9);
+.speed-counter .counter-value {
+  position: absolute;
+  top: 50%;
+  left: 36%;
+  transform: translate(-45%, -50%);
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
+    2px 2px 0 #000;
 }
 
-/* Panels container */
-.panels {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3vh;
-  flex-shrink: 0;
-  min-width: 120px;
-}
-
-/* Each panel */
-.panel {
-  background: #2e2e2e;
-  border: 2px solid #5d5d5d;
-  border-radius: 12px;
-  width: 120px;
-  height: 180px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
+/* DAMAGE COUNTER */
+.damage-counter {
   position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.damage-star {
+  width: 100%;
+  height: 100%;
+}
+
+.damage-counter .counter-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
+    2px 2px 0 #000;
+}
+
+/* RIGHT SECTION (PANELS + RESET) */
+.right-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  margin-left: 40px; /* Shift whole right section further right */
+}
+
+/* RESET BUTTON */
+.reset-container {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.reset-container button {
+  background: none;
+  border: none;
   cursor: pointer;
 }
 
-/* Panel label */
-.panel-label {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  color: #ccc;
+.reset-container img {
+  width: 80px;
+  height: 80px;
 }
 
-/* HP number */
-.hp-count {
-  font-size: 4rem;
-  font-weight: bold;
-  text-align: center;
-  user-select: none;
-  width: 100%;
-}
-
-/* Orientation notice styles */
-#rotateNotice {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: #222;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
+/* HP PANELS */
+.hp-panels {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.player-panel, .rival-panel {
+  position: relative;
+  width: 240px;
+  height: 150px;
+  border-radius: 20px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  z-index: 1000;
+  align-items: center;
+  overflow: hidden;
+  border: 3px solid #5d5d5d;
 }
 
-/* Hide app container and show notice when in portrait */
-@media (orientation: portrait) {
-  .app-container {
-    display: none !important;
-  }
-  #rotateNotice {
-    display: flex !important;
-  }
+.player-panel { background: #003366; }
+.rival-panel { background: #660000; }
+
+.player-panel h2,
+.rival-panel h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
-/* Responsive scaling for smaller widths, keeping horizontal */
-@media (max-width: 600px) {
-  .app-container {
-    width: 100vw;
-    gap: 1vw;
-  }
+.score {
+  font-size: 60px;
+  font-weight: bold;
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
+    2px 2px 0 #000;
+}
 
-  .counter {
-    width: 110px;
-    height: 110px;
-  }
+/* PANEL TOUCH ZONES */
+.panel-top, .panel-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  cursor: pointer;
+  z-index: 2;
+}
 
-  .counter img {
-    width: 70px;
-    height: 70px;
-  }
+.panel-top { top: 0; }
+.panel-bottom { bottom: 0; }
 
-  .counter-number {
-    font-size: 1.8rem;
-    left: 55%;
-  }
-
-  .btn {
-    width: 26px;
-    height: 26px;
-    font-size: 1.4rem;
-  }
-
-  #speedPlus, #speedMinus {
-    left: 18% !important;
-  }
-
-  .damage-counter .increment {
-    right: 12% !important;
-  }
-  .damage-counter .decrement {
-    right: 12% !important;
-  }
-
-  .reset-button {
-    width: 55px;
-    height: 55px;
-    margin: 0 0.5vw;
-  }
-
-  .panels {
+/* RESPONSIVENESS */
+@media (max-width: 1200px) {
+  .main-container {
     flex-direction: column;
-    gap: 1.5vh;
-    min-width: 100px;
+    gap: 30px;
   }
 
-  .panel {
-    width: 100px;
-    height: 140px;
+  .counters-container {
+    flex-direction: column;
   }
 
-  .hp-count {
-    font-size: 3rem;
-  }
-
-  .panel-label {
-    font-size: 1rem;
+  .hp-panels {
+    flex-direction: row;
   }
 }
