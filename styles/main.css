@@ -211,26 +211,32 @@ button.plus, button.minus {
     flex-direction: row;
   }
   
- /* FULL DAMAGE BUTTON */
-.action-button {
-  display: inline-block;            /* ensure it takes up space */
-  margin-top: 1rem;                 /* separate from panels */
-  padding: 0.6rem 1.2rem;           /* make it tappable */
-  background-color: #d9534f;        /* red so it stands out */
-  color: #fff;                      /* white text */
+.icon-button {
+  background: none;
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: bold;
+  padding: 0;
+  margin: 0 0.5em;
   cursor: pointer;
-  text-align: center;
-  user-select: none;
-  transition: background-color 0.2s ease;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Optional: For accessibility/focus style */
+  /* box-shadow: 0 0 0 2px #00f inset; */
 }
 
-.action-button:hover {
-  background-color: #c9302c;
+.icon-button img {
+  width: 48px;   /* Set your preferred icon size */
+  height: 48px;
+  display: block;
+  pointer-events: none; /* So only the button is clickable, not the img inside */
 }
+
+/* Remove outline on click for a cleaner look (optional) */
+.icon-button:focus {
+  outline: none;
+}
+
 
 
 }
