@@ -4,16 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UVS Stats Counter</title>
-  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="main.css" />
   <link rel="manifest" href="manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <div class="rotate-message" style="display:none">
-  <div>🔄<br /><br />Please rotate your device<br>to landscape mode<br>for the best experience.</div>
-</div>
-  
+  <!-- Rotate device message (shown only in portrait) -->
+  <div class="rotate-message" style="display:none;">
+    <div>🔄<br /><br />Please rotate your device<br>to landscape mode<br>for the best experience.</div>
+  </div>
+
   <div class="main-container">
 
     <!-- LEFT: COUNTERS -->
@@ -44,55 +45,55 @@
     <!-- RIGHT: RESET + PANELS -->
     <div class="right-section">
 
-      <!-- RESET BUTTON (positioned absolutely) -->
+      <!-- RESET BUTTON -->
       <div class="reset-container">
         <button id="resetBtn">
           <img src="icons/block-reset.svg" alt="Reset" />
         </button>
       </div>
 
-      <!-- PANELS -->
-    <div class="hp-panels">
+      <!-- PANELS stacked vertically: Player above Rival -->
+      <div class="hp-panels">
 
-  <!-- PLAYER PANEL GROUP -->
-  <div class="panel-group">
-    <div class="player-panel">
-      <h2>Player</h2>
-      <div class="score" id="playerScore">25</div>
-      <div class="panel-top"></div>
-      <div class="panel-bottom"></div>
-    </div>
-    <div class="panel-actions player-actions">
-      <button id="fullDamageBtn" class="icon-button">
-        <img src="icons/player-full.svg" alt="Player Full Damage" />
-      </button>
-      <button id="halfDamageBtn" class="icon-button">
-        <img src="icons/player-half.svg" alt="Player Half Damage" />
-      </button>
+        <div class="panel-group">
+          <div class="player-panel">
+            <h2>Player</h2>
+            <div class="score" id="playerScore">25</div>
+            <div class="panel-top"></div>
+            <div class="panel-bottom"></div>
+          </div>
+          <div class="panel-actions player-actions">
+            <button id="fullDamageBtn" class="icon-button">
+              <img src="icons/player-full.svg" alt="Player Full Damage" />
+            </button>
+            <button id="halfDamageBtn" class="icon-button">
+              <img src="icons/player-half.svg" alt="Player Half Damage" />
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-group">
+          <div class="rival-panel">
+            <h2>Rival</h2>
+            <div class="score" id="rivalScore">25</div>
+            <div class="panel-top"></div>
+            <div class="panel-bottom"></div>
+          </div>
+          <div class="panel-actions rival-actions">
+            <button id="fullDamageRivalBtn" class="icon-button">
+              <img src="icons/rival-full.svg" alt="Rival Full Damage" />
+            </button>
+            <button id="halfDamageRivalBtn" class="icon-button">
+              <img src="icons/rival-half.svg" alt="Rival Half Damage" />
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
-  <!-- RIVAL PANEL GROUP -->
-  <div class="panel-group">
-    <div class="rival-panel">
-      <h2>Rival</h2>
-      <div class="score" id="rivalScore">25</div>
-      <div class="panel-top"></div>
-      <div class="panel-bottom"></div>
-    </div>
-    <div class="panel-actions rival-actions">
-      <button id="fullDamageRivalBtn" class="icon-button">
-        <img src="icons/rival-full.svg" alt="Rival Full Damage" />
-      </button>
-      <button id="halfDamageRivalBtn" class="icon-button">
-        <img src="icons/rival-half.svg" alt="Rival Half Damage" />
-      </button>
-    </div>
-  </div>
-
-</div>
-
-  <script src="scripts/app.js"></script>
+  <script src="app.js"></script>
 
   <script>
     if ('serviceWorker' in navigator) {
