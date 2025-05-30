@@ -1,45 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UVS Stats Counter Responsive</title>
-  <link rel="stylesheet" href="main.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Orientation Notice Test</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: Arial, sans-serif;
+  }
+
+  /* App container styles */
+  .app-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1c1c1c;
+    color: white;
+    font-size: 2rem;
+  }
+
+  /* Notice styles - hidden by default */
+  #rotateNotice {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #222;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    z-index: 9999;
+  }
+
+  /* Show notice & hide app on portrait */
+  @media (orientation: portrait) {
+    .app-container {
+      display: none !important;
+    }
+    #rotateNotice {
+      display: flex !important;
+    }
+  }
+</style>
 </head>
 <body>
-  <div id="rotateNotice">
+
+<div id="rotateNotice">
   Please tilt your phone horizontally to display the app.
 </div>
-  <div class="app-container">
-    <div class="counters">
-      <div class="counter speed-counter">
-        <img id="speedIcon" src="Off.svg" alt="Speed Icon" />
-        <div id="speedCount" class="counter-number">0</div>
-        <button class="btn increment" id="speedPlus">+</button>
-        <button class="btn decrement" id="speedMinus">−</button>
-      </div>
-      <div class="counter damage-counter">
-        <img id="damageIcon" src="Off.svg" alt="Damage Icon" />
-        <div id="damageCount" class="counter-number">0</div>
-        <button class="btn increment" id="damagePlus">+</button>
-        <button class="btn decrement" id="damageMinus">−</button>
-      </div>
-    </div>
-    <button id="resetBtn" class="reset-button" aria-label="Reset">
-      <img src="block-reset.svg" alt="Reset" />
-    </button>
-    <div class="panels">
-      <div id="playerPanel" class="panel">
-        <div class="panel-label">Player</div>
-        <div class="hp-count" id="playerHp">25</div>
-      </div>
-      <div id="rivalPanel" class="panel">
-        <div class="panel-label">Rival</div>
-        <div class="hp-count" id="rivalHp">25</div>
-      </div>
-    </div>
-  </div>
 
-  <script src="app.js"></script>
+<div class="app-container">
+  <p>This is the app content shown only in landscape.</p>
+</div>
+
 </body>
 </html>
