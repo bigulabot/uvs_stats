@@ -211,6 +211,8 @@ button.plus, button.minus {
     flex-direction: row;
   }
   
+}
+
 button.icon-button {
   all: unset;
   display: inline-flex;
@@ -229,7 +231,3 @@ button.icon-button img {
   pointer-events: none;
 }
 
-
-
-
-}
