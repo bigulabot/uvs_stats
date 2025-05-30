@@ -5,34 +5,61 @@
   font-family: 'Poppins', sans-serif;
 }
 
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevent scrolling */
+}
+
 body {
   background-color: #000;
   color: #fff;
   height: 100vh;
-  width: 100%;
+  width: 100vw; /* Ensure the body fills the viewport */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Disable text selection for Safari */
+  -ms-user-select: none; /* Disable text selection for IE/Edge */
+  overscroll-behavior: none; /* Disable pull-to-refresh */
+}
+
+img {
+  user-select: none; /* Disable image selection */
+  pointer-events: none; /* Prevent interaction with images */
 }
 
 .main-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Counters take 2/3, right section takes 1/3 */
+  align-items: stretch; /* Ensure child elements stretch to fill the height */
+  gap: 0; /* Remove gap between counters-container and right-section */
+  width: 100vw; /* Default: Full width for mobile */
+  height: 100vh; /* Default: Full height for mobile */
 }
 
-/* COUNTERS */
+@media (min-width: 1024px) { /* Apply styles for desktop screens */
+  .main-container {
+    width: 700px; /* Fixed width for desktop */
+    height: 320px; /* Fixed height for desktop */
+    margin: auto; /* Center the container */
+  }
+}
+
 .counters-container {
   display: flex;
   flex-direction: row;
   gap: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align counters to the left */
+  width: 100%; /* Fill the grid area */
+  height: 100%; /* Stretch to match the height of main-container */
 }
 
+/* COUNTERS */
 .counter-block {
   display: flex;
   flex-direction: column;
@@ -116,18 +143,27 @@ button.plus, button.minus {
 /* RIGHT SECTION (PANELS + RESET) */
 .right-section {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   gap: 40px;
-  position: relative;
-  margin-left: 40px; /* Shift whole right section further right */
+  margin-left: 0;
+  width: 100%; /* Fill the grid area */
+  height: 100%; /* Stretch to match the height of main-container */
+  position: relative; /* Ensure child elements like reset-container and panel-actions are positioned relative to this */
+}
+
+.panel-group {
+  width: 100%; /* Stretch to match the width of right-section */
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* RESET BUTTON */
 .reset-container {
   position: absolute;
-  left: -35px;
-  top: 50%;
+  left: 0; /* Align to the left side of right-section */
+  top: 50%; /* Center vertically */
   transform: translateY(-50%);
   z-index: 10;
 }
@@ -147,33 +183,33 @@ button.plus, button.minus {
 /* HP PANELS */
 .hp-panels {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Panels stack vertically within the right section */
   align-items: center;
-  gap: 0;
+  gap: 20px;
+  width: 100%; /* Stretch to fit the panel-group */
 }
 
 .panel-group {
   position: relative;
-  width: fit-content;
-  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
+  width: 100%; /* Ensure the panel group takes full width */
+  margin: 0 auto; /* Center horizontally */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .player-panel, .rival-panel {
-  position: relative;
-  width: 240px;
-  height: 150px;
+  width: 100%; /* Stretch to fill the panel group */
+  height: auto; /* Adjust height dynamically */
   border-radius: 20px;
-  padding: 15px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   border: 3px solid #5d5d5d;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
 .player-panel { background: #003070; }
@@ -222,8 +258,8 @@ button.icon-button {
 }
 
 button.icon-button img {
-  width: 48px;
-  height: 48px;
+  width: 40px; /* Adjust icon size */
+  height: 40px;
   display: block;
   pointer-events: none;
   transition: transform 0.13s, filter 0.18s;
@@ -233,15 +269,13 @@ button.icon-button img {
 /* PANEL ACTIONS - Damage buttons on the left, overlapping */
 .panel-actions {
   position: absolute;
-  left: -30px;      /* Adjust as needed for horizontal placement */
-  top: 50%;
+  left: 0; /* Align to the left side of right-section */
+  top: 50%; /* Center vertically */
   transform: translateY(-50%);
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 0.13em;      /* Tight vertical spacing */
-  z-index: 2;
-  margin: 0;
-  padding: 0;
+  gap: 0.13em; /* Tight vertical spacing */
 }
 
 .player-actions { top: 38%; }  /* Move up or down as needed */
@@ -250,13 +284,48 @@ button.icon-button img {
 /* RESPONSIVENESS */
 @media (max-width: 1200px) {
   .main-container {
-    flex-direction: column;
     gap: 30px;
   }
-  .counters-container {
-    flex-direction: column;
-  }
   .hp-panels {
-    flex-direction: row;
+    flex-direction: column; /* Ensure vertical stacking */
+  }
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    grid-template-columns: 1fr; /* Collapse into a single column on small screens */
+    grid-template-rows: auto auto; /* Stack counters and right section vertically */
+    gap: 20px; /* Reduce gap for smaller screens */
+    width: 100%; /* Ensure full width on mobile */
+  }
+
+  .counters-container {
+    justify-content: center; /* Center counters on mobile */
+    width: 100%; /* Stretch to full width */
+    gap: 12px; /* Reduce spacing between counters */
+  }
+
+  .right-section {
+    width: 100%; /* Stretch to full width */
+    gap: 16px; /* Adjust spacing within the right section */
+  }
+}
+@media screen and (orientation:portrait) and (max-width: 600px) {
+  body::before {
+    content: "Please rotate your device to landscape mode for the best experience.";
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #000;
+    color: #fff;
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2em;
+  }
+  .main-container {
+    display: none !important;
   }
 }
