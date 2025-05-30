@@ -314,3 +314,27 @@ button.icon-button img {
     font-size: 24px;
   }
 }
+@media (orientation: portrait) {
+  body > *:not(.rotate-message) {
+    display: none !important;
+  }
+  .rotate-message {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #fff;
+    background: #222;
+    font-size: 1.6em;
+    text-align: center;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+  }
+}
+@media (orientation: landscape) {
+  .rotate-message {
+    display: none !important;
+  }
+}
