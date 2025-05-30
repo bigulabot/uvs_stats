@@ -338,3 +338,50 @@ button.icon-button img {
     display: none !important;
   }
 }
+@media (orientation: landscape) {
+  .main-container {
+    flex-direction: row !important;
+    gap: 40px !important;
+  }
+  .right-section {
+    margin-left: 40px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 40px !important;
+  }
+  .counters-container {
+    flex-direction: row !important;
+    gap: 20px !important;
+  }
+  .hp-panels {
+    flex-direction: row !important;
+    gap: 0 !important;
+  }
+  .player-panel,
+  .rival-panel {
+    width: 240px !important;
+    height: 150px !important;
+    padding: 15px !important;
+    font-size: 16px !important;
+    max-width: none !important;
+  }
+}
+@media (orientation: portrait) {
+  body > *:not(.rotate-message) {
+    display: none !important;
+  }
+  .rotate-message {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #fff;
+    background: #222;
+    font-size: 1.6em;
+    text-align: center;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+  }
+}
