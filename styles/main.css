@@ -296,7 +296,21 @@ button.icon-button img {
     display: none !important;
   }
 }
-/* Temporary Debugging: Outline and color-code all specified elements */
+/* Temporary Debugging: Outline, color-code, and label all specified elements */
+
+/* Add labels to elements */
+*::before {
+  content: attr(class); /* Display the class name */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  color: white;
+  font-size: 12px;
+  padding: 2px 4px;
+  z-index: 9999;
+  pointer-events: none; /* Prevent interference with interactions */
+}
 
 /* Main container */
 .main-container {
