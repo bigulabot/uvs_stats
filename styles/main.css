@@ -296,3 +296,31 @@ button.icon-button img {
     display: none !important;
   }
 }
+/* Debugging layout: Outline all containers and grids */
+* {
+  outline: 1px solid red !important; /* Outline every element */
+}
+
+.main-container {
+  outline: 2px solid red !important; /* Highlight the main container */
+}
+
+.counters-container {
+  outline: 2px dashed red !important; /* Highlight the counters container */
+}
+
+.right-section {
+  outline: 2px dotted red !important; /* Highlight the right section */
+}
+
+.hp-panels {
+  outline: 2px solid red !important; /* Highlight the HP panels */
+}
+
+.player-panel, .rival-panel {
+  outline: 2px dashed red !important; /* Highlight individual panels */
+}
+
+button {
+  outline: 2px solid red !important; /* Highlight buttons */
+}
