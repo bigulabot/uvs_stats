@@ -222,3 +222,7 @@ document.addEventListener('touchmove', function (event) {
     event.preventDefault(); // Disable pinch zoom
   }
 }, { passive: false });
+
+document.addEventListener('gesturestart', function (event) {
+  event.preventDefault(); // Disable double-tap zoom
+});
