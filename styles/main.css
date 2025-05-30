@@ -276,6 +276,8 @@ button.icon-button img {
     flex-direction: row;
     gap: 8px;
     align-items: flex-start;
+    min-width: 120px;
+    flex-shrink: 0;
   }
   .right-section {
     flex-direction: column;
@@ -284,6 +286,7 @@ button.icon-button img {
     width: auto;
     position: static;
     align-items: stretch;
+    flex: 1 1 0;
   }
   .reset-container {
     position: static;
