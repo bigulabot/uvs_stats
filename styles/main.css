@@ -9,7 +9,7 @@ body {
   background-color: #000;
   color: #fff;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,10 +22,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 40px;
-  max-width: 1200px;
-  margin: auto;
 }
 
+/* COUNTERS */
 .counters-container {
   display: flex;
   flex-direction: row;
@@ -81,10 +80,10 @@ button.plus, button.minus {
   transform: translate(-45%, -50%);
   font-size: 70px;
   font-weight: bold;
-  text-shadow:
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
     2px 2px 0 #000;
 }
 
@@ -107,10 +106,10 @@ button.plus, button.minus {
   transform: translate(-50%, -50%);
   font-size: 70px;
   font-weight: bold;
-  text-shadow:
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
     2px 2px 0 #000;
 }
 
@@ -121,9 +120,10 @@ button.plus, button.minus {
   align-items: center;
   gap: 40px;
   position: relative;
-  margin-left: 40px;
+  margin-left: 40px; /* Shift whole right section further right */
 }
 
+/* RESET BUTTON */
 .reset-container {
   position: absolute;
   left: -35px;
@@ -143,18 +143,19 @@ button.plus, button.minus {
   height: 72px;
 }
 
-/* HP PANELS — STACKED VERTICAL (Player above Rival) */
+
+/* HP PANELS */
 .hp-panels {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 0;
 }
 
 .panel-group {
   position: relative;
   width: fit-content;
-  margin: 0 auto 0.6em auto;
+  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,10 +188,10 @@ button.plus, button.minus {
 .score {
   font-size: 60px;
   font-weight: bold;
-  text-shadow:
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
     2px 2px 0 #000;
 }
 
@@ -216,6 +217,8 @@ button.icon-button {
   cursor: pointer;
   margin: 0 0.5em;
   border-radius: 12px;
+  /* Optional: focus style for accessibility */
+  /* outline: 2px solid #ffe95c; */
 }
 
 button.icon-button img {
@@ -223,62 +226,37 @@ button.icon-button img {
   height: 48px;
   display: block;
   pointer-events: none;
+  transition: transform 0.13s, filter 0.18s;
 }
+
 
 /* PANEL ACTIONS - Damage buttons on the left, overlapping */
 .panel-actions {
   position: absolute;
-  left: -28px;
+  left: -30px;      /* Adjust as needed for horizontal placement */
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 0.13em;
+  gap: 0.13em;      /* Tight vertical spacing */
   z-index: 2;
   margin: 0;
   padding: 0;
 }
 
-.player-actions { top: 44%; }
-.rival-actions  { top: 56%; }
+.player-actions { top: 38%; }  /* Move up or down as needed */
+.rival-actions  { top: 62%; }  /* Move up or down as needed */
 
-/* RESPONSIVE SCALING FOR SMALL LANDSCAPE SCREENS */
-@media (max-width: 950px) and (orientation: landscape) {
-  .main-container { gap: 10px !important; padding: 0 !important; }
-  .counters-container { gap: 8px !important; }
-  .right-section { margin-left: 10px !important; gap: 10px !important; }
-  .player-panel, .rival-panel { width: 110px !important; height: 60px !important; padding: 4px !important; font-size: 11px !important; }
-  .panel-group { margin: 0 auto 0.2em auto !important; }
-  .score { font-size: 19px !important; }
-  .speed-counter, .damage-counter { width: 43px !important; height: 43px !important; }
-  button.plus, button.minus { width: 35px !important; height: 35px !important; font-size: 18px !important; }
-  .reset-container img { width: 33px !important; height: 33px !important; }
-  button.icon-button img { width: 23px !important; height: 23px !important; }
-  .panel-actions { left: -10px !important; gap: 0.06em !important; }
-}
-
-/* BLOCK PORTRAIT - ONLY SHOW ROTATE MESSAGE */
-@media (orientation: portrait) {
-  html, body { overflow: hidden !important; width: 100vw !important; height: 100vh !important; }
-  body > *:not(.rotate-message) { display: none !important; }
-  .rotate-message {
-    display: flex !important;
+/* RESPONSIVENESS */
+@media (max-width: 1200px) {
+  .main-container {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100vw !important;
-    height: 100vh !important;
-    color: #fff;
-    background: #222;
-    font-size: 1.6em;
-    text-align: center;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
+    gap: 30px;
   }
-}
-
-/* HIDE ROTATE MESSAGE IN LANDSCAPE */
-@media (orientation: landscape) {
-  .rotate-message { display: none !important; }
+  .counters-container {
+    flex-direction: column;
+  }
+  .hp-panels {
+    flex-direction: row;
+  }
 }
