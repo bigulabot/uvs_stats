@@ -17,23 +17,22 @@ body {
 }
 
 .main-container {
-  display: grid;
-  grid-template-columns: 2fr 1fr; /* Default: Counters take 2/3, right section takes 1/3 */
-  align-items: start;
-  gap: 40px; /* Default gap */
-  width: 100%; /* Use the full width of the screen */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
 }
 
+/* COUNTERS */
 .counters-container {
   display: flex;
   flex-direction: row;
   gap: 20px;
   align-items: center;
   justify-content: center;
-  width: 100%; /* Fill the grid area */
 }
 
-/* COUNTERS */
 .counter-block {
   display: flex;
   flex-direction: column;
@@ -117,17 +116,17 @@ button.plus, button.minus {
 /* RIGHT SECTION (PANELS + RESET) */
 .right-section {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 40px;
-  margin-left: 0;
-  width: 100%; /* Fill the grid area */
-  position: relative; /* Add this */
+  position: relative;
+  margin-left: 40px; /* Shift whole right section further right */
 }
 
 /* RESET BUTTON */
 .reset-container {
   position: absolute;
-  left: -36px; /* or 0 if you want it flush */
+  left: -35px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
@@ -148,33 +147,33 @@ button.plus, button.minus {
 /* HP PANELS */
 .hp-panels {
   display: flex;
-  flex-direction: column; /* Panels stack vertically within the right section */
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
-  width: 100%; /* Use the full width */
+  gap: 0;
 }
 
 .panel-group {
   position: relative;
   width: fit-content;
-  margin: 0 auto; /* Center horizontally */
+  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .player-panel, .rival-panel {
-  width: 100%; /* Stretch to fill the container */
-  height: 120px; /* Reduce panel height for smaller screens */
+  position: relative;
+  width: 240px;
+  height: 150px;
   border-radius: 20px;
-  padding: 10px; /* Adjust padding */
+  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   border: 3px solid #5d5d5d;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 }
 
 .player-panel { background: #003070; }
@@ -223,8 +222,8 @@ button.icon-button {
 }
 
 button.icon-button img {
-  width: 40px; /* Adjust icon size */
-  height: 40px;
+  width: 48px;
+  height: 48px;
   display: block;
   pointer-events: none;
   transition: transform 0.13s, filter 0.18s;
@@ -251,48 +250,13 @@ button.icon-button img {
 /* RESPONSIVENESS */
 @media (max-width: 1200px) {
   .main-container {
+    flex-direction: column;
     gap: 30px;
   }
-  .hp-panels {
-    flex-direction: column; /* Ensure vertical stacking */
-  }
-}
-
-@media (max-width: 600px) {
-  .main-container {
-    grid-template-columns: 1fr; /* Collapse into a single column on small screens */
-    grid-template-rows: auto auto; /* Stack counters and right section vertically */
-    gap: 20px; /* Reduce gap for smaller screens */
-    width: 100%; /* Ensure full width on mobile */
-  }
-
   .counters-container {
-    justify-content: center; /* Center counters on mobile */
-    width: 100%; /* Stretch to full width */
-    gap: 12px; /* Reduce spacing between counters */
+    flex-direction: column;
   }
-
-  .right-section {
-    width: 100%; /* Stretch to full width */
-    gap: 16px; /* Adjust spacing within the right section */
-  }
-}
-@media screen and (orientation:portrait) and (max-width: 600px) {
-  body::before {
-    content: "Please rotate your device to landscape mode for the best experience.";
-    display: flex;
-    position: fixed;
-    z-index: 9999;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #000;
-    color: #fff;
-    font-size: 1.5em;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2em;
-  }
-  .main-container {
-    display: none !important;
+  .hp-panels {
+    flex-direction: row;
   }
 }
