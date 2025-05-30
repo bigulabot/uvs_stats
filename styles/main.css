@@ -126,7 +126,7 @@ button.plus, button.minus {
 /* RESET BUTTON */
 .reset-container {
   position: absolute;
-  left: -40px;
+  left: -35px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
@@ -139,9 +139,10 @@ button.plus, button.minus {
 }
 
 .reset-container img {
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
 }
+
 
 /* HP PANELS */
 .hp-panels {
@@ -150,13 +151,14 @@ button.plus, button.minus {
   align-items: center;
   gap: 0;
 }
-.panel-actions {
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  padding: 0;
+
+.panel-group {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 0.7em;
 }
 
 .player-panel, .rival-panel {
@@ -171,6 +173,7 @@ button.plus, button.minus {
   align-items: center;
   overflow: hidden;
   border: 3px solid #5d5d5d;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 }
 
 .player-panel { background: #003070; }
@@ -205,23 +208,7 @@ button.plus, button.minus {
 .panel-top { top: 0; }
 .panel-bottom { bottom: 0; }
 
-/* RESPONSIVENESS */
-@media (max-width: 1200px) {
-  .main-container {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .counters-container {
-    flex-direction: column;
-  }
-
-  .hp-panels {
-    flex-direction: row;
-  }
-  
-}
-
+/* ICON BUTTONS */
 button.icon-button {
   all: unset;
   display: inline-flex;
@@ -229,8 +216,9 @@ button.icon-button {
   justify-content: center;
   cursor: pointer;
   margin: 0 0.5em;
-  /* Optional: for keyboard accessibility, style focus */
-  /* outline: 2px solid #007bff; */
+  border-radius: 12px;
+  /* Optional: focus style for accessibility */
+  /* outline: 2px solid #ffe95c; */
 }
 
 button.icon-button img {
@@ -238,23 +226,37 @@ button.icon-button img {
   height: 48px;
   display: block;
   pointer-events: none;
+  transition: transform 0.13s, filter 0.18s;
 }
+
+
+/* PANEL ACTIONS - Damage buttons on the left, overlapping */
 .panel-actions {
+  position: absolute;
+  left: -30px;      /* Adjust as needed for horizontal placement */
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  justify-content: center;   /* Center the buttons horizontally */
-  align-items: center;
-  gap: 0.7em;                /* Space between buttons */
-  margin-top: 0.2em;         /* Minimal space above buttons */
-  margin-bottom: 0.1em;      /* Minimal space below buttons */
-  /* Remove any extra padding */
+  flex-direction: column;
+  gap: 0.13em;      /* Tight vertical spacing */
+  z-index: 2;
+  margin: 0;
   padding: 0;
 }
 
-.player-actions, .rival-actions {
-  /* In case you want to target these separately later */
-}
+.player-actions { top: 38%; }  /* Move up or down as needed */
+.rival-actions  { top: 62%; }  /* Move up or down as needed */
 
-.icon-button {
-  /* Keep your icon-button CSS here if you want to further adjust button size */
+/* RESPONSIVENESS */
+@media (max-width: 1200px) {
+  .main-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .counters-container {
+    flex-direction: column;
+  }
+  .hp-panels {
+    flex-direction: row;
+  }
 }
-
