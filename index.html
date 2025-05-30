@@ -9,19 +9,8 @@
     margin: 0; padding: 0; height: 100%;
     font-family: Arial, sans-serif;
   }
-
-  /* App container styles */
-  .app-container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #1c1c1c;
-    color: white;
-    font-size: 2rem;
-  }
-
-  /* Notice styles - hidden by default */
+  
+ /* Notice styles - hidden by default */
   #rotateNotice {
     display: none;
     position: fixed;
@@ -37,6 +26,17 @@
     padding: 2rem;
     z-index: 9999;
   }
+  /* App container styles */
+  .app-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1c1c1c;
+    color: white;
+    font-size: 2rem;
+  }
+ 
 
   /* Show notice & hide app on portrait */
   @media (orientation: portrait) {
