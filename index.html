@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UVS Stats Counter</title>
   <link rel="stylesheet" href="styles/main.css" />
+  <link rel="manifest" href="manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
+
   <div class="main-container">
-    <!-- COUNTERS SECTION -->
+
+    <!-- LEFT: COUNTERS -->
     <div class="counters-container">
+
+      <!-- SPEED COUNTER -->
       <div class="counter-block">
         <button class="plus" onclick="incrementSpeed()">+</button>
         <div class="speed-counter" onclick="cycleSpeedState()">
@@ -19,6 +24,8 @@
         </div>
         <button class="minus" onclick="decrementSpeed()">-</button>
       </div>
+
+      <!-- DAMAGE COUNTER -->
       <div class="counter-block">
         <button class="plus" onclick="incrementDamage()">+</button>
         <div class="damage-counter">
@@ -27,47 +34,59 @@
         </div>
         <button class="minus" onclick="decrementDamage()">-</button>
       </div>
+
     </div>
 
-    <!-- RESET + PANELS SECTION -->
+    <!-- RIGHT: RESET + PANELS -->
     <div class="right-section">
+
+      <!-- RESET BUTTON (positioned absolutely) -->
       <div class="reset-container">
         <button id="resetBtn">
           <img src="icons/block-reset.svg" alt="Reset" />
         </button>
       </div>
+
+      <!-- PANELS -->
       <div class="hp-panels">
+
         <div class="player-panel">
           <h2>Player</h2>
           <div class="score" id="playerScore">25</div>
           <div class="panel-top" onclick="adjustHP('player', 1)"></div>
           <div class="panel-bottom" onclick="adjustHP('player', -1)"></div>
-          <div class="panel-damage-buttons">
-            <button id="fullDamageBtn" class="action-button">
-              <img src="icons/player-full.svg" alt="Full Damage" />
-            </button>
-            <button id="halfDamageBtn" class="action-button">
-              <img src="icons/player-half.svg" alt="Half Damage" />
-            </button>
-          </div>
         </div>
+
         <div class="rival-panel">
           <h2>Rival</h2>
           <div class="score" id="rivalScore">25</div>
           <div class="panel-top" onclick="adjustHP('rival', 1)"></div>
           <div class="panel-bottom" onclick="adjustHP('rival', -1)"></div>
-          <div class="panel-damage-buttons">
-            <button id="fullDamageRivalBtn" class="action-button">
-              <img src="icons/rival-full.svg" alt="Full Damage" />
-            </button>
-            <button id="halfDamageRivalBtn" class="action-button">
-              <img src="icons/rival-half.svg" alt="Half Damage" />
-            </button>
-          </div>
         </div>
+
+        <button id="fullDamageBtn" class="action-button">Full Damage</button>
+        <button id="halfDamageBtn" class="action-button">Half Damage</button>
+        <button id="fullDamageRivalBtn" class="action-button">Full Damage (Rival)</button>
+        <button id="halfDamageRivalBtn" class="action-button">Half Damage (Rival)</button>
+
+
       </div>
+
     </div>
+
   </div>
+
   <script src="scripts/app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('Service worker registered.', reg))
+          .catch(err => console.log('Service worker registration failed.', err));
+      });
+    }
+  </script>
+
 </body>
 </html>
