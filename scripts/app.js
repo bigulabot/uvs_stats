@@ -125,6 +125,25 @@ document.querySelector('.player-panel .panel-bottom').addEventListener('click', 
 document.querySelector('.rival-panel .panel-top').addEventListener('click', () => adjustHP('rival', 1));
 document.querySelector('.rival-panel .panel-bottom').addEventListener('click', () => adjustHP('rival', -1));
 
+// === Full Damage Button Logic ===
+
+const fullDamageBtn = document.getElementById('fullDamageBtn');
+const playerScoreEl = document.getElementById('playerScore');
+const damageCountEl = document.getElementById('damageCount');
+
+fullDamageBtn.addEventListener('click', () => {
+  let playerHp = parseInt(playerScoreEl.textContent, 10);
+  const dmg = parseInt(damageCountEl.textContent, 10);
+
+  // Subtract current damage counter from player HP, floor at 0
+  playerHp = Math.max(playerHp - dmg, 0);
+
+  // Update display and state
+  playerScoreEl.textContent = playerHp;
+  playerHP = playerHp;
+  saveState();
+});
+
 // === Persistent State Storage ===
 
 function saveState() {
