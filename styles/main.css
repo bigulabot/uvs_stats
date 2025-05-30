@@ -164,8 +164,8 @@ button.plus, button.minus {
   border: 3px solid #5d5d5d;
 }
 
-.player-panel { background: #003366; }
-.rival-panel { background: #660000; }
+.player-panel { background: #003070; }
+.rival-panel { background: #830003; }
 
 .player-panel h2,
 .rival-panel h2 {
