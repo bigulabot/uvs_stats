@@ -266,21 +266,21 @@ button.icon-button img {
     padding: 6px;
   }
   .main-container {
-    flex-direction: row;
+    flex-direction: row !important;
     gap: 8px;
     align-items: flex-start;
     width: 100vw;
     justify-content: flex-start;
   }
   .counters-container {
-    flex-direction: row;
+    flex-direction: row !important;
     gap: 8px;
     align-items: flex-start;
     min-width: 120px;
     flex-shrink: 0;
   }
   .right-section {
-    flex-direction: column;
+    flex-direction: column !important;
     gap: 8px;
     margin-left: 0;
     width: auto;
@@ -288,15 +288,8 @@ button.icon-button img {
     align-items: stretch;
     flex: 1 1 0;
   }
-  .reset-container {
-    position: static;
-    transform: none;
-    margin-bottom: 6px;
-    left: 0;
-    top: 0;
-  }
   .hp-panels {
-    flex-direction: column;
+    flex-direction: column !important;
     width: 100%;
     align-items: stretch;
   }
