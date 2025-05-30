@@ -17,10 +17,9 @@ body {
 }
 
 .main-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
   gap: 40px;
 }
 
@@ -116,11 +115,9 @@ button.plus, button.minus {
 /* RIGHT SECTION (PANELS + RESET) */
 .right-section {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   gap: 40px;
-  position: relative;
-  margin-left: 40px; /* Shift whole right section further right */
+  margin-left: 0;
 }
 
 /* RESET BUTTON */
@@ -259,12 +256,11 @@ button.icon-button img {
 
 @media (max-width: 600px) {
   .main-container {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 8px !important;
+    display: grid !important;
+    grid-template-columns: auto 1fr !important;
     align-items: flex-start !important;
+    gap: 8px !important;
     width: 100vw !important;
-    justify-content: flex-start !important;
   }
   .counters-container {
     display: flex !important;
@@ -289,13 +285,6 @@ button.icon-button img {
     flex-direction: column !important;
     width: 100% !important;
     align-items: stretch !important;
-  }
-  .player-panel, .rival-panel {
-    width: 98vw !important;
-    max-width: 340px !important;
-    height: 110px !important;
-    padding: 8px !important;
-    margin: 0 auto !important;
   }
 }
 @media screen and (orientation:portrait) and (max-width: 600px) {
