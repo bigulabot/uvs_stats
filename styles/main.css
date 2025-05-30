@@ -211,36 +211,24 @@ button.plus, button.minus {
     flex-direction: row;
   }
   
-.icon-button {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 0.5em !important;
-  cursor: pointer;
-  outline: none !important;
+button.icon-button {
+  all: unset;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  appearance: none !important;        
-  -webkit-appearance: none !important;
+  cursor: pointer;
+  margin: 0 0.5em;
+  /* Optional: for keyboard accessibility, style focus */
+  /* outline: 2px solid #007bff; */
 }
 
-.icon-button:focus {
-  outline: none !important;
-}
-
-.icon-button img {
+button.icon-button img {
   width: 48px;
   height: 48px;
   display: block;
   pointer-events: none;
 }
 
-/* Remove outline on click for a cleaner look (optional) */
-.icon-button:focus {
-  outline: none;
-}
 
 
 
