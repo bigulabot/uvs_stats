@@ -289,3 +289,53 @@ button.icon-button img {
     z-index: 99999;
   }
 }
+@media (max-width: 950px) and (orientation: landscape) {
+  .main-container {
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+  .counters-container {
+    gap: 8px !important;
+  }
+  .right-section {
+    margin-left: 10px !important;
+    gap: 10px !important;
+  }
+  .player-panel,
+  .rival-panel {
+    width: 110px !important;
+    height: 60px !important;
+    padding: 4px !important;
+    font-size: 11px !important;
+  }
+  .panel-group {
+    margin: 0 auto 0.2em auto !important;
+  }
+  .score {
+    font-size: 19px !important;
+  }
+  .speed-counter,
+  .damage-counter {
+    width: 43px !important;
+    height: 43px !important;
+  }
+  button.plus,
+  button.minus {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 18px !important;
+  }
+  .reset-container img {
+    width: 33px !important;
+    height: 33px !important;
+  }
+  button.icon-button img {
+    width: 23px !important;
+    height: 23px !important;
+  }
+  .panel-actions {
+    left: -10px !important;
+    gap: 0.06em !important;
+  }
+}
+
