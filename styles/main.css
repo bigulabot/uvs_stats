@@ -233,3 +233,29 @@ body, html {
     height: 60px;
   }
 }
+/* Orientation notice styles */
+#rotateNotice {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #222;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 1000;
+}
+
+/* Hide app container and show notice when in portrait */
+@media (orientation: portrait) {
+  .app-container {
+    display: none;
+  }
+  #rotateNotice {
+    display: flex;
+  }
+}
