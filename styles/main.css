@@ -5,15 +5,22 @@
   font-family: 'Poppins', sans-serif;
 }
 
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevent scrolling */
+}
+
 body {
   background-color: #000;
   color: #fff;
   height: 100vh;
-  width: 100%;
+  width: 100vw; /* Ensure the body fills the viewport */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
 }
 
 .main-container {
@@ -131,13 +138,22 @@ button.plus, button.minus {
   margin-left: 0;
   width: 100%; /* Fill the grid area */
   height: 100%; /* Match the height of the main-container */
+  position: relative; /* Ensure child elements like reset-container are positioned relative to this */
+}
+
+.panel-group {
+  width: 100%; /* Stretch to match the width of right-section */
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* RESET BUTTON */
 .reset-container {
-  position: absolute;
-  left: -36px; /* or 0 if you want it flush */
-  top: 50%;
+  position: absolute; /* Position relative to the right-section */
+  right: 20px; /* Align to the right edge of the right-section */
+  top: 50%; /* Center vertically within the right-section */
   transform: translateY(-50%);
   z-index: 10;
 }
@@ -160,12 +176,12 @@ button.plus, button.minus {
   flex-direction: column; /* Panels stack vertically within the right section */
   align-items: center;
   gap: 20px;
-  width: 100%; /* Use the full width */
+  width: 100%; /* Stretch to fit the panel-group */
 }
 
 .panel-group {
   position: relative;
-  width: fit-content;
+  width: 100%; /* Ensure the panel group takes full width */
   margin: 0 auto; /* Center horizontally */
   display: flex;
   align-items: center;
