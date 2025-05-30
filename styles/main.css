@@ -230,4 +230,22 @@ button.icon-button img {
   display: block;
   pointer-events: none;
 }
+.panel-actions {
+  display: flex;
+  justify-content: center;   /* Center the buttons horizontally */
+  align-items: center;
+  gap: 0.7em;                /* Space between buttons */
+  margin-top: 0.2em;         /* Minimal space above buttons */
+  margin-bottom: 0.1em;      /* Minimal space below buttons */
+  /* Remove any extra padding */
+  padding: 0;
+}
+
+.player-actions, .rival-actions {
+  /* In case you want to target these separately later */
+}
+
+.icon-button {
+  /* Keep your icon-button CSS here if you want to further adjust button size */
+}
 
