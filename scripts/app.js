@@ -1,5 +1,13 @@
-// === Speed Counter Logic ===
+// === DOM ELEMENTS ===
+const playerScoreEl = document.getElementById("playerScore");
+const rivalScoreEl = document.getElementById("rivalScore");
+const damageCountEl = document.getElementById("damageCount");
+const fullDamageBtn = document.getElementById("fullDamageBtn");
+const halfDamageBtn = document.getElementById("halfDamageBtn");
+const fullDamageRivalBtn = document.getElementById("fullDamageRivalBtn");
+const halfDamageRivalBtn = document.getElementById("halfDamageRivalBtn");
 
+// === Speed Counter Logic ===
 let speedCount = 0;
 let speedState = 0;
 const speedStates = ["Off", "High", "Mid", "Low"];
@@ -38,11 +46,10 @@ function cycleSpeedState() {
 }
 
 // === Damage Counter Logic ===
-
 let damageCount = 0;
 
 function updateDamageCounter() {
-  document.getElementById("damageCount").innerText = damageCount;
+  damageCountEl.innerText = damageCount;
   saveState();
 }
 
@@ -57,13 +64,12 @@ function decrementDamage() {
 }
 
 // === HP Panels Logic ===
-
 let playerHP = 25;
 let rivalHP = 25;
 
 function updateHP() {
-  document.getElementById("playerScore").innerText = playerHP;
-  document.getElementById("rivalScore").innerText = rivalHP;
+  playerScoreEl.innerText = playerHP;
+  rivalScoreEl.innerText = rivalHP;
   saveState();
 }
 
@@ -77,7 +83,6 @@ function adjustHP(player, amount) {
 }
 
 // === Reset Button Logic ===
-
 let resetHoldTimeout = null;
 
 document.getElementById("resetBtn").addEventListener("mousedown", () => {
@@ -118,102 +123,68 @@ function fullReset() {
 }
 
 // === HP Panel Click Handlers ===
-
 document.querySelector('.player-panel .panel-top').addEventListener('click', () => adjustHP('player', 1));
 document.querySelector('.player-panel .panel-bottom').addEventListener('click', () => adjustHP('player', -1));
 
 document.querySelector('.rival-panel .panel-top').addEventListener('click', () => adjustHP('rival', 1));
 document.querySelector('.rival-panel .panel-bottom').addEventListener('click', () => adjustHP('rival', -1));
 
-// FULL DAMAGE BUTTON
+// === Full/Half Damage Buttons ===
+// Player: Full Damage
 fullDamageBtn.addEventListener('click', () => {
   let playerHp = parseInt(playerScoreEl.textContent, 10);
   const dmg = parseInt(damageCountEl.textContent, 10);
 
-  // Subtract full damage
   playerHp = Math.max(playerHp - dmg, 0);
+  quickReset();
 
-  // Reset speed, damage, and state (short reset)
-  speedCount = 0;
-  damageCount = 0;
-  speedState = 0;
-  updateSpeedCounter();
-  updateDamageCounter();
-
-  // Update HP and save
   playerScoreEl.textContent = playerHp;
   playerHP = playerHp;
   saveState();
 });
 
-// HALF DAMAGE BUTTON
+// Player: Half Damage
 halfDamageBtn.addEventListener('click', () => {
   let playerHp = parseInt(playerScoreEl.textContent, 10);
   const dmg = parseInt(damageCountEl.textContent, 10);
   const half = Math.ceil(dmg / 2);
 
-  // Subtract half damage
   playerHp = Math.max(playerHp - half, 0);
+  quickReset();
 
-  // Reset speed, damage, and state (short reset)
-  speedCount = 0;
-  damageCount = 0;
-  speedState = 0;
-  updateSpeedCounter();
-  updateDamageCounter();
-
-  // Update HP and save
   playerScoreEl.textContent = playerHp;
   playerHP = playerHp;
   saveState();
 });
-// FULL DAMAGE RIVAL BUTTON
-document.getElementById('fullDamageRivalBtn').addEventListener('click', () => {
+
+// Rival: Full Damage
+fullDamageRivalBtn.addEventListener('click', () => {
   let rivalHp = parseInt(rivalScoreEl.textContent, 10);
   const dmg = parseInt(damageCountEl.textContent, 10);
 
-  // Subtract full damage
   rivalHp = Math.max(rivalHp - dmg, 0);
+  quickReset();
 
-  // Reset speed, damage, and state (short reset)
-  speedCount = 0;
-  damageCount = 0;
-  speedState = 0;
-  updateSpeedCounter();
-  updateDamageCounter();
-
-  // Update HP and save
   rivalScoreEl.textContent = rivalHp;
   rivalHP = rivalHp;
   saveState();
 });
 
-// HALF DAMAGE RIVAL BUTTON
-document.getElementById('halfDamageRivalBtn').addEventListener('click', () => {
+// Rival: Half Damage
+halfDamageRivalBtn.addEventListener('click', () => {
   let rivalHp = parseInt(rivalScoreEl.textContent, 10);
   const dmg = parseInt(damageCountEl.textContent, 10);
   const half = Math.ceil(dmg / 2);
 
-  // Subtract half damage
   rivalHp = Math.max(rivalHp - half, 0);
+  quickReset();
 
-  // Reset speed, damage, and state (short reset)
-  speedCount = 0;
-  damageCount = 0;
-  speedState = 0;
-  updateSpeedCounter();
-  updateDamageCounter();
-
-  // Update HP and save
   rivalScoreEl.textContent = rivalHp;
   rivalHP = rivalHp;
   saveState();
 });
 
-
-
 // === Persistent State Storage ===
-
 function saveState() {
   const state = {
     speedCount,
@@ -238,7 +209,6 @@ function loadState() {
 }
 
 // === Init ===
-
 window.onload = function() {
   loadState();
   updateSpeedCounter();
