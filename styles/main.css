@@ -22,6 +22,7 @@ body, html {
   max-width: 1200px;
   height: 70vh;
   gap: 2vw;
+  flex-wrap: nowrap;
 }
 
 /* Counters container */
@@ -57,7 +58,7 @@ body, html {
 .counter-number {
   position: absolute;
   top: 50%;
-  left: 55%; /* shifted right for speed */
+  left: 55%;
   transform: translate(-50%, -50%);
   font-size: 2.5rem;
   font-weight: bold;
@@ -176,63 +177,6 @@ body, html {
   width: 100%;
 }
 
-/* Highlight for top and bottom halves when pressed */
-.panel:active .top-highlight,
-.panel:active .bottom-highlight {
-  background: linear-gradient(90deg, rgba(255,255,255,0.15), transparent);
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  left: 0;
-  pointer-events: none;
-  border-radius: 12px;
-  z-index: 2;
-}
-
-/* Media queries for smaller screens */
-@media (max-width: 600px) {
-  .app-container {
-    flex-direction: column;
-    height: auto;
-    width: 95vw;
-    gap: 3vh;
-  }
-  .counters {
-    width: 100%;
-    justify-content: center;
-  }
-  .counter {
-    width: 120px;
-    height: 120px;
-  }
-  .counter img {
-    width: 80px;
-    height: 80px;
-  }
-  .counter-number {
-    font-size: 2rem;
-  }
-  .btn {
-    width: 28px;
-    height: 28px;
-    font-size: 1.5rem;
-  }
-  .panels {
-    flex-direction: row;
-    gap: 1vw;
-  }
-  .panel {
-    width: 100px;
-    height: 140px;
-  }
-  .hp-count {
-    font-size: 3rem;
-  }
-  .reset-button {
-    width: 60px;
-    height: 60px;
-  }
-  
 /* Orientation notice styles */
 #rotateNotice {
   display: none;
@@ -253,9 +197,74 @@ body, html {
 /* Hide app container and show notice when in portrait */
 @media (orientation: portrait) {
   .app-container {
-    display: none;
+    display: none !important;
   }
   #rotateNotice {
-    display: flex;
+    display: flex !important;
+  }
+}
+
+/* Responsive scaling for smaller widths, keeping horizontal */
+@media (max-width: 600px) {
+  .app-container {
+    width: 100vw;
+    gap: 1vw;
+  }
+
+  .counter {
+    width: 110px;
+    height: 110px;
+  }
+
+  .counter img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .counter-number {
+    font-size: 1.8rem;
+    left: 55%;
+  }
+
+  .btn {
+    width: 26px;
+    height: 26px;
+    font-size: 1.4rem;
+  }
+
+  #speedPlus, #speedMinus {
+    left: 18% !important;
+  }
+
+  .damage-counter .increment {
+    right: 12% !important;
+  }
+  .damage-counter .decrement {
+    right: 12% !important;
+  }
+
+  .reset-button {
+    width: 55px;
+    height: 55px;
+    margin: 0 0.5vw;
+  }
+
+  .panels {
+    flex-direction: column;
+    gap: 1.5vh;
+    min-width: 100px;
+  }
+
+  .panel {
+    width: 100px;
+    height: 140px;
+  }
+
+  .hp-count {
+    font-size: 3rem;
+  }
+
+  .panel-label {
+    font-size: 1rem;
   }
 }
