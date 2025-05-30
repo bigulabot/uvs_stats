@@ -1,0 +1,306 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 40px;
+}
+
+.counters-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* COUNTERS */
+.counter-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+/* PLUS/MINUS Buttons */
+button.plus, button.minus {
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #555;
+  color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Move Speed counter +/- buttons slightly right */
+.counter-block:first-child button.plus,
+.counter-block:first-child button.minus {
+  left: -20px;
+}
+
+/* SPEED COUNTER */
+.speed-counter {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  cursor: pointer;
+}
+
+.speed-counter img {
+  width: 100%;
+  height: 100%;
+}
+
+.speed-counter .counter-value {
+  position: absolute;
+  top: 50%;
+  left: 36%;
+  transform: translate(-45%, -50%);
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
+    2px 2px 0 #000;
+}
+
+/* DAMAGE COUNTER */
+.damage-counter {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.damage-star {
+  width: 100%;
+  height: 100%;
+}
+
+.damage-counter .counter-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
+    2px 2px 0 #000;
+}
+
+/* RIGHT SECTION (PANELS + RESET) */
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-left: 0;
+  position: relative; /* Add this */
+}
+
+/* RESET BUTTON */
+.reset-container {
+  position: absolute;
+  left: -36px; /* or 0 if you want it flush */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.reset-container button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.reset-container img {
+  width: 72px;
+  height: 72px;
+}
+
+
+/* HP PANELS */
+.hp-panels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.panel-group {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-panel, .rival-panel {
+  position: relative;
+  width: 240px;
+  height: 150px;
+  border-radius: 20px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 3px solid #5d5d5d;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+
+.player-panel { background: #003070; }
+.rival-panel { background: #830003; }
+
+.player-panel h2,
+.rival-panel h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.score {
+  font-size: 60px;
+  font-weight: bold;
+  text-shadow: 
+    -2px -2px 0 #000,  
+    2px -2px 0 #000,  
+    -2px 2px 0 #000,  
+    2px 2px 0 #000;
+}
+
+/* PANEL TOUCH ZONES */
+.panel-top, .panel-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.panel-top { top: 0; }
+.panel-bottom { bottom: 0; }
+
+/* ICON BUTTONS */
+button.icon-button {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 0.5em;
+  border-radius: 12px;
+  /* Optional: focus style for accessibility */
+  /* outline: 2px solid #ffe95c; */
+}
+
+button.icon-button img {
+  width: 48px;
+  height: 48px;
+  display: block;
+  pointer-events: none;
+  transition: transform 0.13s, filter 0.18s;
+}
+
+
+/* PANEL ACTIONS - Damage buttons on the left, overlapping */
+.panel-actions {
+  position: absolute;
+  left: -30px;      /* Adjust as needed for horizontal placement */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.13em;      /* Tight vertical spacing */
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+}
+
+.player-actions { top: 38%; }  /* Move up or down as needed */
+.rival-actions  { top: 62%; }  /* Move up or down as needed */
+
+/* RESPONSIVENESS */
+@media (max-width: 1200px) {
+  .main-container {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    display: grid !important;
+    grid-template-columns: auto 1fr !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    width: 100vw !important;
+  }
+  .counters-container {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    align-items: flex-start !important;
+    min-width: 120px !important;
+    flex-shrink: 0 !important;
+  }
+  .right-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-left: 0 !important;
+    width: auto !important;
+    position: static !important;
+    align-items: stretch !important;
+    flex: 1 1 0 !important;
+  }
+  .hp-panels {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    align-items: stretch !important;
+  }
+}
+@media screen and (orientation:portrait) and (max-width: 600px) {
+  body::before {
+    content: "Please rotate your device to landscape mode for the best experience.";
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #000;
+    color: #fff;
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2em;
+  }
+  .main-container {
+    display: none !important;
+  }
+}
