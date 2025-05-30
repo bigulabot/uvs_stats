@@ -133,7 +133,7 @@ document.querySelector('.rival-panel .panel-bottom').addEventListener('click', (
 // Player: Full Damage
 fullDamageBtn.addEventListener('click', () => {
   let playerHp = parseInt(playerScoreEl.textContent, 10);
-  const dmg = parseInt(damageCountEl.textContent, 10);
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
 
   playerHp = Math.max(playerHp - dmg, 0);
   quickReset();
@@ -146,7 +146,7 @@ fullDamageBtn.addEventListener('click', () => {
 // Player: Half Damage
 halfDamageBtn.addEventListener('click', () => {
   let playerHp = parseInt(playerScoreEl.textContent, 10);
-  const dmg = parseInt(damageCountEl.textContent, 10);
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const half = Math.ceil(dmg / 2);
 
   playerHp = Math.max(playerHp - half, 0);
@@ -160,7 +160,7 @@ halfDamageBtn.addEventListener('click', () => {
 // Rival: Full Damage
 fullDamageRivalBtn.addEventListener('click', () => {
   let rivalHp = parseInt(rivalScoreEl.textContent, 10);
-  const dmg = parseInt(damageCountEl.textContent, 10);
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
 
   rivalHp = Math.max(rivalHp - dmg, 0);
   quickReset();
@@ -173,7 +173,7 @@ fullDamageRivalBtn.addEventListener('click', () => {
 // Rival: Half Damage
 halfDamageRivalBtn.addEventListener('click', () => {
   let rivalHp = parseInt(rivalScoreEl.textContent, 10);
-  const dmg = parseInt(damageCountEl.textContent, 10);
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const half = Math.ceil(dmg / 2);
 
   rivalHp = Math.max(rivalHp - half, 0);
@@ -183,6 +183,7 @@ halfDamageRivalBtn.addEventListener('click', () => {
   rivalHP = rivalHp;
   saveState();
 });
+
 
 // === Persistent State Storage ===
 function saveState() {
