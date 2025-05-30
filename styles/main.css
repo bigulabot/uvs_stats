@@ -24,7 +24,6 @@ body {
   gap: 40px;
 }
 
-/* COUNTERS */
 .counters-container {
   display: flex;
   flex-direction: row;
@@ -33,6 +32,7 @@ body {
   justify-content: center;
 }
 
+/* COUNTERS */
 .counter-block {
   display: flex;
   flex-direction: column;
@@ -250,11 +250,7 @@ button.icon-button img {
 /* RESPONSIVENESS */
 @media (max-width: 1200px) {
   .main-container {
-    flex-direction: column;
     gap: 30px;
-  }
-  .counters-container {
-    flex-direction: column;
   }
   .hp-panels {
     flex-direction: row;
