@@ -144,6 +144,22 @@ fullDamageBtn.addEventListener('click', () => {
   saveState();
 });
 
+const halfDamageBtn = document.getElementById('halfDamageBtn');
+
+halfDamageBtn.addEventListener('click', () => {
+  let playerHp = parseInt(playerScoreEl.textContent, 10);
+  const dmg = parseInt(damageCountEl.textContent, 10);
+  const half = Math.ceil(dmg / 2);
+
+  // Subtract half the damage counter (rounded up), min 0
+  playerHp = Math.max(playerHp - half, 0);
+
+  playerScoreEl.textContent = playerHp;
+  playerHP = playerHp;
+  saveState();
+});
+
+
 // === Persistent State Storage ===
 
 function saveState() {
