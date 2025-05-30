@@ -262,10 +262,8 @@ button.icon-button img {
 }
 
 @media (max-width: 600px) {
-  body {
-    padding: 6px;
-  }
   .main-container {
+    display: flex !important;
     flex-direction: row !important;
     gap: 8px;
     align-items: flex-start;
@@ -273,6 +271,7 @@ button.icon-button img {
     justify-content: flex-start;
   }
   .counters-container {
+    display: flex !important;
     flex-direction: row !important;
     gap: 8px;
     align-items: flex-start;
@@ -280,6 +279,7 @@ button.icon-button img {
     flex-shrink: 0;
   }
   .right-section {
+    display: flex !important;
     flex-direction: column !important;
     gap: 8px;
     margin-left: 0;
@@ -289,6 +289,7 @@ button.icon-button img {
     flex: 1 1 0;
   }
   .hp-panels {
+    display: flex !important;
     flex-direction: column !important;
     width: 100%;
     align-items: stretch;
