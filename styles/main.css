@@ -260,3 +260,57 @@ button.icon-button img {
     flex-direction: row;
   }
 }
+@media (max-width: 800px) {
+  .main-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .right-section {
+    margin-left: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .counters-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .hp-panels {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .player-panel,
+  .rival-panel {
+    width: 98vw;
+    max-width: 340px;
+    min-width: 160px;
+    height: 90px;
+    padding: 8px;
+    font-size: 14px;
+  }
+  .score {
+    font-size: 32px;
+  }
+  .speed-counter,
+  .damage-counter {
+    width: 68px;
+    height: 68px;
+  }
+  .panel-actions {
+    left: -8px;
+    gap: 0.07em;
+  }
+}
+
+@media (max-width: 450px) {
+  .player-panel,
+  .rival-panel {
+    width: 99vw;
+    max-width: 99vw;
+    min-width: 0;
+    padding: 4px;
+  }
+  .score {
+    font-size: 24px;
+  }
+}
