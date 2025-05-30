@@ -21,6 +21,15 @@ body {
   align-items: center;
   padding: 0; /* Remove padding */
   margin: 0; /* Remove margin */
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Disable text selection for Safari */
+  -ms-user-select: none; /* Disable text selection for IE/Edge */
+  overscroll-behavior: none; /* Disable pull-to-refresh */
+}
+
+img {
+  user-select: none; /* Disable image selection */
+  pointer-events: none; /* Prevent interaction with images */
 }
 
 .main-container {
