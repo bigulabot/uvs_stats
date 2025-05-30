@@ -2,85 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UVS Stats Counter</title>
-  <link rel="stylesheet" href="styles/main.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UVS Stats Counter Responsive</title>
+  <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-
-  <div class="main-container">
-
-    <!-- LEFT: COUNTERS -->
-    <div class="counters-container">
-
-      <!-- SPEED COUNTER -->
-      <div class="counter-block">
-        <button class="plus" onclick="incrementSpeed()">+</button>
-        <div class="speed-counter" onclick="cycleSpeedState()">
-          <img id="speedIcon" src="icons/Off.svg" alt="Speed Counter" />
-          <div class="counter-value" id="speedCount">0</div>
-        </div>
-        <button class="minus" onclick="decrementSpeed()">-</button>
+  <div class="app-container">
+    <div class="counters">
+      <div class="counter speed-counter">
+        <img id="speedIcon" src="Off.svg" alt="Speed Icon" />
+        <div id="speedCount" class="counter-number">0</div>
+        <button class="btn increment" id="speedPlus">+</button>
+        <button class="btn decrement" id="speedMinus">−</button>
       </div>
-
-      <!-- DAMAGE COUNTER -->
-      <div class="counter-block">
-        <button class="plus" onclick="incrementDamage()">+</button>
-        <div class="damage-counter">
-          <img src="icons/yellow-star.svg" class="damage-star" />
-          <div class="counter-value" id="damageCount">0</div>
-        </div>
-        <button class="minus" onclick="decrementDamage()">-</button>
+      <div class="counter damage-counter">
+        <img id="damageIcon" src="Off.svg" alt="Damage Icon" />
+        <div id="damageCount" class="counter-number">0</div>
+        <button class="btn increment" id="damagePlus">+</button>
+        <button class="btn decrement" id="damageMinus">−</button>
       </div>
-
     </div>
-
-    <!-- RIGHT: RESET + PANELS -->
-    <div class="right-section">
-
-      <!-- RESET BUTTON (positioned absolutely) -->
-      <div class="reset-container">
-        <button id="resetBtn">
-          <img src="icons/block-reset.svg" alt="Reset" />
-        </button>
+    <button id="resetBtn" class="reset-button" aria-label="Reset">
+      <img src="block-reset.svg" alt="Reset" />
+    </button>
+    <div class="panels">
+      <div id="playerPanel" class="panel">
+        <div class="panel-label">Player</div>
+        <div class="hp-count" id="playerHp">25</div>
       </div>
-
-      <!-- PANELS -->
-      <div class="hp-panels">
-
-        <div class="player-panel">
-          <h2>Player</h2>
-          <div class="score" id="playerScore">25</div>
-          <div class="panel-top" onclick="adjustHP('player', 1)"></div>
-          <div class="panel-bottom" onclick="adjustHP('player', -1)"></div>
-        </div>
-
-        <div class="rival-panel">
-          <h2>Rival</h2>
-          <div class="score" id="rivalScore">25</div>
-          <div class="panel-top" onclick="adjustHP('rival', 1)"></div>
-          <div class="panel-bottom" onclick="adjustHP('rival', -1)"></div>
-        </div>
-
+      <div id="rivalPanel" class="panel">
+        <div class="panel-label">Rival</div>
+        <div class="hp-count" id="rivalHp">25</div>
       </div>
-
     </div>
-
   </div>
 
-  <script src="scripts/app.js"></script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(reg => console.log('Service worker registered.', reg))
-          .catch(err => console.log('Service worker registration failed.', err));
-      });
-    }
-  </script>
-
+  <script src="app.js"></script>
 </body>
 </html>
