@@ -212,24 +212,29 @@ button.plus, button.minus {
   }
   
 .icon-button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0 0.5em;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0.5em !important;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* Optional: For accessibility/focus style */
-  /* box-shadow: 0 0 0 2px #00f inset; */
+  appearance: none !important;        
+  -webkit-appearance: none !important;
+}
+
+.icon-button:focus {
+  outline: none !important;
 }
 
 .icon-button img {
-  width: 48px;   /* Set your preferred icon size */
+  width: 48px;
   height: 48px;
   display: block;
-  pointer-events: none; /* So only the button is clickable, not the img inside */
+  pointer-events: none;
 }
 
 /* Remove outline on click for a cleaner look (optional) */
