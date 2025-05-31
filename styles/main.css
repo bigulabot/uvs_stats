@@ -259,11 +259,14 @@ button.icon-button img {
   font-style: italic;
   font-weight: bold;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.5s;   /* <--- fade time (0.5s is smooth) */
   pointer-events: none;
   text-shadow: 0 0 8px #222;
   font-size: 1.1em;
   line-height: 1;
+  display: inline-block;
+  min-width: 2.5em;
+  text-align: left;
 }
 
 
