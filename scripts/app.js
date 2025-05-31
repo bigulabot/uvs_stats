@@ -73,15 +73,6 @@ function updateHP() {
   saveState();
 }
 
-function adjustHP(player, amount) {
-  if (player === 'player') {
-    playerHP = Math.max(0, playerHP + amount);
-  } else {
-    rivalHP = Math.max(0, rivalHP + amount);
-  }
-  updateHP();
-}
-
 // === Session State for Increment Display (per panel) ===
 const hpSessionState = {
   player: {
@@ -99,7 +90,7 @@ const hpSessionState = {
 };
 
 // === Session Logic Helper ===
-function handleHPSession(player, newValue) {
+function handleHPSession(player, newValue, forceNewSession = false) {
   const state = hpSessionState[player];
   const panel = document.querySelector(`.${player}-panel`);
   let now = Date.now();
@@ -108,16 +99,19 @@ function handleHPSession(player, newValue) {
   if (!state.incrementDisplay) {
     state.incrementDisplay = document.createElement('span');
     state.incrementDisplay.className = 'increment-display';
+    // Inline styling, white italic
     state.incrementDisplay.style.position = 'static';
     state.incrementDisplay.style.display = 'inline-block';
     state.incrementDisplay.style.marginLeft = '0.5em';
     state.incrementDisplay.style.verticalAlign = 'middle';
-    state.incrementDisplay.style.color = '#11d611';
-    state.incrementDisplay.style.textShadow = '0 0 4px #222';
+    state.incrementDisplay.style.color = '#fff';
+    state.incrementDisplay.style.fontStyle = 'italic';
     state.incrementDisplay.style.fontWeight = 'bold';
     state.incrementDisplay.style.zIndex = '2';
     state.incrementDisplay.style.opacity = 0;
     state.incrementDisplay.style.transition = 'opacity 0.3s';
+    state.incrementDisplay.style.pointerEvents = 'none';
+    state.incrementDisplay.style.textShadow = '0 0 8px #222';
     // Insert after the score span
     const hpSpan = panel.querySelector('span');
     if (hpSpan && hpSpan.nextSibling) {
@@ -129,11 +123,12 @@ function handleHPSession(player, newValue) {
     }
   }
 
-  // New session if paused too long or no baseValue
+  // New session if paused too long or no baseValue or forced
   if (
     state.baseValue === null ||
     !state.lastActionTime ||
-    (now - state.lastActionTime > 700)
+    (now - state.lastActionTime > 700) ||
+    forceNewSession
   ) {
     state.baseValue = newValue;
   }
@@ -152,16 +147,27 @@ function handleHPSession(player, newValue) {
   }, 700);
 }
 
-// === HP Panel Click Handlers (no hold, just click/tap with session reporting) ===
+// === Adjust HP and show increment display (ALL sources: panel taps, buttons) ===
+function adjustHPAndShow(player, amount, forceNewSession = false) {
+  if (player === 'player') {
+    playerHP = Math.max(0, playerHP + amount);
+    updateHP();
+    handleHPSession('player', playerHP, forceNewSession);
+  } else {
+    rivalHP = Math.max(0, rivalHP + amount);
+    updateHP();
+    handleHPSession('rival', rivalHP, forceNewSession);
+  }
+}
+
+// === HP Panel Click Handlers ===
 function setupPanelButton(panelSelector, player, amount) {
   const el = document.querySelector(panelSelector);
   el.addEventListener('click', () => {
-    adjustHP(player, amount);
-    handleHPSession(player, player === 'player' ? playerHP : rivalHP);
+    adjustHPAndShow(player, amount);
   });
   el.addEventListener('touchend', () => {
-    adjustHP(player, amount);
-    handleHPSession(player, player === 'player' ? playerHP : rivalHP);
+    adjustHPAndShow(player, amount);
   });
 }
 setupPanelButton('.player-panel .panel-top', 'player', 1);
@@ -170,54 +176,47 @@ setupPanelButton('.rival-panel .panel-top', 'rival', 1);
 setupPanelButton('.rival-panel .panel-bottom', 'rival', -1);
 
 // === Full/Half Damage Buttons with session-based increment display ===
-// Player: Full Damage
+// (NOTE: Always participate in current session, do not force a new session)
 fullDamageBtn.addEventListener('click', () => {
   let oldHp = playerHP;
-  let dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   let newHp = Math.max(oldHp - dmg, 0);
   quickReset();
-  playerScoreEl.textContent = newHp;
   playerHP = newHp;
-  saveState();
-  handleHPSession('player', newHp);
+  updateHP();
+  handleHPSession('player', playerHP);
 });
 
-// Player: Half Damage
 halfDamageBtn.addEventListener('click', () => {
   let oldHp = playerHP;
-  let dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  let half = Math.ceil(dmg / 2);
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const half = Math.ceil(dmg / 2);
   let newHp = Math.max(oldHp - half, 0);
   quickReset();
-  playerScoreEl.textContent = newHp;
   playerHP = newHp;
-  saveState();
-  handleHPSession('player', newHp);
+  updateHP();
+  handleHPSession('player', playerHP);
 });
 
-// Rival: Full Damage
 fullDamageRivalBtn.addEventListener('click', () => {
   let oldHp = rivalHP;
-  let dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   let newHp = Math.max(oldHp - dmg, 0);
   quickReset();
-  rivalScoreEl.textContent = newHp;
   rivalHP = newHp;
-  saveState();
-  handleHPSession('rival', newHp);
+  updateHP();
+  handleHPSession('rival', rivalHP);
 });
 
-// Rival: Half Damage
 halfDamageRivalBtn.addEventListener('click', () => {
   let oldHp = rivalHP;
-  let dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  let half = Math.ceil(dmg / 2);
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const half = Math.ceil(dmg / 2);
   let newHp = Math.max(oldHp - half, 0);
   quickReset();
-  rivalScoreEl.textContent = newHp;
   rivalHP = newHp;
-  saveState();
-  handleHPSession('rival', newHp);
+  updateHP();
+  handleHPSession('rival', rivalHP);
 });
 
 // === Reset Button Logic ===
