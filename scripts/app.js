@@ -22,22 +22,23 @@ function updateHP() {
 
 // === INCREMENT DISPLAY (always fades out) ===
 function showIncrementDisplay(player, diff) {
-  const row = document.querySelector(`.${player}-panel .hp-row`);
-  let incrementDisplay = row.querySelector('.increment-display');
+  // Find the .score span inside the correct panel
+  const score = document.querySelector(`.${player}-panel .score`);
+  let incrementDisplay = score.querySelector('.increment-display');
   if (!incrementDisplay) {
     incrementDisplay = document.createElement('span');
     incrementDisplay.className = 'increment-display';
-    score.appendChild(incrementDisplay);
+    score.appendChild(incrementDisplay); // <--- fixed!
   }
   incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
   incrementDisplay.style.opacity = 1;
 
-  // Always fade out after SESSION_TIMEOUT
   clearTimeout(incrementDisplay._fadeTimeout);
   incrementDisplay._fadeTimeout = setTimeout(() => {
     incrementDisplay.style.opacity = 0;
   }, SESSION_TIMEOUT);
 }
+
 
 // === SESSION LOGIC (handles session counting for panel taps) ===
 const hpSessionState = {
