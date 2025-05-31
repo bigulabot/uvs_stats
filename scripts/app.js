@@ -30,7 +30,7 @@ function showIncrementDisplay(player, diff) {
     row.appendChild(incrementDisplay);
   }
   incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
-  incrementDisplay.style.opacity = diff !== 0 ? 1 : 0;
+  incrementDisplay.style.opacity = 1;
 
   // Always fade out after SESSION_TIMEOUT
   clearTimeout(incrementDisplay._fadeTimeout);
