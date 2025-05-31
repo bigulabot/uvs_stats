@@ -91,24 +91,38 @@ setupPanelButton('.rival-panel .panel-bottom', 'rival', -1);
 // === FULL/HALF DAMAGE BUTTONS ===
 fullDamageBtn.addEventListener('click', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  adjustHPAndShow('player', -dmg);
+  playerHP = Math.max(0, playerHP - dmg);     // Change HP directly
+  updateHP();                                 // Refresh display
+  showIncrementDisplay('player', -dmg);       // Show -dmg in increment display
   quickReset();
 });
+
 halfDamageBtn.addEventListener('click', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  adjustHPAndShow('player', -Math.ceil(dmg / 2));
+  const applied = -Math.ceil(dmg / 2);
+  playerHP = Math.max(0, playerHP + applied); // (applied is negative)
+  updateHP();
+  showIncrementDisplay('player', applied);
   quickReset();
 });
+
 fullDamageRivalBtn.addEventListener('click', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  adjustHPAndShow('rival', -dmg);
+  rivalHP = Math.max(0, rivalHP - dmg);
+  updateHP();
+  showIncrementDisplay('rival', -dmg);
   quickReset();
 });
+
 halfDamageRivalBtn.addEventListener('click', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  adjustHPAndShow('rival', -Math.ceil(dmg / 2));
+  const applied = -Math.ceil(dmg / 2);
+  rivalHP = Math.max(0, rivalHP + applied);
+  updateHP();
+  showIncrementDisplay('rival', applied);
   quickReset();
 });
+
 
 // === DAMAGE & SPEED LOGIC, STORAGE, RESET, ETC. ===
 let speedCount = 0;
