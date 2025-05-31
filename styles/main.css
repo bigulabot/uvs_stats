@@ -250,25 +250,27 @@ button.icon-button img {
 /* HP INCREMENT DISPLAYS
 .hp-row {
   display: flex;
-  align-items: center;
+  align-items: center;      /* Vertical center */
   justify-content: flex-start;
 }
+
+
 .increment-display {
-  margin-left: 0.5em;
+  margin-left: 0.7em;       /* Space between HP and increment */
   color: #fff;
   font-style: italic;
   font-weight: bold;
   opacity: 0;
-  transition: opacity 0.5s;   /* <--- fade time (0.5s is smooth) */
+  transition: opacity 0.5s;
   pointer-events: none;
   text-shadow: 0 0 8px #222;
-  font-size: 1.1em;
+  font-size: 2vw;           /* Smaller, but vertically centered */
   line-height: 1;
   display: inline-block;
-  min-width: 2.5em;
+  min-width: 1.5em;
   text-align: left;
+  
 }
-
 
 
 
