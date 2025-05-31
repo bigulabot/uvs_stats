@@ -254,28 +254,25 @@ button.icon-button img {
 .hp-row {
   position: relative;
   display: flex;
-  align-items: center;      /* Vertical center */
-  justify-content: center;
+  align-items: center;      /* Vertically center children */
+  justify-content: center;  /* Center them as a unit */
   height: 100%;
+  gap: 0.7em;               /* Add gap for spacing */
 }
 
 .increment-display {
-  position: absolute;
-  left: 100%;                 /* Tweak as needed—places it to the right of center */
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 0.5em;
+  /* Remove position: absolute, left, top, transform, margin-left */
   color: #fff;
   font-style: italic;
+  font-weight: bold;
   opacity: 0;
   transition: opacity 1s;
   pointer-events: none;
   text-shadow: 0 0 8px #222;
-  font-size: 1vw;          
+  font-size: 1vw;           /* Adjust size as you like */
   line-height: 1;
   min-width: 1.5em;
   text-align: left;
-  
 }
 
 
