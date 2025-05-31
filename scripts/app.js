@@ -64,18 +64,32 @@ function handleHPSession(player, newValue) {
   }, SESSION_TIMEOUT);
 }
 
-// === HP ADJUSTMENT & SESSION UPDATE (all sources) ===
+// === HP ADJUSTMENT & SESSION UPDATE  ===
 function adjustHPAndShow(player, amount) {
   if (player === 'player') {
+    const prev = playerHP; // store previous value
     playerHP = Math.max(0, playerHP + amount);
     updateHP();
-    handleHPSession('player', playerHP);
+    handleHPSession('player', playerHP, prev);
   } else {
+    const prev = rivalHP;
     rivalHP = Math.max(0, rivalHP + amount);
     updateHP();
-    handleHPSession('rival', rivalHP);
+    handleHPSession('rival', rivalHP, prev);
   }
 }
+
+function handleHPSession(player, newValue, prevValue) {
+  const state = hpSessionState[player];
+  const now = Date.now();
+
+  if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > SESSION_TIMEOUT)) {
+    state.baseValue = prevValue; // Use value BEFORE the change
+  }
+  state.lastActionTime = now;
+  const diff = newValue - state.baseValue;
+}
+
 
 // === HP PANEL CLICK HANDLERS ===
 function setupPanelButton(panelSelector, player, amount) {
