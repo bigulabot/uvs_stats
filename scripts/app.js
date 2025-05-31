@@ -82,6 +82,93 @@ function adjustHP(player, amount) {
   updateHP();
 }
 
+// === Timed Increment/Decrement & Reporting for HP ===
+function setupTimedHoldHP(element, player, amount) {
+  let holdInterval = null;
+  let holdStartTime = null;
+  let baseValue = null;
+  let incrementDisplay = null;
+
+  // Add increment display element if it doesn't exist
+  function ensureIncrementDisplay() {
+    incrementDisplay = element.querySelector('.increment-display');
+    if (!incrementDisplay) {
+      incrementDisplay = document.createElement('div');
+      incrementDisplay.className = 'increment-display';
+      incrementDisplay.style.position = 'absolute';
+      incrementDisplay.style.right = '8px';
+      incrementDisplay.style.top = '8px';
+      incrementDisplay.style.fontSize = '1.2em';
+      incrementDisplay.style.opacity = 0;
+      incrementDisplay.style.transition = 'opacity 0.3s';
+      element.appendChild(incrementDisplay);
+    }
+  }
+
+  function getValue() {
+    return player === 'player' ? playerHP : rivalHP;
+  }
+
+  function updateIncrementDisplay() {
+    ensureIncrementDisplay();
+    const currentValue = getValue();
+    const diff = currentValue - baseValue;
+    incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
+    incrementDisplay.style.opacity = (diff !== 0) ? 1 : 0;
+  }
+
+  function hideIncrementDisplay() {
+    if (incrementDisplay) incrementDisplay.style.opacity = 0;
+    baseValue = null;
+  }
+
+  function getAcceleratedInterval() {
+    if (!holdStartTime) return 200;
+    const holdDuration = Date.now() - holdStartTime;
+    if (holdDuration < 1000) return 200;
+    if (holdDuration < 2000) return 120;
+    if (holdDuration < 4000) return 70;
+    return 30;
+  }
+
+  function holdAction() {
+    adjustHP(player, amount);
+    updateIncrementDisplay();
+    holdInterval = setTimeout(holdAction, getAcceleratedInterval());
+  }
+
+  function startHold() {
+    if (baseValue === null) baseValue = getValue();
+    holdStartTime = Date.now();
+    adjustHP(player, amount);
+    updateIncrementDisplay();
+    holdInterval = setTimeout(holdAction, getAcceleratedInterval());
+  }
+
+  function stopHold() {
+    clearTimeout(holdInterval);
+    holdInterval = null;
+    holdStartTime = null;
+    setTimeout(hideIncrementDisplay, 900);
+  }
+
+  // Mouse events
+  element.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    startHold();
+  });
+  element.addEventListener('mouseup', stopHold);
+  element.addEventListener('mouseleave', stopHold);
+
+  // Touch events
+  element.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    startHold();
+  }, { passive: false });
+  element.addEventListener('touchend', stopHold);
+  element.addEventListener('touchcancel', stopHold);
+}
+
 // === Reset Button Logic ===
 let resetHoldTimeout = null;
 
@@ -122,12 +209,11 @@ function fullReset() {
   updateHP();
 }
 
-// === HP Panel Click Handlers ===
-document.querySelector('.player-panel .panel-top').addEventListener('click', () => adjustHP('player', 1));
-document.querySelector('.player-panel .panel-bottom').addEventListener('click', () => adjustHP('player', -1));
-
-document.querySelector('.rival-panel .panel-top').addEventListener('click', () => adjustHP('rival', 1));
-document.querySelector('.rival-panel .panel-bottom').addEventListener('click', () => adjustHP('rival', -1));
+// === HP Panel Hold Handlers (replaces old click events) ===
+setupTimedHoldHP(document.querySelector('.player-panel .panel-top'), 'player', 1);
+setupTimedHoldHP(document.querySelector('.player-panel .panel-bottom'), 'player', -1);
+setupTimedHoldHP(document.querySelector('.rival-panel .panel-top'), 'rival', 1);
+setupTimedHoldHP(document.querySelector('.rival-panel .panel-bottom'), 'rival', -1);
 
 // === Full/Half Damage Buttons ===
 // Player: Full Damage
@@ -183,7 +269,6 @@ halfDamageRivalBtn.addEventListener('click', () => {
   rivalHP = rivalHp;
   saveState();
 });
-
 
 // === Persistent State Storage ===
 function saveState() {
