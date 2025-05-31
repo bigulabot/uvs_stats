@@ -7,7 +7,7 @@ const halfDamageBtn = document.getElementById("halfDamageBtn");
 const fullDamageRivalBtn = document.getElementById("fullDamageRivalBtn");
 const halfDamageRivalBtn = document.getElementById("halfDamageRivalBtn");
 
-// === HP logic ===
+// === HP LOGIC ===
 let playerHP = 25;
 let rivalHP = 25;
 
@@ -17,50 +17,52 @@ function updateHP() {
   saveState();
 }
 
-// === Session State for Increment Display (per panel) ===
+// === INCREMENT DISPLAY (DOM Manipulation) ===
+function showIncrementDisplay(player, diff) {
+  const row = document.querySelector(`.${player}-panel .hp-row`);
+  let incrementDisplay = row.querySelector('.increment-display');
+  if (!incrementDisplay) {
+    incrementDisplay = document.createElement('span');
+    incrementDisplay.className = 'increment-display';
+    row.appendChild(incrementDisplay);
+  }
+  incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
+  incrementDisplay.style.opacity = diff !== 0 ? 1 : 0;
+
+  // Fade out after 700ms
+  clearTimeout(incrementDisplay._fadeTimeout);
+  incrementDisplay._fadeTimeout = setTimeout(() => {
+    incrementDisplay.style.opacity = 0;
+  }, 700);
+}
+
+// === SESSION LOGIC (tracks net change, calls showIncrementDisplay) ===
 const hpSessionState = {
-  player: { baseValue: null, lastActionTime: null, incrementDisplay: null, timer: null },
-  rival: { baseValue: null, lastActionTime: null, incrementDisplay: null, timer: null }
+  player: { baseValue: null, lastActionTime: null, _sessionTimeout: null },
+  rival: { baseValue: null, lastActionTime: null, _sessionTimeout: null }
 };
 
-// === Session Logic Helper ===
 function handleHPSession(player, newValue) {
   const state = hpSessionState[player];
-  const row = document.querySelector(`.${player}-panel .hp-row`);
-  let now = Date.now();
-
-  // Get or create increment display (next to HP value)
-  if (!state.incrementDisplay) {
-    state.incrementDisplay = document.createElement('span');
-    state.incrementDisplay.className = 'increment-display';
-    const hpSpan = row.querySelector('span');
-    if (hpSpan && hpSpan.nextSibling) {
-      row.insertBefore(state.incrementDisplay, hpSpan.nextSibling);
-    } else {
-      row.appendChild(state.incrementDisplay);
-    }
-  }
+  const now = Date.now();
 
   // New session if paused too long or no baseValue
   if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > 700)) {
     state.baseValue = newValue;
   }
-
   state.lastActionTime = now;
   const diff = newValue - state.baseValue;
-  state.incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
-  state.incrementDisplay.style.opacity = diff !== 0 ? 1 : 0;
 
-  // Reset timer
-  clearTimeout(state.timer);
-  state.timer = setTimeout(() => {
-    state.incrementDisplay.style.opacity = 0;
+  showIncrementDisplay(player, diff);
+
+  clearTimeout(state._sessionTimeout);
+  state._sessionTimeout = setTimeout(() => {
     state.baseValue = null;
     state.lastActionTime = null;
   }, 700);
 }
 
-// === HP Adjustment & Session Display (ALL sources) ===
+// === HP ADJUSTMENT & SESSION UPDATE (all sources) ===
 function adjustHPAndShow(player, amount) {
   if (player === 'player') {
     playerHP = Math.max(0, playerHP + amount);
@@ -73,7 +75,7 @@ function adjustHPAndShow(player, amount) {
   }
 }
 
-// === HP Panel Click Handlers ===
+// === HP PANEL CLICK HANDLERS ===
 function setupPanelButton(panelSelector, player, amount) {
   const el = document.querySelector(panelSelector);
   el.addEventListener('click', () => adjustHPAndShow(player, amount));
@@ -84,7 +86,7 @@ setupPanelButton('.player-panel .panel-bottom', 'player', -1);
 setupPanelButton('.rival-panel .panel-top', 'rival', 1);
 setupPanelButton('.rival-panel .panel-bottom', 'rival', -1);
 
-// === Full/Half Damage Buttons with session-based increment display ===
+// === FULL/HALF DAMAGE BUTTONS ===
 fullDamageBtn.addEventListener('click', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   adjustHPAndShow('player', -dmg);
@@ -106,8 +108,7 @@ halfDamageRivalBtn.addEventListener('click', () => {
   quickReset();
 });
 
-// === Damage & Speed Logic, Storage, Reset, etc. ===
-// (Unchanged; keep your previous logic for these parts)
+// === DAMAGE & SPEED LOGIC, STORAGE, RESET, ETC. ===
 let speedCount = 0;
 let speedState = 0;
 const speedStates = ["Off", "High", "Mid", "Low"];
