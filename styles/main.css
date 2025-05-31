@@ -257,7 +257,7 @@ button.icon-button img {
 
 .increment-display {
   position: relative;
-  margin-left: 1em;
+  margin-left: 0.5em;
   color: #fff;
   font-style: italic;
   font-weight: bold;
@@ -265,7 +265,7 @@ button.icon-button img {
   transition: opacity 1s;
   pointer-events: none;
   text-shadow: 0 0 8px #222;
-  font-size: 2vw;           /* Smaller, but vertically centered */
+  font-size: 0.3em;          
   line-height: 1;
   display: inline-block;
   min-width: 1.5em;
