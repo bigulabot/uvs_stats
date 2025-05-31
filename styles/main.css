@@ -257,8 +257,8 @@ button.icon-button img {
 
 .increment-display {
   position: relative;
-  top: -10em;
-  margin-left: 3em;       /* Space between HP and increment */
+  top: -0;
+  margin-left: 0.7em;       /* Space between HP and increment */
   color: #fff;
   font-style: italic;
   font-weight: bold;
