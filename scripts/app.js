@@ -217,6 +217,19 @@ document.addEventListener('touchend', function (event) {
   if (now - lastTouchEnd <= 300) { event.preventDefault(); }
   lastTouchEnd = now;
 }, false);
+document.body.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 1) {
+        e.preventDefault(); // Prevent multi-touch zoom
+    }
+}, { passive: false });
+
+document.body.addEventListener('gesturestart', (e) => {
+    e.preventDefault(); // Prevent pinch-to-zoom
+});
+
+document.body.addEventListener('dblclick', (e) => {
+    e.preventDefault(); // Prevent double-tap zoom on desktop
+});
 function updateViewportHeight() {
   const viewportHeight = window.innerHeight;
   document.querySelector('.main-container').style.height = `${viewportHeight}px`;
