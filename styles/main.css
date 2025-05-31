@@ -248,19 +248,22 @@ button.icon-button img {
 }
 
 /* HP INCREMENT DISPLAYS
+.hp-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .increment-display {
-  position: static !important;
-  display: inline-block;
   margin-left: 0.5em;
-  vertical-align: middle;
   color: #fff;
   font-style: italic;
   font-weight: bold;
-  z-index: 2;
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
   text-shadow: 0 0 8px #222;
+  font-size: 1.1em;
+  line-height: 1;
 }
 
 
