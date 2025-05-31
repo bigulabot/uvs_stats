@@ -247,6 +247,14 @@ button.icon-button img {
   transition: transform 0.13s, filter 0.18s;
 }
 
+/* HP INCREMENT DISPLAYS
+.increment-display {
+  pointer-events: none;
+  color: #11d611;
+  text-shadow: 0 0 4px #222;
+  font-weight: bold;
+  z-index: 2;
+}
 
 /* PANEL ACTIONS - Damage buttons on the left, overlapping */
 .panel-actions {
