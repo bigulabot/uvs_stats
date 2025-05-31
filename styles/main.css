@@ -305,8 +305,6 @@ button.icon-button img {
   align-items: center;
 }
 
-.player-actions { top: 38%; }  /* Move up or down as needed */
-.rival-actions  { top: 62%; }  /* Move up or down as needed */
 
 /* RESPONSIVENESS */
 @media (max-width: 1200px) {
