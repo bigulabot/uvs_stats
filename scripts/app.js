@@ -27,7 +27,7 @@ function showIncrementDisplay(player, diff) {
   if (!incrementDisplay) {
     incrementDisplay = document.createElement('span');
     incrementDisplay.className = 'increment-display';
-    row.appendChild(incrementDisplay);
+    score.appendChild(incrementDisplay);
   }
   incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
   incrementDisplay.style.opacity = 1;
