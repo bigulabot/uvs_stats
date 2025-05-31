@@ -261,7 +261,7 @@ button.icon-button img {
   left: 55%;                 /* Tweak as needed—places it to the right of center */
   top: 50%;
   transform: translateY(-50%);
-  margin-left: 0.7em;
+  margin-left: 2em;
   color: #fff;
   font-style: italic;
   font-weight: bold;
