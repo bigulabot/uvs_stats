@@ -1,3 +1,6 @@
+// === CONFIG: Timeout for increment session (ms) ===
+const SESSION_TIMEOUT = 1500; // 1.5 seconds
+
 // === DOM ELEMENTS ===
 const playerScoreEl = document.getElementById("playerScore");
 const rivalScoreEl = document.getElementById("rivalScore");
@@ -28,18 +31,13 @@ function showIncrementDisplay(player, diff) {
   }
   incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
   incrementDisplay.style.opacity = diff !== 0 ? 1 : 0;
-
-  // Fade out after 1500ms
-  clearTimeout(incrementDisplay._fadeTimeout);
-  incrementDisplay._fadeTimeout = setTimeout(() => {
-    incrementDisplay.style.opacity = 0;
-  }, 1500);
+  return incrementDisplay;
 }
 
-// === SESSION LOGIC (tracks net change, calls showIncrementDisplay) ===
+// === SESSION LOGIC (tracks net change, calls showIncrementDisplay, and handles fade) ===
 const hpSessionState = {
-  player: { baseValue: null, lastActionTime: null, _sessionTimeout: null },
-  rival: { baseValue: null, lastActionTime: null, _sessionTimeout: null }
+  player: { baseValue: null, lastActionTime: null, _sessionTimer: null },
+  rival: { baseValue: null, lastActionTime: null, _sessionTimer: null }
 };
 
 function handleHPSession(player, newValue) {
@@ -47,19 +45,23 @@ function handleHPSession(player, newValue) {
   const now = Date.now();
 
   // New session if paused too long or no baseValue
-  if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > 1500)) {
+  if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > SESSION_TIMEOUT)) {
     state.baseValue = newValue;
   }
   state.lastActionTime = now;
   const diff = newValue - state.baseValue;
 
-  showIncrementDisplay(player, diff);
+  // Show/update the increment display and manage combined timer
+  const incrementDisplay = showIncrementDisplay(player, diff);
 
-  clearTimeout(state._sessionTimeout);
-  state._sessionTimeout = setTimeout(() => {
+  clearTimeout(state._sessionTimer);
+  state._sessionTimer = setTimeout(() => {
+    // Fade out increment display
+    if (incrementDisplay) incrementDisplay.style.opacity = 0;
+    // Reset session logic
     state.baseValue = null;
     state.lastActionTime = null;
-  }, 1500);
+  }, SESSION_TIMEOUT);
 }
 
 // === HP ADJUSTMENT & SESSION UPDATE (all sources) ===
