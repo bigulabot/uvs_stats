@@ -254,14 +254,15 @@ button.icon-button img {
 .hp-row {
   position: relative;
   display: flex;
-  align-items: center;      /* Vertically center children */
-  justify-content: center;  /* Center them as a unit */
-  height: 100%;
-  gap: 0.7em;               /* Add gap for spacing */
+  align-items: center;      
+  justify-content: center;  
+  height: 100%;              
 }
 
 .increment-display {
-  /* Remove position: absolute, left, top, transform, margin-left */
+  position: absolute;
+  left: calc(50% + 2.2em); 
+  top: 50%;
   color: #fff;
   font-style: italic;
   font-weight: bold;
