@@ -29,11 +29,11 @@ function showIncrementDisplay(player, diff) {
   incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
   incrementDisplay.style.opacity = diff !== 0 ? 1 : 0;
 
-  // Fade out after 700ms
+  // Fade out after 1500ms
   clearTimeout(incrementDisplay._fadeTimeout);
   incrementDisplay._fadeTimeout = setTimeout(() => {
     incrementDisplay.style.opacity = 0;
-  }, 700);
+  }, 1500);
 }
 
 // === SESSION LOGIC (tracks net change, calls showIncrementDisplay) ===
@@ -47,7 +47,7 @@ function handleHPSession(player, newValue) {
   const now = Date.now();
 
   // New session if paused too long or no baseValue
-  if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > 700)) {
+  if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > 1500)) {
     state.baseValue = newValue;
   }
   state.lastActionTime = now;
@@ -59,7 +59,7 @@ function handleHPSession(player, newValue) {
   state._sessionTimeout = setTimeout(() => {
     state.baseValue = null;
     state.lastActionTime = null;
-  }, 700);
+  }, 1500);
 }
 
 // === HP ADJUSTMENT & SESSION UPDATE (all sources) ===
