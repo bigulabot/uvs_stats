@@ -252,12 +252,11 @@ button.icon-button img {
   display: flex;
   align-items: center;      /* Vertical center */
   justify-content: flex-start;
-  border: 1px solid red;
 }
 
 .increment-display {
   position: relative;
-  margin-left: 0.5em;
+  margin-left: 0.7em;
   color: #fff;
   font-style: italic;
   font-weight: bold;
@@ -265,7 +264,7 @@ button.icon-button img {
   transition: opacity 1s;
   pointer-events: none;
   text-shadow: 0 0 8px #222;
-  font-size: 0.3em;          
+  font-size: 0.7em;          
   line-height: 1;
   display: inline-block;
   min-width: 1.5em;
