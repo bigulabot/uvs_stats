@@ -247,14 +247,13 @@ button.icon-button img {
   transition: transform 0.13s, filter 0.18s;
 }
 
-/* HP INCREMENT DISPLAYS
+/* HP INCREMENT DISPLAYS */
 .hp-row {
   display: flex;
   align-items: center;      /* Vertical center */
   justify-content: flex-start;
   border: 1px solid red;
 }
-
 
 .increment-display {
   position: relative;
@@ -274,7 +273,6 @@ button.icon-button img {
   text-align: left;
   
 }
-
 
 
 /* PANEL ACTIONS - Damage buttons on the left, overlapping */
