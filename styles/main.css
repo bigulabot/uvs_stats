@@ -204,8 +204,11 @@ button.plus, button.minus {
 }
 
 .score {
-  font-size: 60px;
+  position: relative;
+  font-size: 4vw;    /* Or your preferred size */
   font-weight: bold;
+  color: #fff;
+  display: inline-block;
   text-shadow: 
     -2px -2px 0 #000,  
     2px -2px 0 #000,  
@@ -258,20 +261,18 @@ button.icon-button img {
 
 .increment-display {
   position: absolute;
-  left: 120%;                 /* Tweak as needed—places it to the right of center */
+  left: 100%;                 /* Tweak as needed—places it to the right of center */
   top: 50%;
   transform: translateY(-50%);
-  margin-left: 0.7em;
+  margin-left: 0.5em;
   color: #fff;
   font-style: italic;
-  font-weight: bold;
   opacity: 0;
   transition: opacity 1s;
   pointer-events: none;
   text-shadow: 0 0 8px #222;
   font-size: 1vw;          
   line-height: 1;
-  display: inline-block;
   min-width: 1.5em;
   text-align: left;
   
