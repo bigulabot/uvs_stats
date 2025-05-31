@@ -40,54 +40,61 @@
     <!-- RIGHT: RESET + PANELS -->
     <div class="right-section">
 
-     <!-- PANELS BLOCK -->
-<div class="hp-panels">
-  <!-- SIDE ICONS COLUMN -->
-  <div class="side-icons">
-    <!-- Player Actions -->
-    <div class="icon-group player-icons">
-      <button id="fullDamageBtn" class="icon-btn">
+      <!-- RESET BUTTON (positioned absolutely) -->
+      <div class="reset-container">
+        <button id="resetBtn">
+          <img src="icons/block-reset.svg" alt="Reset" />
+        </button>
+      </div>
+
+      <!-- PANELS -->
+   <div class="hp-panels">
+  <!-- PLAYER PANEL WRAPPER -->
+  <div class="panel-group-wrapper">
+    <div class="panel-group">
+      <div class="player-panel">
+        <h2>Player</h2>
+        <div class="panel-top"></div>
+        <div class="hp-row">
+          <span id="playerScore" class="score">25</span>
+          <div class="increment-display"></div>
+        </div>
+        <div class="panel-bottom"></div>
+      </div>
+    </div>
+    <div class="panel-actions player-actions">
+      <button id="fullDamageBtn" class="icon-button">
         <img src="icons/player-full.svg" alt="Player Full Damage" />
       </button>
-      <button id="halfDamageBtn" class="icon-btn">
+      <button id="halfDamageBtn" class="icon-button">
         <img src="icons/player-half.svg" alt="Player Half Damage" />
       </button>
     </div>
-    <!-- RESET (centered between) -->
-    <div class="reset-icon-group">
-      <button id="resetBtn" class="reset-btn">
-        <img src="icons/block-reset.svg" alt="Reset" />
-      </button>
+  </div>
+
+  <!-- RIVAL PANEL WRAPPER -->
+  <div class="panel-group-wrapper">
+    <div class="panel-group">
+      <div class="rival-panel">
+        <h2>Rival</h2>
+        <div class="panel-top"></div>
+        <div class="hp-row">
+          <span id="rivalScore" class="score">25</span>
+          <div class="increment-display"></div>
+        </div>
+        <div class="panel-bottom"></div>
+      </div>
     </div>
-    <!-- Rival Actions -->
-    <div class="icon-group rival-icons">
-      <button id="fullDamageRivalBtn" class="icon-btn">
+    <div class="panel-actions rival-actions">
+      <button id="fullDamageRivalBtn" class="icon-button">
         <img src="icons/rival-full.svg" alt="Rival Full Damage" />
       </button>
-      <button id="halfDamageRivalBtn" class="icon-btn">
+      <button id="halfDamageRivalBtn" class="icon-button">
         <img src="icons/rival-half.svg" alt="Rival Half Damage" />
       </button>
     </div>
   </div>
-  <!-- PANELS STACK -->
-  <div class="panels-stack">
-    <div class="player-panel panel-box">
-      <h2>Player</h2>
-      <div class="hp-row">
-        <span id="playerScore" class="score">25</span>
-        <div class="increment-display"></div>
-      </div>
-    </div>
-    <div class="rival-panel panel-box">
-      <h2>Rival</h2>
-      <div class="hp-row">
-        <span id="rivalScore" class="score">25</span>
-        <div class="increment-display"></div>
-      </div>
-    </div>
-  </div>
 </div>
-
 
 
   <script src="scripts/app.js"></script>
