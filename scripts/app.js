@@ -1,5 +1,5 @@
 // === CONFIG: Timeout for increment session (ms) ===
-const SESSION_TIMEOUT = 2000; // 2 seconds
+const SESSION_TIMEOUT = 1500; // 1.5 seconds
 
 // === DOM ELEMENTS ===
 const playerScoreEl = document.getElementById("playerScore");
