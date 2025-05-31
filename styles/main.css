@@ -257,11 +257,10 @@ button.icon-button img {
 }
 
 .increment-display {
-  position: relative;
   position: absolute;
   left: 55%;                 /* Tweak as needed—places it to the right of center */
   top: 50%;
-  transform: translateY(-50%)
+  transform: translateY(-50%);
   margin-left: 0.7em;
   color: #fff;
   font-style: italic;
