@@ -253,14 +253,16 @@ button.icon-button img {
   display: inline-block;
   margin-left: 0.5em;
   vertical-align: middle;
-  color: #11d611;
-  text-shadow: 0 0 4px #222;
+  color: #fff;
+  font-style: italic;
   font-weight: bold;
   z-index: 2;
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
+  text-shadow: 0 0 8px #222;
 }
+
 
 
 /* PANEL ACTIONS - Damage buttons on the left, overlapping */
