@@ -266,7 +266,6 @@ button.icon-button img {
   transform: translateY(-50%);
   color: #fff;
   font-style: italic;
-  font-weight: bold;
   opacity: 0;
   transition: opacity 1s;
   pointer-events: none;
