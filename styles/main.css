@@ -258,7 +258,7 @@ button.icon-button img {
 
 .increment-display {
   position: absolute;
-  left: 75%;                 /* Tweak as needed—places it to the right of center */
+  left: 120%;                 /* Tweak as needed—places it to the right of center */
   top: 50%;
   transform: translateY(-50%);
   margin-left: 0.7em;
