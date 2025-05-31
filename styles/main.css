@@ -252,13 +252,14 @@ button.icon-button img {
   display: flex;
   align-items: center;      /* Vertical center */
   justify-content: flex-start;
+  border: 1px solid red;
 }
 
 
 .increment-display {
   position: relative;
-  top: -0;
-  margin-left: 0.7em;       /* Space between HP and increment */
+  top: top: -2em !important;
+  margin-left: 3em !important;
   color: #fff;
   font-style: italic;
   font-weight: bold;
