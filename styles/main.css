@@ -261,7 +261,7 @@ button.icon-button img {
 
 .increment-display {
   position: absolute;
-  left: calc(50% + 3.3em); /* Tweak the 2.2em until it's the distance you like */
+  left: calc(50% + 5em); /* Tweak the 2.2em until it's the distance you like */
   top: 50%;
   color: #fff;
   font-style: italic;
