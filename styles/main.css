@@ -249,13 +249,18 @@ button.icon-button img {
 
 /* HP INCREMENT DISPLAYS */
 .hp-row {
+  position: relative;
   display: flex;
   align-items: center;      /* Vertical center */
-  justify-content: flex-start;
+  justify-content: center;
+  height: 100%;
 }
 
 .increment-display {
   position: relative;
+  position: absolute;
+  left: 55%;                 /* Tweak as needed—places it to the right of center */
+  top: 50%;
   margin-left: 0.7em;
   color: #fff;
   font-style: italic;
@@ -264,7 +269,7 @@ button.icon-button img {
   transition: opacity 1s;
   pointer-events: none;
   text-shadow: 0 0 8px #222;
-  font-size: 0.7em;          
+  font-size: 1vw;          
   line-height: 1;
   display: inline-block;
   min-width: 1.5em;
