@@ -82,12 +82,12 @@ function adjustHP(player, amount) {
   updateHP();
 }
 
-// === Timed Increment/Decrement & Reporting for HP ===
+// === Timed Session Increment/Decrement & Reporting for HP (Click/Tap Only) ===
 function setupTimedHoldHP(element, player, amount) {
-  let holdInterval = null;
-  let holdStartTime = null;
   let baseValue = null;
   let incrementDisplay = null;
+  let lastClickTime = null;
+  let clickSessionTimeout = null;
 
   // Add increment display element if it doesn't exist
   function ensureIncrementDisplay() {
@@ -122,51 +122,57 @@ function setupTimedHoldHP(element, player, amount) {
     baseValue = null;
   }
 
-  function getAcceleratedInterval() {
-    if (!holdStartTime) return 200;
-    const holdDuration = Date.now() - holdStartTime;
-    if (holdDuration < 1000) return 200;
-    if (holdDuration < 2000) return 120;
-    if (holdDuration < 4000) return 70;
-    return 30;
-  }
-
-  function holdAction() {
+  function singleClick() {
+    const now = Date.now();
+    if (!baseValue || !lastClickTime || (now - lastClickTime > 700)) {
+      // New click session
+      baseValue = getValue();
+    }
+    lastClickTime = now;
     adjustHP(player, amount);
     updateIncrementDisplay();
-    holdInterval = setTimeout(holdAction, getAcceleratedInterval());
+    clearTimeout(clickSessionTimeout);
+    clickSessionTimeout = setTimeout(() => {
+      hideIncrementDisplay();
+      lastClickTime = null;
+    }, 700);
   }
 
-  function startHold() {
-    if (baseValue === null) baseValue = getValue();
-    holdStartTime = Date.now();
-    adjustHP(player, amount);
-    updateIncrementDisplay();
-    holdInterval = setTimeout(holdAction, getAcceleratedInterval());
-  }
-
-  function stopHold() {
-    clearTimeout(holdInterval);
-    holdInterval = null;
-    holdStartTime = null;
-    setTimeout(hideIncrementDisplay, 900);
-  }
-
-  // Mouse events
-  element.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    startHold();
+  // Mouse click/tap events only (no hold!)
+  element.addEventListener('click', (e) => {
+    singleClick();
   });
-  element.addEventListener('mouseup', stopHold);
-  element.addEventListener('mouseleave', stopHold);
 
-  // Touch events
-  element.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    startHold();
-  }, { passive: false });
-  element.addEventListener('touchend', stopHold);
-  element.addEventListener('touchcancel', stopHold);
+  element.addEventListener('touchend', (e) => {
+    singleClick();
+  });
+}
+
+// === Show increment display for damage buttons ===
+function showIncrementDisplayForHP(panelSelector, oldValue, newValue) {
+  const panel = document.querySelector(panelSelector);
+  if (!panel) return;
+
+  let incrementDisplay = panel.querySelector('.increment-display');
+  if (!incrementDisplay) {
+    incrementDisplay = document.createElement('div');
+    incrementDisplay.className = 'increment-display';
+    incrementDisplay.style.position = 'absolute';
+    incrementDisplay.style.right = '8px';
+    incrementDisplay.style.top = '8px';
+    incrementDisplay.style.fontSize = '1.2em';
+    incrementDisplay.style.opacity = 0;
+    incrementDisplay.style.transition = 'opacity 0.3s';
+    panel.appendChild(incrementDisplay);
+  }
+
+  const diff = newValue - oldValue;
+  incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
+  incrementDisplay.style.opacity = (diff !== 0) ? 1 : 0;
+
+  setTimeout(() => {
+    incrementDisplay.style.opacity = 0;
+  }, 900);
 }
 
 // === Reset Button Logic ===
@@ -209,15 +215,16 @@ function fullReset() {
   updateHP();
 }
 
-// === HP Panel Hold Handlers (replaces old click events) ===
+// === HP Panel Click Handlers (no hold, only click/tap with reporting) ===
 setupTimedHoldHP(document.querySelector('.player-panel .panel-top'), 'player', 1);
 setupTimedHoldHP(document.querySelector('.player-panel .panel-bottom'), 'player', -1);
 setupTimedHoldHP(document.querySelector('.rival-panel .panel-top'), 'rival', 1);
 setupTimedHoldHP(document.querySelector('.rival-panel .panel-bottom'), 'rival', -1);
 
-// === Full/Half Damage Buttons ===
+// === Full/Half Damage Buttons with increment display ===
 // Player: Full Damage
 fullDamageBtn.addEventListener('click', () => {
+  const oldHp = playerHP;
   let playerHp = parseInt(playerScoreEl.textContent, 10);
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
 
@@ -227,10 +234,13 @@ fullDamageBtn.addEventListener('click', () => {
   playerScoreEl.textContent = playerHp;
   playerHP = playerHp;
   saveState();
+
+  showIncrementDisplayForHP('.player-panel', oldHp, playerHp);
 });
 
 // Player: Half Damage
 halfDamageBtn.addEventListener('click', () => {
+  const oldHp = playerHP;
   let playerHp = parseInt(playerScoreEl.textContent, 10);
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const half = Math.ceil(dmg / 2);
@@ -241,10 +251,13 @@ halfDamageBtn.addEventListener('click', () => {
   playerScoreEl.textContent = playerHp;
   playerHP = playerHp;
   saveState();
+
+  showIncrementDisplayForHP('.player-panel', oldHp, playerHp);
 });
 
 // Rival: Full Damage
 fullDamageRivalBtn.addEventListener('click', () => {
+  const oldHp = rivalHP;
   let rivalHp = parseInt(rivalScoreEl.textContent, 10);
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
 
@@ -254,10 +267,13 @@ fullDamageRivalBtn.addEventListener('click', () => {
   rivalScoreEl.textContent = rivalHp;
   rivalHP = rivalHp;
   saveState();
+
+  showIncrementDisplayForHP('.rival-panel', oldHp, rivalHp);
 });
 
 // Rival: Half Damage
 halfDamageRivalBtn.addEventListener('click', () => {
+  const oldHp = rivalHP;
   let rivalHp = parseInt(rivalScoreEl.textContent, 10);
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const half = Math.ceil(dmg / 2);
@@ -268,6 +284,8 @@ halfDamageRivalBtn.addEventListener('click', () => {
   rivalScoreEl.textContent = rivalHp;
   rivalHP = rivalHp;
   saveState();
+
+  showIncrementDisplayForHP('.rival-panel', oldHp, rivalHp);
 });
 
 // === Persistent State Storage ===
