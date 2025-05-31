@@ -1,5 +1,5 @@
 // === CONFIG: Timeout for increment session (ms) ===
-const SESSION_TIMEOUT = 1500; // 1.5 seconds
+const SESSION_TIMEOUT = 2000; // 2 seconds
 
 // === DOM ELEMENTS ===
 const playerScoreEl = document.getElementById("playerScore");
@@ -20,7 +20,7 @@ function updateHP() {
   saveState();
 }
 
-// === INCREMENT DISPLAY (DOM Manipulation) ===
+// === INCREMENT DISPLAY (always fades out) ===
 function showIncrementDisplay(player, diff) {
   const row = document.querySelector(`.${player}-panel .hp-row`);
   let incrementDisplay = row.querySelector('.increment-display');
@@ -31,43 +31,43 @@ function showIncrementDisplay(player, diff) {
   }
   incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
   incrementDisplay.style.opacity = diff !== 0 ? 1 : 0;
-  return incrementDisplay;
+
+  // Always fade out after SESSION_TIMEOUT
+  clearTimeout(incrementDisplay._fadeTimeout);
+  incrementDisplay._fadeTimeout = setTimeout(() => {
+    incrementDisplay.style.opacity = 0;
+  }, SESSION_TIMEOUT);
 }
 
-// === SESSION LOGIC (tracks net change, calls showIncrementDisplay, and handles fade) ===
+// === SESSION LOGIC (handles session counting for panel taps) ===
 const hpSessionState = {
   player: { baseValue: null, lastActionTime: null, _sessionTimer: null },
   rival: { baseValue: null, lastActionTime: null, _sessionTimer: null }
 };
 
-function handleHPSession(player, newValue) {
+function handleHPSession(player, newValue, prevValue) {
   const state = hpSessionState[player];
   const now = Date.now();
 
-  // New session if paused too long or no baseValue
   if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > SESSION_TIMEOUT)) {
-    state.baseValue = newValue;
+    state.baseValue = prevValue; // base is always the HP before the first change
   }
   state.lastActionTime = now;
   const diff = newValue - state.baseValue;
 
-  // Show/update the increment display and manage combined timer
-  const incrementDisplay = showIncrementDisplay(player, diff);
+  showIncrementDisplay(player, diff);
 
   clearTimeout(state._sessionTimer);
   state._sessionTimer = setTimeout(() => {
-    // Fade out increment display
-    if (incrementDisplay) incrementDisplay.style.opacity = 0;
-    // Reset session logic
     state.baseValue = null;
     state.lastActionTime = null;
   }, SESSION_TIMEOUT);
 }
 
-// === HP ADJUSTMENT & SESSION UPDATE  ===
+// === ADJUST HP AND TRIGGER SESSION (for panel buttons only) ===
 function adjustHPAndShow(player, amount) {
   if (player === 'player') {
-    const prev = playerHP; // store previous value
+    const prev = playerHP;
     playerHP = Math.max(0, playerHP + amount);
     updateHP();
     handleHPSession('player', playerHP, prev);
@@ -79,19 +79,7 @@ function adjustHPAndShow(player, amount) {
   }
 }
 
-function handleHPSession(player, newValue, prevValue) {
-  const state = hpSessionState[player];
-  const now = Date.now();
-
-  if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > SESSION_TIMEOUT)) {
-    state.baseValue = prevValue; // Use value BEFORE the change
-  }
-  state.lastActionTime = now;
-  const diff = newValue - state.baseValue;
-}
-
-
-// === HP PANEL CLICK HANDLERS ===
+// === PANEL BUTTONS (manual adjustment triggers session) ===
 function setupPanelButton(panelSelector, player, amount) {
   const el = document.querySelector(panelSelector);
   el.addEventListener('click', () => adjustHPAndShow(player, amount));
@@ -102,19 +90,19 @@ setupPanelButton('.player-panel .panel-bottom', 'player', -1);
 setupPanelButton('.rival-panel .panel-top', 'rival', 1);
 setupPanelButton('.rival-panel .panel-bottom', 'rival', -1);
 
-// === FULL/HALF DAMAGE BUTTONS ===
+// === DAMAGE BUTTONS (NO SESSION, ONLY SHOW INCREMENT) ===
 fullDamageBtn.addEventListener('click', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  playerHP = Math.max(0, playerHP - dmg);     // Change HP directly
-  updateHP();                                 // Refresh display
-  showIncrementDisplay('player', -dmg);       // Show -dmg in increment display
+  playerHP = Math.max(0, playerHP - dmg);
+  updateHP();
+  showIncrementDisplay('player', -dmg);
   quickReset();
 });
 
 halfDamageBtn.addEventListener('click', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const applied = -Math.ceil(dmg / 2);
-  playerHP = Math.max(0, playerHP + applied); // (applied is negative)
+  playerHP = Math.max(0, playerHP + applied);
   updateHP();
   showIncrementDisplay('player', applied);
   quickReset();
@@ -136,7 +124,6 @@ halfDamageRivalBtn.addEventListener('click', () => {
   showIncrementDisplay('rival', applied);
   quickReset();
 });
-
 
 // === DAMAGE & SPEED LOGIC, STORAGE, RESET, ETC. ===
 let speedCount = 0;
