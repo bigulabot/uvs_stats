@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>UVS Stats Counter</title>
   <link rel="stylesheet" href="styles/main.css" />
   <link rel="manifest" href="manifest.json" />
@@ -39,8 +39,7 @@
 
     <!-- RIGHT: RESET + PANELS -->
     <div class="right-section">
-
-      <!-- RESET BUTTON (positioned absolutely) -->
+    
       <div class="reset-container">
         <button id="resetBtn">
           <img src="icons/block-reset.svg" alt="Reset" />
@@ -48,15 +47,20 @@
       </div>
 
       <!-- PANELS -->
-    <div class="hp-panels">
-
-  <!-- PLAYER PANEL GROUP -->
-  <div class="panel-group">
-    <div class="player-panel">
-      <h2>Player</h2>
-      <div class="score" id="playerScore">25</div>
-      <div class="panel-top"></div>
-      <div class="panel-bottom"></div>
+   <div class="hp-panels">
+       
+  <!-- PLAYER PANEL WRAPPER -->
+  <div class="panel-group-wrapper">
+    <div class="panel-group">
+      <div class="player-panel">
+        <h2>Player</h2>
+        <div class="panel-top"></div>
+        <div class="hp-row">
+          <span id="playerScore" class="score">25</span>
+          <div class="increment-display"></div>
+        </div>
+        <div class="panel-bottom"></div>
+      </div>
     </div>
     <div class="panel-actions player-actions">
       <button id="fullDamageBtn" class="icon-button">
@@ -68,13 +72,18 @@
     </div>
   </div>
 
-  <!-- RIVAL PANEL GROUP -->
-  <div class="panel-group">
-    <div class="rival-panel">
-      <h2>Rival</h2>
-      <div class="score" id="rivalScore">25</div>
-      <div class="panel-top"></div>
-      <div class="panel-bottom"></div>
+  <!-- RIVAL PANEL WRAPPER -->
+  <div class="panel-group-wrapper">
+    <div class="panel-group">
+      <div class="rival-panel">
+        <h2>Rival</h2>
+        <div class="panel-top"></div>
+        <div class="hp-row">
+          <span id="rivalScore" class="score">25</span>
+          <div class="increment-display"></div>
+        </div>
+        <div class="panel-bottom"></div>
+      </div>
     </div>
     <div class="panel-actions rival-actions">
       <button id="fullDamageRivalBtn" class="icon-button">
@@ -85,8 +94,8 @@
       </button>
     </div>
   </div>
-
 </div>
+
 
   <script src="scripts/app.js"></script>
 

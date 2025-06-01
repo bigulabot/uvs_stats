@@ -1,3 +1,6 @@
+// === CONFIG: Timeout for increment session (ms) ===
+const SESSION_TIMEOUT = 1500; // 1.5 seconds
+
 // === DOM ELEMENTS ===
 const playerScoreEl = document.getElementById("playerScore");
 const rivalScoreEl = document.getElementById("rivalScore");
@@ -7,63 +10,7 @@ const halfDamageBtn = document.getElementById("halfDamageBtn");
 const fullDamageRivalBtn = document.getElementById("fullDamageRivalBtn");
 const halfDamageRivalBtn = document.getElementById("halfDamageRivalBtn");
 
-// === Speed Counter Logic ===
-let speedCount = 0;
-let speedState = 0;
-const speedStates = ["Off", "High", "Mid", "Low"];
-const speedIcons = {
-  "Off": "icons/Off.svg",
-  "High": "icons/High.svg",
-  "Mid": "icons/Mid.svg",
-  "Low": "icons/Low.svg"
-};
-
-function updateSpeedCounter() {
-  document.getElementById("speedCount").innerText = speedCount;
-  document.getElementById("speedIcon").src = speedIcons[speedStates[speedState]];
-  saveState();
-}
-
-function incrementSpeed() {
-  speedCount++;
-  updateSpeedCounter();
-}
-
-function decrementSpeed() {
-  speedCount--;  // Allow negative
-  updateSpeedCounter();
-}
-
-function cycleSpeedState() {
-  if (speedState === 0) {
-    speedState = 1;
-  } else if (speedState === 3) {
-    speedState = 1;
-  } else {
-    speedState++;
-  }
-  updateSpeedCounter();
-}
-
-// === Damage Counter Logic ===
-let damageCount = 0;
-
-function updateDamageCounter() {
-  damageCountEl.innerText = damageCount;
-  saveState();
-}
-
-function incrementDamage() {
-  damageCount++;
-  updateDamageCounter();
-}
-
-function decrementDamage() {
-  damageCount--;  // Allow negative
-  updateDamageCounter();
-}
-
-// === HP Panels Logic ===
+// === HP LOGIC ===
 let playerHP = 25;
 let rivalHP = 25;
 
@@ -73,119 +20,166 @@ function updateHP() {
   saveState();
 }
 
-function adjustHP(player, amount) {
-  if (player === 'player') {
-    playerHP = Math.max(0, playerHP + amount);
-  } else {
-    rivalHP = Math.max(0, rivalHP + amount);
-  }
-  updateHP();
+// === INCREMENT DISPLAY (always fades out) ===
+function showIncrementDisplay(player, diff) {
+  // Find the .hp-row for the right panel
+  const row = document.querySelector(`.${player}-panel .hp-row`);
+  // Select the existing .increment-display as a child of .hp-row
+  const incrementDisplay = row.querySelector('.increment-display');
+  // Just update, do NOT create
+  incrementDisplay.textContent = diff > 0 ? `+${diff}` : `${diff}`;
+  incrementDisplay.style.opacity = 1;
+
+  clearTimeout(incrementDisplay._fadeTimeout);
+  incrementDisplay._fadeTimeout = setTimeout(() => {
+    incrementDisplay.style.opacity = 0;
+  }, SESSION_TIMEOUT);
 }
 
-// === Reset Button Logic ===
-let resetHoldTimeout = null;
+// === SESSION LOGIC (handles session counting for panel taps) ===
+const hpSessionState = {
+  player: { baseValue: null, lastActionTime: null, _sessionTimer: null },
+  rival: { baseValue: null, lastActionTime: null, _sessionTimer: null }
+};
 
-document.getElementById("resetBtn").addEventListener("mousedown", () => {
-  resetHoldTimeout = setTimeout(fullReset, 1500);
-});
+function handleHPSession(player, newValue, prevValue) {
+  const state = hpSessionState[player];
+  const now = Date.now();
 
-document.getElementById("resetBtn").addEventListener("mouseup", () => {
-  clearTimeout(resetHoldTimeout);
+  if (state.baseValue === null || !state.lastActionTime || (now - state.lastActionTime > SESSION_TIMEOUT)) {
+    state.baseValue = prevValue; // base is always the HP before the first change
+  }
+  state.lastActionTime = now;
+  const diff = newValue - state.baseValue;
+
+  showIncrementDisplay(player, diff);
+
+  clearTimeout(state._sessionTimer);
+  state._sessionTimer = setTimeout(() => {
+    state.baseValue = null;
+    state.lastActionTime = null;
+  }, SESSION_TIMEOUT);
+}
+
+// === ADJUST HP AND TRIGGER SESSION (for panel buttons only) ===
+function adjustHPAndShow(player, amount) {
+  if (player === 'player') {
+    const prev = playerHP;
+    playerHP = Math.max(0, playerHP + amount);
+    updateHP();
+    handleHPSession('player', playerHP, prev);
+  } else {
+    const prev = rivalHP;
+    rivalHP = Math.max(0, rivalHP + amount);
+    updateHP();
+    handleHPSession('rival', rivalHP, prev);
+  }
+}
+
+// === PANEL BUTTONS (manual adjustment triggers session) ===
+function setupPanelButton(panelSelector, player, amount) {
+  const el = document.querySelector(panelSelector);
+  el.addEventListener('click', () => adjustHPAndShow(player, amount));
+  el.addEventListener('touchend', () => adjustHPAndShow(player, amount));
+}
+setupPanelButton('.player-panel .panel-top', 'player', 1);
+setupPanelButton('.player-panel .panel-bottom', 'player', -1);
+setupPanelButton('.rival-panel .panel-top', 'rival', 1);
+setupPanelButton('.rival-panel .panel-bottom', 'rival', -1);
+
+// === DAMAGE BUTTONS (NO SESSION, ONLY SHOW INCREMENT) ===
+fullDamageBtn.addEventListener('click', () => {
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  playerHP = Math.max(0, playerHP - dmg);
+  updateHP();
+  showIncrementDisplay('player', -dmg);
   quickReset();
 });
 
-document.getElementById("resetBtn").addEventListener("mouseleave", () => {
-  clearTimeout(resetHoldTimeout);
-});
-
-document.getElementById("resetBtn").addEventListener("touchstart", () => {
-  resetHoldTimeout = setTimeout(fullReset, 1500);
-}, { passive: true });
-
-document.getElementById("resetBtn").addEventListener("touchend", () => {
-  clearTimeout(resetHoldTimeout);
+halfDamageBtn.addEventListener('click', () => {
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const applied = -Math.ceil(dmg / 2);
+  playerHP = Math.max(0, playerHP + applied);
+  updateHP();
+  showIncrementDisplay('player', applied);
   quickReset();
 });
 
+fullDamageRivalBtn.addEventListener('click', () => {
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  rivalHP = Math.max(0, rivalHP - dmg);
+  updateHP();
+  showIncrementDisplay('rival', -dmg);
+  quickReset();
+});
+
+halfDamageRivalBtn.addEventListener('click', () => {
+  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
+  const applied = -Math.ceil(dmg / 2);
+  rivalHP = Math.max(0, rivalHP + applied);
+  updateHP();
+  showIncrementDisplay('rival', applied);
+  quickReset();
+});
+
+// === DAMAGE & SPEED LOGIC, STORAGE, RESET, ETC. ===
+let speedCount = 0;
+let speedState = 0;
+const speedStates = ["Off", "High", "Mid", "Low"];
+const speedIcons = {
+  "Off": "icons/Off.svg",
+  "High": "icons/High.svg",
+  "Mid": "icons/Mid.svg",
+  "Low": "icons/Low.svg"
+};
+function updateSpeedCounter() {
+  document.getElementById("speedCount").innerText = speedCount;
+  document.getElementById("speedIcon").src = speedIcons[speedStates[speedState]];
+  saveState();
+}
+function incrementSpeed() { speedCount++; updateSpeedCounter(); }
+function decrementSpeed() { speedCount--; updateSpeedCounter(); }
+function cycleSpeedState() {
+  if (speedState === 0) { speedState = 1; }
+  else if (speedState === 3) { speedState = 1; }
+  else { speedState++; }
+  updateSpeedCounter();
+}
+let damageCount = 0;
+function updateDamageCounter() { damageCountEl.innerText = damageCount; saveState(); }
+function incrementDamage() { damageCount++; updateDamageCounter(); }
+function decrementDamage() { damageCount--; updateDamageCounter(); }
 function quickReset() {
   speedCount = 0;
   damageCount = 0;
-  speedState = 0; // Reset speed state to Off
+  speedState = 0;
   updateSpeedCounter();
   updateDamageCounter();
 }
-
 function fullReset() {
   quickReset();
   playerHP = 25;
   rivalHP = 25;
   updateHP();
 }
-
-// === HP Panel Click Handlers ===
-document.querySelector('.player-panel .panel-top').addEventListener('click', () => adjustHP('player', 1));
-document.querySelector('.player-panel .panel-bottom').addEventListener('click', () => adjustHP('player', -1));
-
-document.querySelector('.rival-panel .panel-top').addEventListener('click', () => adjustHP('rival', 1));
-document.querySelector('.rival-panel .panel-bottom').addEventListener('click', () => adjustHP('rival', -1));
-
-// === Full/Half Damage Buttons ===
-// Player: Full Damage
-fullDamageBtn.addEventListener('click', () => {
-  let playerHp = parseInt(playerScoreEl.textContent, 10);
-  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-
-  playerHp = Math.max(playerHp - dmg, 0);
-  quickReset();
-
-  playerScoreEl.textContent = playerHp;
-  playerHP = playerHp;
-  saveState();
+let resetHoldTimeout = null;
+document.getElementById("resetBtn").addEventListener("mousedown", () => {
+  resetHoldTimeout = setTimeout(fullReset, 1500);
 });
-
-// Player: Half Damage
-halfDamageBtn.addEventListener('click', () => {
-  let playerHp = parseInt(playerScoreEl.textContent, 10);
-  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  const half = Math.ceil(dmg / 2);
-
-  playerHp = Math.max(playerHp - half, 0);
+document.getElementById("resetBtn").addEventListener("mouseup", () => {
+  clearTimeout(resetHoldTimeout);
   quickReset();
-
-  playerScoreEl.textContent = playerHp;
-  playerHP = playerHp;
-  saveState();
 });
-
-// Rival: Full Damage
-fullDamageRivalBtn.addEventListener('click', () => {
-  let rivalHp = parseInt(rivalScoreEl.textContent, 10);
-  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-
-  rivalHp = Math.max(rivalHp - dmg, 0);
+document.getElementById("resetBtn").addEventListener("mouseleave", () => {
+  clearTimeout(resetHoldTimeout);
+});
+document.getElementById("resetBtn").addEventListener("touchstart", () => {
+  resetHoldTimeout = setTimeout(fullReset, 1500);
+}, { passive: true });
+document.getElementById("resetBtn").addEventListener("touchend", () => {
+  clearTimeout(resetHoldTimeout);
   quickReset();
-
-  rivalScoreEl.textContent = rivalHp;
-  rivalHP = rivalHp;
-  saveState();
 });
-
-// Rival: Half Damage
-halfDamageRivalBtn.addEventListener('click', () => {
-  let rivalHp = parseInt(rivalScoreEl.textContent, 10);
-  const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
-  const half = Math.ceil(dmg / 2);
-
-  rivalHp = Math.max(rivalHp - half, 0);
-  quickReset();
-
-  rivalScoreEl.textContent = rivalHp;
-  rivalHP = rivalHp;
-  saveState();
-});
-
-
-// === Persistent State Storage ===
 function saveState() {
   const state = {
     speedCount,
@@ -196,7 +190,6 @@ function saveState() {
   };
   localStorage.setItem("uvsState", JSON.stringify(state));
 }
-
 function loadState() {
   const stateStr = localStorage.getItem("uvsState");
   if (stateStr) {
@@ -208,17 +201,38 @@ function loadState() {
     rivalHP = state.rivalHP ?? 25;
   }
 }
-
-// === Init ===
 window.onload = function() {
   loadState();
   updateSpeedCounter();
   updateDamageCounter();
   updateHP();
 }
-
 document.addEventListener('touchmove', function (event) {
-  if (event.touches.length > 1) {
-    event.preventDefault(); // Disable pinch zoom
-  }
+  if (event.touches.length > 1) { event.preventDefault(); }
 }, { passive: false });
+document.addEventListener('gesturestart', function (event) { event.preventDefault(); });
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+  const now = new Date().getTime();
+  if (now - lastTouchEnd <= 300) { event.preventDefault(); }
+  lastTouchEnd = now;
+}, false);
+document.body.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 1) {
+        e.preventDefault(); // Prevent multi-touch zoom
+    }
+}, { passive: false });
+
+document.body.addEventListener('gesturestart', (e) => {
+    e.preventDefault(); // Prevent pinch-to-zoom
+});
+
+document.body.addEventListener('dblclick', (e) => {
+    e.preventDefault(); // Prevent double-tap zoom on desktop
+});
+function updateViewportHeight() {
+  const viewportHeight = window.innerHeight;
+  document.querySelector('.main-container').style.height = `${viewportHeight}px`;
+}
+window.addEventListener('resize', updateViewportHeight);
+updateViewportHeight(); // Initial call
