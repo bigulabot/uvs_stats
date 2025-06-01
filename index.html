@@ -15,27 +15,25 @@
     <!-- LEFT: COUNTERS -->
     <div class="counters-container">
 
-      <!-- SPEED COUNTER -->
-      <div class="counter-block">
-        <button class="plus" onclick="incrementSpeed()">+</button>
-        <div class="speed-counter" onclick="cycleSpeedState()">
-          <img id="speedIcon" src="icons/Off.svg" alt="Speed Counter" />
-          <div class="counter-value" id="speedCount">0</div>
-        </div>
-        <button class="minus" onclick="decrementSpeed()">-</button>
-      </div>
+   <!-- SPEED COUNTER -->
+<div class="counter-block">
+  <button class="plus" type="button" aria-label="Increase speed">+</button>
+  <div class="speed-counter" tabindex="0" role="button" aria-label="Cycle speed">
+    <img id="speedIcon" src="icons/Off.svg" alt="Speed Counter" />
+    <div class="counter-value" id="speedCount">0</div>
+  </div>
+  <button class="minus" type="button" aria-label="Decrease speed">-</button>
+</div>
 
-      <!-- DAMAGE COUNTER -->
-      <div class="counter-block">
-        <button class="plus" onclick="incrementDamage()">+</button>
-        <div class="damage-counter">
-          <img src="icons/yellow-star.svg" class="damage-star" />
-          <div class="counter-value" id="damageCount">0</div>
-        </div>
-        <button class="minus" onclick="decrementDamage()">-</button>
-      </div>
-
-    </div>
+<!-- DAMAGE COUNTER -->
+<div class="counter-block">
+  <button class="plus" type="button" aria-label="Increase damage">+</button>
+  <div class="damage-counter">
+    <img src="icons/yellow-star.svg" class="damage-star" alt="" />
+    <div class="counter-value" id="damageCount">0</div>
+  </div>
+  <button class="minus" type="button" aria-label="Decrease damage">-</button>
+</div>
 
     <!-- RIGHT: RESET + PANELS -->
     <div class="right-section">

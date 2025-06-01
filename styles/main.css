@@ -17,6 +17,15 @@ html, body {
   color: #fff;
 }
 
+body,
+.main-container {
+  -webkit-touch-callout: none;
+  /* Disable long press */
+  -webkit-user-select: none;
+  /* Disable text selection */
+  user-select: none;
+}
+
 .main-container {
   display: flex;
   gap: 75px; /* Space between counters and right section */
@@ -24,6 +33,7 @@ html, body {
   height: 100%; /* Full height of the viewport */
   justify-content: space-evenly;
   align-content: space-evenly;
+  gap: 10px
 }
 
 
@@ -34,6 +44,8 @@ html, body {
   flex-direction: row; /* Keep elements side by side */
   align-items: stretch; /* Stretch children vertically */
   height: 100%; /* Ensure it takes up the full height of its parent */
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /* COUNTERS */
@@ -325,6 +337,7 @@ button.icon-button img {
   pointer-events: none;
   transition: transform 0.13s, filter 0.18s;
 }
+
 
 /* RESPONSIVENESS */
 

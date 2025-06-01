@@ -10,6 +10,25 @@ const halfDamageBtn = document.getElementById("halfDamageBtn");
 const fullDamageRivalBtn = document.getElementById("fullDamageRivalBtn");
 const halfDamageRivalBtn = document.getElementById("halfDamageRivalBtn");
 
+// Speed counter buttons
+const speedCounterBlock = document.querySelectorAll('.counter-block')[0];
+const speedPlusBtn = speedCounterBlock.querySelector('.plus');
+const speedMinusBtn = speedCounterBlock.querySelector('.minus');
+const speedCounter = speedCounterBlock.querySelector('.speed-counter');
+
+// Damage counter buttons
+const damageCounterBlock = document.querySelectorAll('.counter-block')[1];
+const damagePlusBtn = damageCounterBlock.querySelector('.plus');
+const damageMinusBtn = damageCounterBlock.querySelector('.minus');
+
+
+speedPlusBtn.addEventListener('pointerdown', incrementSpeed);
+speedMinusBtn.addEventListener('pointerdown', decrementSpeed);
+speedCounter.addEventListener('pointerdown', cycleSpeedState);
+
+damagePlusBtn.addEventListener('pointerdown', incrementDamage);
+damageMinusBtn.addEventListener('pointerdown', decrementDamage);
+
 // === HP LOGIC ===
 let playerHP = 25;
 let rivalHP = 25;
@@ -79,8 +98,7 @@ function adjustHPAndShow(player, amount) {
 // === PANEL BUTTONS (manual adjustment triggers session) ===
 function setupPanelButton(panelSelector, player, amount) {
   const el = document.querySelector(panelSelector);
-  el.addEventListener('click', () => adjustHPAndShow(player, amount));
-  el.addEventListener('touchend', () => adjustHPAndShow(player, amount));
+  el.addEventListener('pointerdown', () => adjustHPAndShow(player, amount));
 }
 setupPanelButton('.player-panel .panel-top', 'player', 1);
 setupPanelButton('.player-panel .panel-bottom', 'player', -1);
@@ -88,7 +106,7 @@ setupPanelButton('.rival-panel .panel-top', 'rival', 1);
 setupPanelButton('.rival-panel .panel-bottom', 'rival', -1);
 
 // === DAMAGE BUTTONS (NO SESSION, ONLY SHOW INCREMENT) ===
-fullDamageBtn.addEventListener('click', () => {
+fullDamageBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   playerHP = Math.max(0, playerHP - dmg);
   updateHP();
@@ -96,7 +114,7 @@ fullDamageBtn.addEventListener('click', () => {
   quickReset();
 });
 
-halfDamageBtn.addEventListener('click', () => {
+halfDamageBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const applied = -Math.ceil(dmg / 2);
   playerHP = Math.max(0, playerHP + applied);
@@ -105,7 +123,7 @@ halfDamageBtn.addEventListener('click', () => {
   quickReset();
 });
 
-fullDamageRivalBtn.addEventListener('click', () => {
+fullDamageRivalBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   rivalHP = Math.max(0, rivalHP - dmg);
   updateHP();
@@ -113,13 +131,25 @@ fullDamageRivalBtn.addEventListener('click', () => {
   quickReset();
 });
 
-halfDamageRivalBtn.addEventListener('click', () => {
+halfDamageRivalBtn.addEventListener('pointerdown', () => {
   const dmg = Math.max(0, parseInt(damageCountEl.textContent, 10));
   const applied = -Math.ceil(dmg / 2);
   rivalHP = Math.max(0, rivalHP + applied);
   updateHP();
   showIncrementDisplay('rival', applied);
   quickReset();
+});
+
+// === RESET BUTTON ===
+document.getElementById("resetBtn").addEventListener("pointerdown", () => {
+  resetHoldTimeout = setTimeout(fullReset, 1500);
+});
+document.getElementById("resetBtn").addEventListener("pointerup", () => {
+  clearTimeout(resetHoldTimeout);
+  quickReset();
+});
+document.getElementById("resetBtn").addEventListener("pointerleave", () => {
+  clearTimeout(resetHoldTimeout);
 });
 
 // === DAMAGE & SPEED LOGIC, STORAGE, RESET, ETC. ===
@@ -137,8 +167,14 @@ function updateSpeedCounter() {
   document.getElementById("speedIcon").src = speedIcons[speedStates[speedState]];
   saveState();
 }
-function incrementSpeed() { speedCount++; updateSpeedCounter(); }
-function decrementSpeed() { speedCount--; updateSpeedCounter(); }
+function incrementSpeed() {
+  speedCount++;
+  updateSpeedCounter();
+}
+function decrementSpeed() {
+  speedCount--;
+  updateSpeedCounter();
+}
 function cycleSpeedState() {
   if (speedState === 0) { speedState = 1; }
   else if (speedState === 3) { speedState = 1; }
@@ -148,7 +184,10 @@ function cycleSpeedState() {
 let damageCount = 0;
 function updateDamageCounter() { damageCountEl.innerText = damageCount; saveState(); }
 function incrementDamage() { damageCount++; updateDamageCounter(); }
-function decrementDamage() { damageCount--; updateDamageCounter(); }
+function decrementDamage() {
+  damageCount--;
+  updateDamageCounter();
+}
 function quickReset() {
   speedCount = 0;
   damageCount = 0;
@@ -213,10 +252,18 @@ document.addEventListener('touchmove', function (event) {
 document.addEventListener('gesturestart', function (event) { event.preventDefault(); });
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function (event) {
+  // Only prevent default if the target is NOT a button or inside a button
   const now = new Date().getTime();
-  if (now - lastTouchEnd <= 300) { event.preventDefault(); }
+  if (
+    now - lastTouchEnd <= 300 &&
+    !event.target.closest('button')
+  ) {
+    event.preventDefault();
+  }
   lastTouchEnd = now;
 }, false);
+
+// === MOBILE SAFETY: Prevent long press, double-tap zoom, and magnify on iOS ===
 document.body.addEventListener('touchstart', (e) => {
     if (e.touches.length > 1) {
         e.preventDefault(); // Prevent multi-touch zoom
@@ -228,11 +275,16 @@ document.body.addEventListener('gesturestart', (e) => {
 });
 
 document.body.addEventListener('dblclick', (e) => {
-    e.preventDefault(); // Prevent double-tap zoom on desktop
+    e.preventDefault(); // Prevent double-tap zoom
 });
-function updateViewportHeight() {
-  const viewportHeight = window.innerHeight;
-  document.querySelector('.main-container').style.height = `${viewportHeight}px`;
-}
-window.addEventListener('resize', updateViewportHeight);
-updateViewportHeight(); // Initial call
+
+// === OPTIONAL: Request fullscreen on page load ===
+window.addEventListener('load', () => {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.webkitRequestFullscreen) { // Safari
+        document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+        document.documentElement.msRequestFullscreen();
+    }
+});
