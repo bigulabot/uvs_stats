@@ -155,6 +155,7 @@ halfDamageRivalBtn.addEventListener('pointerdown', () => {
   quickReset();
 });
 
+
 // === DAMAGE & SPEED LOGIC, STORAGE, RESET, ETC. ===
 let speedCount = 0;
 let speedState = 0;
@@ -228,10 +229,6 @@ function endResetHold() {
 resetBtn.addEventListener("pointerdown", startResetHold);
 resetBtn.addEventListener("pointerup", endResetHold);
 resetBtn.addEventListener("pointerleave", () => clearTimeout(resetHoldTimeout));
-resetBtn.addEventListener("touchstart", startResetHold, { passive: true });
-resetBtn.addEventListener("touchend", endResetHold);
-resetBtn.addEventListener("mousedown", startResetHold);
-resetBtn.addEventListener("mouseup", endResetHold);
 function saveState() {
   const state = {
     speedCount,
