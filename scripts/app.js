@@ -38,7 +38,6 @@ function updateHP() {
   rivalScoreEl.innerText = rivalHP;
   saveState();
 }
-
 function checkOrientation() {
   // Only show warning if in portrait
   if (window.matchMedia("(orientation: portrait)").matches) {
@@ -52,6 +51,8 @@ function checkOrientation() {
 window.addEventListener('load', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
 window.addEventListener('resize', checkOrientation);
+
+
 
 // === INCREMENT DISPLAY (always fades out) ===
 function showIncrementDisplay(player, diff) {
@@ -216,23 +217,33 @@ function fullReset() {
   updateHP();
 }
 let resetHoldTimeout = null;
-document.getElementById("resetBtn").addEventListener("mousedown", () => {
-  resetHoldTimeout = setTimeout(fullReset, 1500);
-});
-document.getElementById("resetBtn").addEventListener("mouseup", () => {
+let resetTriggered = false;
+
+const resetBtn = document.getElementById("resetBtn");
+
+function startResetHold() {
+  resetTriggered = false;
+  resetHoldTimeout = setTimeout(() => {
+    fullReset();
+    quickReset();
+    resetTriggered = true;
+  }, 2000); // 2 seconds for long tap
+}
+
+function endResetHold() {
   clearTimeout(resetHoldTimeout);
-  quickReset();
-});
-document.getElementById("resetBtn").addEventListener("mouseleave", () => {
-  clearTimeout(resetHoldTimeout);
-});
-document.getElementById("resetBtn").addEventListener("touchstart", () => {
-  resetHoldTimeout = setTimeout(fullReset, 1500);
-}, { passive: true });
-document.getElementById("resetBtn").addEventListener("touchend", () => {
-  clearTimeout(resetHoldTimeout);
-  quickReset();
-});
+  if (!resetTriggered) {
+    quickReset();
+  }
+}
+
+resetBtn.addEventListener("pointerdown", startResetHold);
+resetBtn.addEventListener("pointerup", endResetHold);
+resetBtn.addEventListener("pointerleave", () => clearTimeout(resetHoldTimeout));
+resetBtn.addEventListener("touchstart", startResetHold, { passive: true });
+resetBtn.addEventListener("touchend", endResetHold);
+resetBtn.addEventListener("mousedown", startResetHold);
+resetBtn.addEventListener("mouseup", endResetHold);
 function saveState() {
   const state = {
     speedCount,
