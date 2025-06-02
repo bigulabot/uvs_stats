@@ -51,7 +51,6 @@ body,
 /* COUNTERS */
 .counter-block {
   display: flex;
-  flex-grow: 1; /* Allow counter-blocks to grow equally */
   flex-direction: column; /* Stack elements vertically */
   align-items: center;
   justify-content: center; /* Center elements vertically */
@@ -85,7 +84,6 @@ button.plus, button.minus {
 /* SPEED COUNTER */
 .speed-counter {
   display: flex;
-  flex-grow: 1;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -202,7 +200,6 @@ button.plus, button.minus {
 }
 
 
-
 /* HP PANELS */
 .hp-panels {
   position: relative;
@@ -213,9 +210,8 @@ button.plus, button.minus {
   align-content: stretch;
   width: 100%;
   height: 100%;
-  gap: 20px
+  gap: 20px;
   padding-top: 10px;
-  padding-right: 10px;
   padding-bottom: 10px;
 }
 
@@ -239,7 +235,9 @@ button.plus, button.minus {
 }
 
 .player-panel { background: #003070; }
+.player-panel:active { background: #004080; }
 .rival-panel { background: #830003; }
+.rival-panel:active { background: #a00000; }  
 
 .player-panel h2,
 .rival-panel h2 {
@@ -342,81 +340,6 @@ button.icon-button img {
   transition: transform 0.13s, filter 0.18s;
 }
 
-
-/* PORTRAIT WARNIN AND INSTRUCTIONS */
-#orientation-warning {
-  position: fixed;
-  z-index: 9999;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(20,20,20,1);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
-  pointer-events: all;
-}
-
-.orientation-message {
-  padding: 2em 1em;
-  border-radius: 18px;
-  background: #111b;
-  box-shadow: 0 0 20px #0008;
-  display: flex;
-  width: 100%;
-}
-.instructions-wrapper {
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: center;
-  justify-content: center;
-}
-
-.instruction-card {
-  background: #232629;
-  border-radius: 32px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  width: 100%;
-  max-width: 420px;   /* Or a value to match your Figma, but not required */
-  box-shadow: 0 4px 20px #0006;
-  margin: 0 auto;     /* Center horizontally if wrapper is wide */
-}
-
-.instruction-card .icon {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  margin-top: 2px;
-  margin-left: 10px;
-}
-
-.instruction-card span {
-  font-size: 12px;
-  color: #fff;
-  display: block;
-  line-height: 1.32;
-}
-
-.instruction-card strong {
-  font-weight: 600;
-  color: #fff;
-}
-
-@media (max-width: 400px) {
-  .instruction-card {
-    min-width: unset;
-    padding: 18px 8px;
-  }
-}
-
-
-
 /* RESPONSIVENESS */
 
 @media (min-width: 1024px) { /* Apply styles for desktop screens */
@@ -433,5 +356,114 @@ button.icon-button img {
     gap: 20px; /* Reduce spacing */
     width: auto; /* Allow shrinking */
     height: auto; /* Allow shrinking */
+  }
+}
+@media (orientation: portrait) {
+  body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000;
+   
+    
+  }
+ .main-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  padding: 0 !important;
+}
+
+.counters-container {
+  order: 1;
+  width: 100vw !important;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center !important; /* or space-evenly */
+  align-items: stretch !important;
+  margin: 0 !important;
+}
+
+.right-section {
+  order: 2;
+  width: 100vw !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: stretch !important;
+  margin: 0 0 16px 0 !important;
+  position: static !important;
+}
+  .counter-block {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 18px !important;
+    width: 40vw !important;
+    max-width: 180px !important;
+    min-width: 120px !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .reset-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    position: static !important;
+    z-index: 10 !important;
+  }
+  .reset-shield {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 50% !important;
+    background: none !important;
+    box-shadow: none !important;
+    font-size: 2.3rem !important;
+    z-index: 10 !important;
+  }
+  .hp-panels {
+    width: 100vw !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-evenly !important;
+    align-items: flex-start !important;
+    margin: 0 0 16px 0 !important;
+    flex: none !important;
+  }
+  .player-panel, .rival-panel {
+    width: 42vw !important;
+    max-width: 180px !important;
+    min-width: 100px !important;
+    height: 120px !important;
+    margin-bottom: 0 !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    font-size: 2rem !important;
+  }
+  .bottom-icons-row {
+    width: 100vw !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+    gap: 16px !important;
+    margin: 0 0 12px 0 !important;
+    position: static !important;
+    transform: none !important;
   }
 }
