@@ -40,7 +40,6 @@ body,
 
 .counters-container {
   display: flex;
-  flex-grow: 2; /* Higher priority for counters-container */
   flex-direction: row; /* Keep elements side by side */
   align-items: stretch; /* Stretch children vertically */
   height: 100%; /* Ensure it takes up the full height of its parent */
@@ -120,7 +119,6 @@ button.plus:active, button.minus:active {
 /* DAMAGE COUNTER */
 .damage-counter {
   display: flex;
-  flex-grow: 1;
   align-items: center;
   justify-content: center;
   min-width: 180px;
@@ -154,7 +152,7 @@ button.plus:active, button.minus:active {
   align-items: stretch;
   flex-grow: 1;
   flex-direction: column;
-  width: 100%; /* Fill the grid area */
+  width: 80%; /* Fill the grid area */
   height: 100%; /* Stretch to match the height of main-container */
   
 }
@@ -163,7 +161,7 @@ button.plus:active, button.minus:active {
   display: flex;
   position: absolute;
   z-index: 20;
-  left: -38px;                /* "Pokes out" left, adjust as needed */
+  left: -42px;                /* "Pokes out" left, adjust as needed */
   top: 50%;
   transform: translateY(-50%);
   flex-direction: column;
@@ -176,10 +174,16 @@ button.plus:active, button.minus:active {
   cursor: pointer;
 }
 
-.reset-container img {
-  width: 72px;
-  height: 72px;
+.reset-container button:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.11);
 }
+
+.reset-container img {
+  width: 85px;
+  height: 85px;
+}
+
 
 
 .panel-group-wrapper {
@@ -189,11 +193,12 @@ button.plus:active, button.minus:active {
   align-items: stretch;
   width: 100%;
   height: 100%;
-  max-width: 370px;      /* Adjust as needed for your layout */
+  min-width: 160px;      /* Adjust as needed for your layout */
   min-height: 160px;     /* Ensures enough space for buttons and panel */
   margin: 0;
   justify-content: stretch;
   align-content: stretch;
+  padding-right: 10px;
 }
 
 .panel-group {
@@ -219,6 +224,7 @@ button.plus:active, button.minus:active {
   gap: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-right: 10px;
 }
 
 .panel-group {
@@ -240,10 +246,10 @@ button.plus:active, button.minus:active {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
-.player-panel { background: #003070; }
-.player-panel:active { background: #004080; }
-.rival-panel { background: #830003; }
-.rival-panel:active { background: #a00000; }  
+
+.player-panel { background: #004080; }
+.rival-panel { background: #a00000; }
+ 
 
 .player-panel h2,
 .rival-panel h2 {
@@ -276,8 +282,7 @@ button.plus:active, button.minus:active {
 
 .panel-top { top: 0; }
 .panel-bottom { bottom: 0; }
-
-
+ 
 
 /* HP INCREMENT DISPLAYS */
 .hp-row {
@@ -306,16 +311,16 @@ button.plus:active, button.minus:active {
 }
 
 
-/* PANEL ACTIONS - Damage buttons on the left, overlapping */
+/* PANEL ACTIONS */
 .panel-actions {
   position: absolute;
-  left: -32px;                /* "Pokes out" left, adjust as needed */
   top: 50%;
   transform: translateY(-50%);
+  left: -40px;                
   z-index: 20;
   display: flex;
   flex-direction: column;
-  gap: 0.13em;
+  gap: 0.2em;
   background: #181818;
   border: 2px solid #333;
   border-radius: 14px;
@@ -323,6 +328,13 @@ button.plus:active, button.minus:active {
   padding: 0.5em 0.25em;
   width: 56px;
   align-items: center;
+  gap: 10px;
+}
+.panel-actions.player-actions {
+    top: 20%;
+}
+.panel-actions.rival-actions {
+    top: 80%;
 }
 
 /* ICON BUTTONS */
@@ -334,8 +346,11 @@ button.icon-button {
   cursor: pointer;
   margin: 0 0.5em;
   border-radius: 12px;
-  /* Optional: focus style for accessibility */
-  /* outline: 2px solid #ffe95c; */
+}
+
+button.icon-button:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.11);
 }
 
 button.icon-button img {
