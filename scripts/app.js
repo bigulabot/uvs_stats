@@ -38,19 +38,6 @@ function updateHP() {
   rivalScoreEl.innerText = rivalHP;
   saveState();
 }
-function checkOrientation() {
-  // Only show warning if in portrait
-  if (window.matchMedia("(orientation: portrait)").matches) {
-    document.getElementById('orientation-warning').style.display = 'flex';
-  } else {
-    document.getElementById('orientation-warning').style.display = 'none';
-  }
-}
-
-// Check on load and whenever orientation changes
-window.addEventListener('load', checkOrientation);
-window.addEventListener('orientationchange', checkOrientation);
-window.addEventListener('resize', checkOrientation);
 
 
 
