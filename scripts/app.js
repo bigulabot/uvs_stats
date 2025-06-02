@@ -155,18 +155,6 @@ halfDamageRivalBtn.addEventListener('pointerdown', () => {
   quickReset();
 });
 
-// === RESET BUTTON ===
-document.getElementById("resetBtn").addEventListener("pointerdown", () => {
-  resetHoldTimeout = setTimeout(fullReset, 1500);
-});
-document.getElementById("resetBtn").addEventListener("pointerup", () => {
-  clearTimeout(resetHoldTimeout);
-  quickReset();
-});
-document.getElementById("resetBtn").addEventListener("pointerleave", () => {
-  clearTimeout(resetHoldTimeout);
-});
-
 // === DAMAGE & SPEED LOGIC, STORAGE, RESET, ETC. ===
 let speedCount = 0;
 let speedState = 0;
