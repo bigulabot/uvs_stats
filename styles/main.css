@@ -5,44 +5,61 @@
   font-family: 'Poppins', sans-serif;
 }
 
-body {
+html, body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  width: 100%; /* Full width of the viewport */
+  height: 100%; /* Full height of the viewport */
+  justify-content: space-evenly;
+  align-content: space-evenly;
   background-color: #000;
   color: #fff;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+}
+
+body,
+.main-container {
+  -webkit-touch-callout: none;
+  /* Disable long press */
+  -webkit-user-select: none;
+  /* Disable text selection */
+  user-select: none;
 }
 
 .main-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
+  gap: 75px; /* Space between counters and right section */
+  width: 100%; /* Full width of the viewport */
+  height: 100%; /* Full height of the viewport */
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  gap: 60px
+}
+
+
+
+.counters-container {
+  display: flex;
+  flex-direction: row; /* Keep elements side by side */
+  align-items: stretch; /* Stretch children vertically */
+  height: 100%; /* Ensure it takes up the full height of its parent */
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /* COUNTERS */
-.counters-container {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-}
-
 .counter-block {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stack elements vertically */
   align-items: center;
-  gap: 8px;
-  position: relative;
+  justify-content: center; /* Center elements vertically */
+  gap: 6px;
+  position: relative; 
 }
 
 /* PLUS/MINUS Buttons */
 button.plus, button.minus {
+  display: flex;
   font-size: 32px;
   width: 60px;
   height: 60px;
@@ -52,7 +69,16 @@ button.plus, button.minus {
   color: white;
   cursor: pointer;
   position: relative;
+  align-items: center;
+  justify-content: center;
+  
 }
+
+button.plus:active, button.minus:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.11);
+}
+
 
 /* Move Speed counter +/- buttons slightly right */
 .counter-block:first-child button.plus,
@@ -62,15 +88,18 @@ button.plus, button.minus {
 
 /* SPEED COUNTER */
 .speed-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  width: 180px;
-  height: 180px;
-  cursor: pointer;
+  min-width: 180px;
+  min-height: 180px;
 }
 
 .speed-counter img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .speed-counter .counter-value {
@@ -89,14 +118,17 @@ button.plus, button.minus {
 
 /* DAMAGE COUNTER */
 .damage-counter {
-  position: relative;
-  width: 180px;
-  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  min-height: 180px;
 }
 
 .damage-star {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .damage-counter .counter-value {
@@ -116,20 +148,24 @@ button.plus, button.minus {
 /* RIGHT SECTION (PANELS + RESET) */
 .right-section {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 40px;
   position: relative;
-  margin-left: 40px; /* Shift whole right section further right */
+  align-items: stretch;
+  flex-grow: 1;
+  flex-direction: column;
+  width: 80%; /* Fill the grid area */
+  height: 100%; /* Stretch to match the height of main-container */
+  
 }
 
-/* RESET BUTTON */
 .reset-container {
+  display: flex;
   position: absolute;
-  left: -35px;
+  z-index: 20;
+  left: -42px;                /* "Pokes out" left, adjust as needed */
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
+  flex-direction: column;
+  align-items: center;
 }
 
 .reset-container button {
@@ -138,56 +174,95 @@ button.plus, button.minus {
   cursor: pointer;
 }
 
+.reset-container button:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.11);
+}
+
 .reset-container img {
-  width: 72px;
-  height: 72px;
+  width: 85px;
+  height: 85px;
+}
+
+
+
+.panel-group-wrapper {
+  flex: 1 1 0;
+  display: flex;
+  position: relative;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  min-width: 160px;      /* Adjust as needed for your layout */
+  min-height: 160px;     /* Ensures enough space for buttons and panel */
+  margin: 0;
+  justify-content: stretch;
+  align-content: stretch;
+  padding-right: 10px;
+}
+
+.panel-group {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  position: relative;
 }
 
 
 /* HP PANELS */
 .hp-panels {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
+  flex-direction: column; /* Panels stack vertically within the right section */
+  align-items: stretch;
+  justify-content: stretch;
+  align-content: stretch;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
 }
 
 .panel-group {
   position: relative;
-  width: fit-content;
-  margin: 0 auto 0.6em auto; /* Reduced bottom margin for tighter stacking */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: stretch;
 }
 
 .player-panel, .rival-panel {
-  position: relative;
-  width: 240px;
-  height: 150px;
+  width: 100%; /* Stretch to fill the panel group */
+  height: 100%; /* Stretch to fill the panel group */
   border-radius: 20px;
-  padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: stretch;
   align-items: center;
-  overflow: hidden;
   border: 3px solid #5d5d5d;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
-.player-panel { background: #003070; }
-.rival-panel { background: #830003; }
+
+.player-panel { background: #004080; }
+.rival-panel { background: #a00000; }
+ 
 
 .player-panel h2,
 .rival-panel h2 {
-  font-size: 20px;
+  font-size: 25px;
   margin-bottom: 10px;
 }
 
 .score {
-  font-size: 60px;
+  position: relative;
+  font-size: 75px;    /* Or your preferred size */
   font-weight: bold;
+  color: #fff;
+  display: inline-block;
   text-shadow: 
     -2px -2px 0 #000,  
     2px -2px 0 #000,  
@@ -207,6 +282,60 @@ button.plus, button.minus {
 
 .panel-top { top: 0; }
 .panel-bottom { bottom: 0; }
+ 
+
+/* HP INCREMENT DISPLAYS */
+.hp-row {
+  position: relative;
+  display: flex;
+  align-items: center;      
+  justify-content: center;  
+  height: 100%;              
+}
+
+.increment-display {
+  position: absolute;
+  left: calc(50% + 5em); /* Tweak the em until it's the distance you like */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 1s;
+  pointer-events: none;
+  text-shadow: 0 0 8px #222;
+  font-size: 15px;           /* Adjust size as you like */
+  line-height: 1;
+  min-width: 1.5em;
+  text-align: left;
+}
+
+
+/* PANEL ACTIONS */
+.panel-actions {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -40px;                
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  background: #181818;
+  border: 2px solid #333;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px #0005;
+  padding: 0.5em 0.25em;
+  width: 56px;
+  align-items: center;
+  gap: 10px;
+}
+.panel-actions.player-actions {
+    top: 20%;
+}
+.panel-actions.rival-actions {
+    top: 80%;
+}
 
 /* ICON BUTTONS */
 button.icon-button {
@@ -217,46 +346,145 @@ button.icon-button {
   cursor: pointer;
   margin: 0 0.5em;
   border-radius: 12px;
-  /* Optional: focus style for accessibility */
-  /* outline: 2px solid #ffe95c; */
+}
+
+button.icon-button:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.11);
 }
 
 button.icon-button img {
-  width: 48px;
-  height: 48px;
+  width: 40px; /* Adjust icon size */
+  height: 40px;
   display: block;
   pointer-events: none;
   transition: transform 0.13s, filter 0.18s;
 }
 
+/* RESPONSIVENESS */
 
-/* PANEL ACTIONS - Damage buttons on the left, overlapping */
-.panel-actions {
-  position: absolute;
-  left: -30px;      /* Adjust as needed for horizontal placement */
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 0.13em;      /* Tight vertical spacing */
-  z-index: 2;
-  margin: 0;
-  padding: 0;
+@media (min-width: 1024px) { /* Apply styles for desktop screens */
+  .main-container {
+    width: 700px; /* Fixed width for desktop */
+    height: 320px; /* Fixed height for desktop */
+    margin: auto; /* Center the container */
+  }
 }
 
-.player-actions { top: 38%; }  /* Move up or down as needed */
-.rival-actions  { top: 62%; }  /* Move up or down as needed */
-
-/* RESPONSIVENESS */
-@media (max-width: 1200px) {
+@media (max-width: 560px) {
   .main-container {
-    flex-direction: column;
-    gap: 30px;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 20px; /* Reduce spacing */
+    width: auto; /* Allow shrinking */
+    height: auto; /* Allow shrinking */
   }
-  .counters-container {
-    flex-direction: column;
+}
+@media (orientation: portrait) {
+  body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000;
+   
+    
+  }
+ .main-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  padding: 0 !important;
+}
+
+.counters-container {
+  order: 1;
+  width: 100vw !important;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center !important; /* or space-evenly */
+  align-items: stretch !important;
+  margin: 0 !important;
+}
+
+.right-section {
+  order: 2;
+  width: 100vw !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: stretch !important;
+  margin: 0 0 16px 0 !important;
+  position: static !important;
+}
+  .counter-block {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 18px !important;
+    width: 40vw !important;
+    max-width: 180px !important;
+    min-width: 120px !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .reset-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    position: static !important;
+    z-index: 10 !important;
+  }
+  .reset-shield {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 50% !important;
+    background: none !important;
+    box-shadow: none !important;
+    font-size: 2.3rem !important;
+    z-index: 10 !important;
   }
   .hp-panels {
-    flex-direction: row;
+    width: 100vw !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-evenly !important;
+    align-items: flex-start !important;
+    margin: 0 0 16px 0 !important;
+    flex: none !important;
+  }
+  .player-panel, .rival-panel {
+    width: 42vw !important;
+    max-width: 180px !important;
+    min-width: 100px !important;
+    height: 120px !important;
+    margin-bottom: 0 !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    font-size: 2rem !important;
+  }
+  .bottom-icons-row {
+    width: 100vw !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+    gap: 16px !important;
+    margin: 0 0 12px 0 !important;
+    position: static !important;
+    transform: none !important;
   }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>UVS Stats Counter</title>
   <link rel="stylesheet" href="styles/main.css" />
   <link rel="manifest" href="manifest.json" />
@@ -15,50 +15,36 @@
     <!-- LEFT: COUNTERS -->
     <div class="counters-container">
 
-      <!-- SPEED COUNTER -->
-      <div class="counter-block">
-        <button class="plus" onclick="incrementSpeed()">+</button>
-        <div class="speed-counter" onclick="cycleSpeedState()">
-          <img id="speedIcon" src="icons/Off.svg" alt="Speed Counter" />
-          <div class="counter-value" id="speedCount">0</div>
-        </div>
-        <button class="minus" onclick="decrementSpeed()">-</button>
-      </div>
+   <!-- SPEED COUNTER -->
+<div class="counter-block">
+  <button class="plus" type="button" aria-label="Increase speed">+</button>
+  <div class="speed-counter" tabindex="0" role="button" aria-label="Cycle speed">
+    <img id="speedIcon" src="icons/Off.svg" alt="Speed Counter" />
+    <div class="counter-value" id="speedCount">0</div>
+  </div>
+  <button class="minus" type="button" aria-label="Decrease speed">-</button>
+</div>
 
-      <!-- DAMAGE COUNTER -->
-      <div class="counter-block">
-        <button class="plus" onclick="incrementDamage()">+</button>
-        <div class="damage-counter">
-          <img src="icons/yellow-star.svg" class="damage-star" />
-          <div class="counter-value" id="damageCount">0</div>
-        </div>
-        <button class="minus" onclick="decrementDamage()">-</button>
-      </div>
-
-    </div>
-
+<!-- DAMAGE COUNTER -->
+<div class="counter-block">
+  <button class="plus" type="button" aria-label="Increase damage">+</button>
+  <div class="damage-counter">
+    <img src="icons/yellow-star.svg" class="damage-star" alt="" />
+    <div class="counter-value" id="damageCount">0</div>
+  </div>
+  <button class="minus" type="button" aria-label="Decrease damage">-</button>
+</div>
+</div>
     <!-- RIGHT: RESET + PANELS -->
     <div class="right-section">
-
-      <!-- RESET BUTTON (positioned absolutely) -->
+    
       <div class="reset-container">
         <button id="resetBtn">
           <img src="icons/block-reset.svg" alt="Reset" />
         </button>
-      </div>
+      </div>  
 
-      <!-- PANELS -->
-    <div class="hp-panels">
-
-  <!-- PLAYER PANEL GROUP -->
-  <div class="panel-group">
-    <div class="player-panel">
-      <h2>Player</h2>
-      <div class="score" id="playerScore">25</div>
-      <div class="panel-top"></div>
-      <div class="panel-bottom"></div>
-    </div>
-    <div class="panel-actions player-actions">
+ <div class="panel-actions player-actions">
       <button id="fullDamageBtn" class="icon-button">
         <img src="icons/player-full.svg" alt="Player Full Damage" />
       </button>
@@ -66,17 +52,8 @@
         <img src="icons/player-half.svg" alt="Player Half Damage" />
       </button>
     </div>
-  </div>
 
-  <!-- RIVAL PANEL GROUP -->
-  <div class="panel-group">
-    <div class="rival-panel">
-      <h2>Rival</h2>
-      <div class="score" id="rivalScore">25</div>
-      <div class="panel-top"></div>
-      <div class="panel-bottom"></div>
-    </div>
-    <div class="panel-actions rival-actions">
+   <div class="panel-actions rival-actions">
       <button id="fullDamageRivalBtn" class="icon-button">
         <img src="icons/rival-full.svg" alt="Rival Full Damage" />
       </button>
@@ -84,9 +61,47 @@
         <img src="icons/rival-half.svg" alt="Rival Half Damage" />
       </button>
     </div>
+
+
+
+      <!-- PANELS -->
+   <div class="hp-panels">
+       
+  <!-- PLAYER PANEL WRAPPER -->
+  
+    <div class="panel-group">
+      <div class="player-panel">
+        <h2>Player</h2>
+        <div class="panel-top"></div>
+        <div class="hp-row">
+          <span id="playerScore" class="score">25</span>
+          <div class="increment-display"></div>
+        </div>
+        <div class="panel-bottom"></div>
+      </div>
+    </div>
+   
+  
+
+  <!-- RIVAL PANEL WRAPPER -->
+  
+    <div class="panel-group">
+      <div class="rival-panel">
+        <h2>Rival</h2>
+        <div class="panel-top"></div>
+        <div class="hp-row">
+          <span id="rivalScore" class="score">25</span>
+          <div class="increment-display"></div>
+        </div>
+        <div class="panel-bottom"></div>
+      </div>
+    </div>
+ 
+  
+   </div>
+</div>
   </div>
 
-</div>
 
   <script src="scripts/app.js"></script>
 
