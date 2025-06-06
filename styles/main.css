@@ -36,7 +36,17 @@ body,
   gap: 60px
 }
 
+#showLandingPageBtn {
+  position: fixed;
+  background: transparent;       
+  border: 2px solid #636363; 
+  border-radius: 100%;
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 0.8em;
+  width: 1em;                  /* SAME value for width and height */
+  height: 1.1em;
 
+}
 
 .counters-container {
   display: flex;
@@ -339,6 +349,118 @@ button.icon-button img {
   pointer-events: none;
   transition: transform 0.13s, filter 0.18s;
 }
+
+/* LANDING PAGE */
+.landing-page {
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(20,22,30,0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vw;
+}
+
+
+.landing-content {
+  background: #222529;
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 28px #000a;
+  padding: 5vw 4vw 4vw 4vw;
+  text-align: left;
+  max-width: 410px;
+  width: 96vw;
+  max-height: 87vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Welcome header */
+.welcome-message {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0;
+  color: #ffcc00; /* Highlight color */
+  text-align: center;
+}
+
+/* Description text */
+.landing-description {
+  font-size: 0.8em;
+  line-height: 1.5;
+  margin-bottom: 1.5em;
+  color: #ccc; /* Lighter text */
+  text-align: center;
+}
+
+/* Close button (X) */
+.close-btn {
+  position: absolute;
+  top: 0.7em;
+  right: 0.7em;
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+}
+.close-btn:hover,
+.close-btn:focus {
+  color: #0078ff;
+}
+
+/* Instruction list */
+.landing-list {
+  margin: 2em 0 2.5em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.landing-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  font-size: 1.07em;
+  line-height: 1.4;
+}
+
+/* Instruction icons */
+.landing-icon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 4px #0004);
+}
+
+/* Buy Me a Coffee button */
+.coffee-btn {
+  display: inline-flex;
+  border: none;
+  padding: 0.5em 1.2em;
+  margin-top: 1em;
+  cursor: pointer;
+  gap: 0.7em;
+  background: none; /* Remove default background if using SVG button */
+}
+.coffee-btn img {
+  width: 1.8em;  /* Use a readable icon size */
+  height: 1.8em;
+}
+.coffee-btn:hover, .coffee-btn:focus {
+  background: #000000;
+  border-radius: 20%;
+}
+
+
 
 /* RESPONSIVENESS */
 
