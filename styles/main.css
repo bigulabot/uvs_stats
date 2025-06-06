@@ -236,8 +236,8 @@ button.plus:active, button.minus:active {
 
 .player-panel h2,
 .rival-panel h2 {
-  font-size: 25px;
-  margin-bottom: 10px;
+  font-size: 20px;
+  padding-top: 15px;
 }
 
 .score {
@@ -360,24 +360,102 @@ button.icon-button img {
     width: auto; /* Allow shrinking */
     height: auto; /* Allow shrinking */
   }
-}
-@media (orientation: portrait) {
+
   body, html {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     background: #000;
-       
   }
- .main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  min-height: 100vh;
-  width: 100vw;
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100vw;
   padding: 0;
 }
 
+.right-section {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hp-panels {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+    padding-bottom: 9vh;
+  }
+
+  .counter-block:first-child button.plus, 
+  .counter-block:first-child button.minus {
+    left: 0px;
+  }
+.reset-container {
+    display: flex;
+    position: absolute;
+    z-index: 20;
+    top: 5%;
+    align-items: center;
+    transform: translateY(-50%);
+    left: auto;
+    }
+
+.panel-actions {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -26px;                
+  z-index: 20;
+  display: flex;
+  flex-direction: row;
+  gap: 0.2em;
+  width: 56px;
+  align-items: center;
+  gap: 10px;
+}
+.panel-actions.player-actions {
+  top: 91%;
+  right: 81%;
+  left: auto;
+}
+.panel-actions.rival-actions {
+  top: 91%;
+  left: 56%;
+  right: auto;
+}
+
+button.icon-button img {
+    width: 15vw;
+    display: block;
+    pointer-events: none;
+    transition: transform 0.13s, filter 0.18s;
+}
+
+.increment-display {
+  position: absolute;
+  left: calc(50% + 3.75em); /* Tweak the em until it's the distance you like */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 1s;
+  pointer-events: none;
+  text-shadow: 0 0 8px #222;
+  font-size: 15px;           /* Adjust size as you like */
+  line-height: 1;
+  min-width: 1.5em;
+  text-align: left;
+}
 }
