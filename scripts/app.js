@@ -203,7 +203,7 @@ function startResetHold() {
     fullReset();
     quickReset();
     resetTriggered = true;
-  }, 2000); // 2 seconds for long tap
+  }, 1500); // 2 seconds for long tap
 }
 
 function endResetHold() {
