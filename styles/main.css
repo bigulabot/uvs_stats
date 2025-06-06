@@ -343,6 +343,52 @@ button.icon-button img {
   transition: transform 0.13s, filter 0.18s;
 }
 
+/* LANDING PAGE */
+.landing-page {
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(20,22,30,0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-page .landing-content {
+  background: #222529;
+  color: #fff;
+  border-radius: 22px;
+  box-shadow: 0 2px 28px #000a;
+  padding: 2.5em 2em 2em 2em;
+  text-align: center;
+  max-width: 95vw;
+  width: 350px;
+  position: relative;
+}
+
+.landing-page h2 {
+  margin-bottom: 0.7em;
+}
+.landing-page .close-btn {
+  position: absolute;
+  top: 0.7em;
+  right: 0.7em;
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+}
+.landing-page .close-btn:hover,
+.landing-page .close-btn:focus {
+  color: #0078ff;
+}
+
+
+
 /* RESPONSIVENESS */
 
 @media (min-width: 1024px) { /* Apply styles for desktop screens */

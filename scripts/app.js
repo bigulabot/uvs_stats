@@ -285,3 +285,22 @@ window.addEventListener('load', () => {
         document.documentElement.msRequestFullscreen();
     }
 });
+
+// === LANDING PAGE LOGIC (always show on load, can close with X) ===
+window.addEventListener('DOMContentLoaded', () => {
+  const landingPage = document.getElementById('landingPage');
+  const closeLandingPage = document.getElementById('closeLandingPage');
+
+  landingPage.style.display = 'flex';
+
+  closeLandingPage?.addEventListener('click', () => {
+    landingPage.style.display = 'none';
+  });
+});
+
+const showLandingPageBtn = document.getElementById('showLandingPageBtn');
+const landingPage = document.getElementById('landingPage');
+
+showLandingPageBtn?.addEventListener('click', () => {
+  landingPage.style.display = 'flex';
+});
