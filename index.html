@@ -15,7 +15,7 @@
 
   <div class="main-container">
 
-    <button id="showLandingPageBtn" class="icon-button" style="position: absolute; top: 1em; left: 1em; z-index: 20;">
+    <button id="showLandingPageBtn" class="icon-button" style="position: absolute; top: 0.3em; left: 0em; z-index: 20;">
   ?
 </button>
 
@@ -111,8 +111,47 @@
   <div id="landingPage" class="landing-page">
   <div class="landing-content">
     <button id="closeLandingPage" class="close-btn" aria-label="Close">&times;</button>
-    <h2>Welcome to UVS Counter!</h2>
-    <p>This is your app landing screen. Tap the X to continue.</p>
+    
+    <div class="welcome-message">
+    Welcome to <b>UVS Counter</b>!
+  </div>
+    <div class="landing-description">
+      This app is designed to help you keep track of speed, zone, damage, and life in your games. 
+    </div>
+
+    <div class="landing-list">
+      <div class="landing-row">
+        <img src="icons/home-screen.svg" class="landing-icon" alt="Add to Home Screen" />
+        <span>Click on the <img src="icons/share.svg" alt="Share" style="vertical-align:center; width:1em; height:1em; margin:0;"> button and <b>Add to Home Screen</b> for the best experience.</span>
+      </div>
+      <div class="landing-row">
+        <img src="icons/rotate-device.svg" class="landing-icon" alt="Phone Portrait/Landscape" />
+        <span>This app works both in portrait and landscape mode.</span>
+      </div>
+      <div class="landing-row">
+        <img src="icons/intro-reset.svg" class="landing-icon" alt="Reset" />
+        <span>
+          <b>tap</b> to reset speed &amp; damage / full block.<br>
+          <b>hold</b> to reset speed, damage &amp; life count.
+        </span>
+      </div>
+      <div class="landing-row">
+        <img src="icons/intro_dmg1.svg" class="landing-icon" alt="Full Damage" />
+        <span><b>tap</b> to deal full damage.</span>
+      </div>
+      <div class="landing-row">
+        <img src="icons/intro_dmg2.svg" class="landing-icon" alt="Half Damage" />
+        <span><b>tap</b> to deal half damage / half block.</span>
+      </div>
+         <div style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://coff.ee/bigula" target="_blank" class="coffee-btn">
+    <img src="icons/bmc-button.svg" alt="Buy me a coffee" style="height:32px; width:auto;">
+  </a>
+</div>
+    </div>
+ 
+  
+
   </div>
 </div>
 
