@@ -271,9 +271,26 @@ button.plus:active, button.minus:active {
 }
 
 .panel-top:active, .panel-bottom:active {
-  transform: translateY(2px) scale(0.95);
-  opacity: 0.8;
-} 
+  background: rgba(255,255,255,0.18); /* lighter highlight */
+}
+
+.panel-top {
+  transition: background 0.15s, transform 0.12s;
+  border-top-left-radius: 15%;
+  border-top-right-radius: 15%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.panel-bottom {
+  transition: background 0.15s, transform 0.12s;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 15%;
+  border-bottom-right-radius: 15%;
+}
+
+
 
 .panel-top { top: 0; }
 .panel-bottom { bottom: 0; }
@@ -376,6 +393,22 @@ button.icon-button img {
   overflow-y: auto;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-link {
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+.support-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  gap: 0.5em;
 }
 
 /* Welcome header */
@@ -460,7 +493,13 @@ button.icon-button img {
   border-radius: 20%;
 }
 
-
+.support-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  gap: 0.5em;
+}
 
 /* RESPONSIVENESS */
 
