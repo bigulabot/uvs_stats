@@ -191,6 +191,11 @@ button.plus:active, button.minus:active {
   height: 85px;
 }
 
+#resetBtn img {
+  pointer-events: none;
+}
+
+
 .panel-group {
   width: 100%;
   height: 100%;
