@@ -191,6 +191,12 @@ button.plus:active, button.minus:active {
   height: 85px;
 }
 
+#resetBtn img {
+  pointer-events: none;
+}
+
+
+
 .panel-group {
   width: 100%;
   height: 100%;
@@ -289,8 +295,6 @@ button.plus:active, button.minus:active {
   border-bottom-left-radius: 15%;
   border-bottom-right-radius: 15%;
 }
-
-
 
 .panel-top { top: 0; }
 .panel-bottom { bottom: 0; }
@@ -482,10 +486,10 @@ button.icon-button img {
   margin-top: 1em;
   cursor: pointer;
   gap: 0.7em;
-  background: none; /* Remove default background if using SVG button */
+  background: none; 
 }
 .coffee-btn img {
-  width: 1.8em;  /* Use a readable icon size */
+  width: 1.8em;  
   height: 1.8em;
 }
 .coffee-btn:hover, .coffee-btn:focus {
@@ -500,6 +504,14 @@ button.icon-button img {
   margin-top: auto;
   gap: 0.5em;
 }
+
+/* Disable text selection and long press */
+button img,
+.speed-counter img,
+.damage-counter img {
+  pointer-events: none;
+}
+
 
 /* RESPONSIVENESS */
 
