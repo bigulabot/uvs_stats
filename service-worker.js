@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uvs-stats-cache-v2'; // Increment version to force update
+const CACHE_NAME = 'uvs-stats-cache-v2.5'; // Increment version to force update
 const urlsToCache = [
   './',
   './index.html',
