@@ -556,7 +556,7 @@ button img,
 }
 
 /* Remove tap highlight color for buttons and icon buttons */
-button, a, .icon-button {
+button, a, .icon-button, .panel-top, .panel-bottom {
   -webkit-tap-highlight-color: transparent;
 }
 
