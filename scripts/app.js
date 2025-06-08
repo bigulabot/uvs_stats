@@ -30,6 +30,19 @@ damagePlusBtn.addEventListener('pointerdown', incrementDamage);
 damageMinusBtn.addEventListener('pointerdown', decrementDamage);
 
 // === HP LOGIC ===
+let defaultPlayerHP = 25;
+let defaultRivalHP = 25;
+
+// Try to load custom defaults from localStorage
+function loadDefaultHP() {
+  const defaults = JSON.parse(localStorage.getItem('uvsDefaultHP') || '{}');
+  defaultPlayerHP = defaults.player ?? 25;
+  defaultRivalHP = defaults.rival ?? 25;
+}
+function saveDefaultHP(player, rival) {
+  localStorage.setItem('uvsDefaultHP', JSON.stringify({ player, rival }));
+}
+
 let playerHP = 25;
 let rivalHP = 25;
 
@@ -188,8 +201,9 @@ function quickReset() {
 }
 function fullReset() {
   quickReset();
-  playerHP = 25;
-  rivalHP = 25;
+  loadDefaultHP();
+  playerHP = defaultPlayerHP;
+  rivalHP = defaultRivalHP;
   updateHP();
 }
 let resetHoldTimeout = null;
@@ -238,6 +252,7 @@ function loadState() {
   }
 }
 window.onload = function() {
+  loadDefaultHP();
   loadState();
   updateSpeedCounter();
   updateDamageCounter();
@@ -304,3 +319,82 @@ const landingPage = document.getElementById('landingPage');
 showLandingPageBtn?.addEventListener('click', () => {
   landingPage.style.display = 'flex';
 });
+
+// === HP DEFAULTS POPUP ===
+function showHPDefaultsPopup() {
+  // Create overlay
+  let overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = '100vw';
+  overlay.style.height = '100vh';
+  overlay.style.background = 'rgba(0,0,0,0.6)';
+  overlay.style.zIndex = 99999;
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+
+  // Create popup
+  let popup = document.createElement('div');
+  popup.style.background = '#222529';
+  popup.style.color = '#fff';
+  popup.style.padding = '2em 2em 1.5em 2em';
+  popup.style.borderRadius = '18px';
+  popup.style.boxShadow = '0 2px 28px #000a';
+  popup.style.display = 'flex';
+  popup.style.flexDirection = 'column';
+  popup.style.gap = '1.2em';
+  popup.style.minWidth = '260px';
+  popup.style.maxWidth = '90vw';
+  popup.style.textAlign = 'center';
+
+  popup.innerHTML = `
+    <h3 style="margin-bottom:0.5em;">Set Starting Life</h3>
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:1em;">
+      Player Life: <input id="defaultPlayerHPInput" type="number" min="1" max="99" value="${defaultPlayerHP}" style="width:4em;font-size:1.2em;text-align:center;" />
+    </label>
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:1em;">
+      Rival Life: <input id="defaultRivalHPInput" type="number" min="1" max="99" value="${defaultRivalHP}" style="width:4em;font-size:1.2em;text-align:center;" />
+    </label>
+    <div style="display:flex;gap:1em;justify-content:center;margin-top:1em;">
+      <button id="saveHPDefaultsBtn" style="padding:0.5em 1.5em;border-radius:8px;background:#0078ff;color:#fff;border:none;font-size:1em;cursor:pointer;">Save</button>
+      <button id="cancelHPDefaultsBtn" style="padding:0.5em 1.5em;border-radius:8px;background:#444;color:#fff;border:none;font-size:1em;cursor:pointer;">Cancel</button>
+    </div>
+  `;
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  document.getElementById('defaultPlayerHPInput').focus();
+
+  document.getElementById('saveHPDefaultsBtn').onclick = function() {
+    const p = parseInt(document.getElementById('defaultPlayerHPInput').value, 10);
+    const r = parseInt(document.getElementById('defaultRivalHPInput').value, 10);
+    if (p > 0 && r > 0) {
+      saveDefaultHP(p, r);
+      defaultPlayerHP = p;
+      defaultRivalHP = r;
+      fullReset();
+      document.body.removeChild(overlay);
+    }
+  };
+  document.getElementById('cancelHPDefaultsBtn').onclick = function() {
+    document.body.removeChild(overlay);
+  };
+  overlay.onclick = function(e) {
+    if (e.target === overlay) document.body.removeChild(overlay);
+  };
+}
+
+// === LONG PRESS ON PANEL TO OPEN POPUP ===
+function setupPanelLongPress(panelSelector) {
+  let timer = null;
+  const el = document.querySelector(panelSelector);
+  el.addEventListener('pointerdown', () => {
+    timer = setTimeout(showHPDefaultsPopup, 1200);
+  });
+  el.addEventListener('pointerup', () => clearTimeout(timer));
+  el.addEventListener('pointerleave', () => clearTimeout(timer));
+}
+setupPanelLongPress('.player-panel');
+setupPanelLongPress('.rival-panel');
