@@ -48,6 +48,31 @@ body,
 
 }
 
+/* Add style for the ? button inside the settings popup */
+#showLandingPageBtn.settings-modal-btn {
+  position: absolute;
+  top: 0.7em;
+  left: 0.7em;
+  z-index: 100001;
+  background: transparent;
+  border: 2px solid #636363;
+  border-radius: 100%;
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 0.9em;
+  width: 1.5em;
+  height: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
 .counters-container {
   display: flex;
   flex-direction: row; /* Keep elements side by side */
@@ -515,6 +540,21 @@ button img,
 }
 
 
+/* SETTINGS BUTTON - NEW STYLES */
+
+#settingsBtn {
+  width: 1.2em;
+  height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+ }
+#settingsBtn:active {
+  background: #222;
+  border-color: #666; 
+}
+
 /* RESPONSIVENESS */
 
 @media (min-width: 1024px) { /* Apply styles for desktop screens */
@@ -630,4 +670,10 @@ button.icon-button img {
   min-width: 1.5em;
   text-align: left;
 }
+
+/* Ensure popup/modal has relative positioning for absolute children */
+body > div[style*='z-index: 99999'] > div {
+  position: relative !important;
+}
+
 }

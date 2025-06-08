@@ -30,6 +30,26 @@ damagePlusBtn.addEventListener('pointerdown', incrementDamage);
 damageMinusBtn.addEventListener('pointerdown', decrementDamage);
 
 // === HP LOGIC ===
+let defaultPlayerHP = 25;
+let defaultRivalHP = 25;
+
+// Try to load custom defaults from localStorage
+function loadDefaultHP() {
+  const defaults = JSON.parse(localStorage.getItem('uvsDefaultHP') || '{}');
+  defaultPlayerHP = defaults.player ?? 25;
+  defaultRivalHP = defaults.rival ?? 25;
+  defaultSpeed = defaults.speed ?? 0;
+  defaultDamage = defaults.damage ?? 0;
+  defaultSpeedIcon = defaults.speedIcon ?? "Off";
+}
+function saveDefaultHP(player, rival, speed, damage, speedIcon) {
+  localStorage.setItem('uvsDefaultHP', JSON.stringify({ player, rival, speed, damage, speedIcon }));
+}
+
+let defaultSpeed = 0;
+let defaultDamage = 0;
+let defaultSpeedIcon = "Off";
+
 let playerHP = 25;
 let rivalHP = 25;
 
@@ -180,16 +200,25 @@ function decrementDamage() {
   updateDamageCounter();
 }
 function quickReset() {
-  speedCount = 0;
-  damageCount = 0;
-  speedState = 0;
+  loadDefaultHP();
+  speedCount = defaultSpeed;
+  damageCount = defaultDamage;
+  speedState = ["Off", "High", "Mid", "Low"].indexOf(defaultSpeedIcon);
+  if (speedState === -1) speedState = 0;
   updateSpeedCounter();
   updateDamageCounter();
 }
 function fullReset() {
   quickReset();
-  playerHP = 25;
-  rivalHP = 25;
+  loadDefaultHP();
+  playerHP = defaultPlayerHP;
+  rivalHP = defaultRivalHP;
+  speedCount = defaultSpeed;
+  damageCount = defaultDamage;
+  speedState = ["Off", "High", "Mid", "Low"].indexOf(defaultSpeedIcon);
+  if (speedState === -1) speedState = 0;
+  updateSpeedCounter();
+  updateDamageCounter();
   updateHP();
 }
 let resetHoldTimeout = null;
@@ -238,6 +267,7 @@ function loadState() {
   }
 }
 window.onload = function() {
+  loadDefaultHP();
   loadState();
   updateSpeedCounter();
   updateDamageCounter();
@@ -304,3 +334,123 @@ const landingPage = document.getElementById('landingPage');
 showLandingPageBtn?.addEventListener('click', () => {
   landingPage.style.display = 'flex';
 });
+
+// === HP DEFAULTS POPUP ===
+function showHPDefaultsPopup() {
+  // Create overlay
+  let overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = '100vw';
+  overlay.style.height = '100vh';
+  overlay.style.background = 'rgba(0,0,0,0.6)';
+  overlay.style.zIndex = 99999;
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+
+  // Create popup
+  let popup = document.createElement('div');
+  popup.style.background = '#222529';
+  popup.style.color = '#fff';
+  popup.style.padding = '2em 2em 1.5em 2em';
+  popup.style.borderRadius = '18px';
+  popup.style.boxShadow = '0 2px 28px #000a';
+  popup.style.display = 'flex';
+  popup.style.flexDirection = 'column';
+  popup.style.gap = '1.2em';
+  popup.style.minWidth = '260px';
+  popup.style.maxWidth = '90vw';
+  popup.style.textAlign = 'center';
+
+  popup.innerHTML = `
+    <h3 style="margin-bottom:0.5em;">Set Starting Values</h3>
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:1em;">
+      Player Life: <input id="defaultPlayerHPInput" type="number" min="1" max="99" value="${defaultPlayerHP}" style="width:4em;font-size:1.2em;text-align:center;" />
+    </label>
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:1em;">
+      Rival Life: <input id="defaultRivalHPInput" type="number" min="1" max="99" value="${defaultRivalHP}" style="width:4em;font-size:1.2em;text-align:center;" />
+    </label>
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:1em;">
+      Speed: <input id="defaultSpeedInput" type="number" min="0" max="99" value="${defaultSpeed}" style="width:4em;font-size:1.2em;text-align:center;" />
+    </label>
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:1em;">
+      Damage: <input id="defaultDamageInput" type="number" min="0" max="99" value="${defaultDamage}" style="width:4em;font-size:1.2em;text-align:center;" />
+    </label>
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:1em;">
+      Zone: <select id="defaultSpeedIconInput" style="width:6em;font-size:1.1em;text-align:center;">
+        <option value="Off" ${defaultSpeedIcon === "Off" ? "selected" : ""}>Off</option>
+        <option value="High" ${defaultSpeedIcon === "High" ? "selected" : ""}>High</option>
+        <option value="Mid" ${defaultSpeedIcon === "Mid" ? "selected" : ""}>Mid</option>
+        <option value="Low" ${defaultSpeedIcon === "Low" ? "selected" : ""}>Low</option>
+      </select>
+    </label>
+    <div style="display:flex;gap:1em;justify-content:center;margin-top:1em;">
+      <button id="saveHPDefaultsBtn" style="padding:0.5em 1.5em;border-radius:8px;background:#0078ff;color:#fff;border:none;font-size:1em;cursor:pointer;">Save</button>
+      <button id="resetAllDefaultsBtn" style="padding:0.5em 1.5em;border-radius:8px;background:#ff4444;color:#fff;border:none;font-size:1em;cursor:pointer;">Reset All</button>
+      <button id="cancelHPDefaultsBtn" style="padding:0.5em 1.5em;border-radius:8px;background:#444;color:#fff;border:none;font-size:1em;cursor:pointer;">Cancel</button>
+    </div>
+  `;
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  // Add the ? button inside the popup, absolutely positioned top left
+  let landingBtn = document.createElement('button');
+  landingBtn.id = 'showLandingPageBtn';
+  landingBtn.className = 'icon-button settings-modal-btn';
+  landingBtn.innerText = '?';
+  landingBtn.title = 'Show help/about';
+  popup.style.position = 'relative';
+  popup.appendChild(landingBtn);
+  popup.style.paddingTop = '2.5em'; // Make room for the button
+
+  landingBtn.onclick = function(e) {
+    e.stopPropagation();
+    document.body.removeChild(overlay);
+    landingPage.style.display = 'flex';
+  };
+
+  document.getElementById('defaultPlayerHPInput').focus();
+
+  document.getElementById('saveHPDefaultsBtn').onclick = function() {
+    const p = parseInt(document.getElementById('defaultPlayerHPInput').value, 10);
+    const r = parseInt(document.getElementById('defaultRivalHPInput').value, 10);
+    const s = parseInt(document.getElementById('defaultSpeedInput').value, 10);
+    const d = parseInt(document.getElementById('defaultDamageInput').value, 10);
+    const si = document.getElementById('defaultSpeedIconInput').value;
+    if (p > 0 && r > 0 && s >= 0 && d >= 0) {
+      saveDefaultHP(p, r, s, d, si);
+      defaultPlayerHP = p;
+      defaultRivalHP = r;
+      defaultSpeed = s;
+      defaultDamage = d;
+      defaultSpeedIcon = si;
+      fullReset();
+      document.body.removeChild(overlay);
+    }
+  };
+  document.getElementById('resetAllDefaultsBtn').onclick = function() {
+    saveDefaultHP(25, 25, 0, 0, 'Off');
+    defaultPlayerHP = 25;
+    defaultRivalHP = 25;
+    defaultSpeed = 0;
+    defaultDamage = 0;
+    defaultSpeedIcon = 'Off';
+    fullReset();
+    document.body.removeChild(overlay);
+  };
+  document.getElementById('cancelHPDefaultsBtn').onclick = function() {
+    document.body.removeChild(overlay);
+  };
+  overlay.onclick = function(e) {
+    if (e.target === overlay) document.body.removeChild(overlay);
+  };
+}
+
+// Remove long-press popup setup
+
+const settingsBtn = document.getElementById('settingsBtn');
+if (settingsBtn) {
+  settingsBtn.addEventListener('click', showHPDefaultsPopup);
+}
