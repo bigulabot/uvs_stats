@@ -560,6 +560,16 @@ button, a, .icon-button, .panel-top, .panel-bottom {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Chevron blink animation */
+.chevron-blink {
+  animation: chevron-blink-fade 2.2s infinite;
+}
+
+@keyframes chevron-blink-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
 /* RESPONSIVENESS */
 
 @media (min-width: 1024px) { /* Apply styles for desktop screens */
